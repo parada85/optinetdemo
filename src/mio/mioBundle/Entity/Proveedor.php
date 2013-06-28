@@ -43,14 +43,14 @@ class Proveedor{
 	 
 	  /**
 	* @ORM\Column(type="string",nullable=true)
-    * @Assert\Regex(pattern="/^([A-z]+\s?)*$/",message="Este valor no es válido.")
+    * @Assert\Regex(pattern="/^([A-z áéíóúÁÉÍÓÚÑñ]+\s?)*$/",message="Este valor no es válido.")
 	*/
 	
 	 public $localidad;
 	 
 	  /**
 	* @ORM\Column(type="string",nullable=true)
-    * @Assert\Regex(pattern="/^([A-z]+\s?)*$/",message="Este valor no es válido.")
+    * @Assert\Regex(pattern="/^([A-z áéíóúÁÉÍÓÚÑñ]+\s?)*$/",message="Este valor no es válido.")
 	*/
 	
 	 public $provincia;

@@ -297,7 +297,7 @@ tablapermisos1 = $('#tablapermisos1').dataTable( {
                 tablalistaproveedores = $('#tablalistaproveedores').dataTable( {
                     "bJQueryUI": true,
                     "sDom": '<"H"Tfr>t<"F"ip>',
-                    "sScrollY": "450px",
+                    "sScrollY": "270px",
                     "bPaginate": false,
                     "bScrollCollapse": true,
                     "oTableTools": {
@@ -378,7 +378,7 @@ tablalistadevolucion.columnFilter({"bUseColVis": true,"aoColumns": [null,null,nu
                     "bJQueryUI": true,
                     "sDom": '<"H"Tfr>t<"F"ip>',
                     "bPaginate": false,
-                    "sScrollY": "300px",
+                    "sScrollY": "270px",
                     "bScrollCollapse": true,
                     "oTableTools": {
                         "aButtons": [
@@ -470,7 +470,7 @@ tablalistadevolucion.columnFilter({"bUseColVis": true,"aoColumns": [null,null,nu
                 tablalistaventa = $('#tablalistaventa').dataTable( {
                     "bJQueryUI": true,
                     "sDom": '<"H"Tfr>t<"F"ip>',
-                    "sScrollY": "250px",
+                    "sScrollY": "230px",
                     "bPaginate": false,
                     "bScrollCollapse": true,
                     "oTableTools": {
@@ -499,7 +499,7 @@ tablalistaventa.columnFilter({"bUseColVis": true,"aoColumns": [null,null,null,nu
                 tablalistaoperacion = $('#tablalistaoperacion').dataTable( {
                     "bJQueryUI": true,
                     "sDom": '<"H"Tfr>t<"F"ip>',
-                    "sScrollY": "250px",
+                    "sScrollY": "230px",
                     "bPaginate": false,
                     "bScrollCollapse": true,
                     "oTableTools": {
