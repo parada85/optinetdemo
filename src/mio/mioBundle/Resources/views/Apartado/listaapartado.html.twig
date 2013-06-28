@@ -101,11 +101,11 @@ $(document).ready(function () {
             <td>{{ reserva.adelanto }} €</td>
             <td>{{ reserva.pago | capitalize | trans }}</td>
             <td>{{ reserva.empleado.username | capitalize }}</td>
-            <td><div class="detallereserva botoncarro">{% trans %}Detalle{% endtrans %}</div>
+            <td class="tdizquierda"><div class="detallereserva botoncarro">{% trans %}Detalle{% endtrans %}</div>
               {% if reserva.venta == null %}
             <div class="boton convertiraventa">{% trans %}Convertir a venta{% endtrans %}</div> </td>
             {% else %}
-            <div title="{%trans%}Venta número{%endtrans%} {{reserva.venta.id}} "class="botondesactivado convertiraventa">{% trans %}Convertir a venta{% endtrans %}</div> </td>
+            <a title="{%trans%}Venta número{%endtrans%} {{reserva.venta.id}}" class="fancybox factura botondocumento" href="{{ path('facturapdf', { 'id': reserva.venta.id }) }}">{% trans %}Venta{% endtrans %}</a></td>
             {% endif %}
 		</tr>
   {% endfor %}

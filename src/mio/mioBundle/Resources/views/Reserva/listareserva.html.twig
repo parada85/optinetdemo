@@ -118,10 +118,10 @@ $(document).ready(function () {
             {% else %}
              <td>{{ reserva.avisada | date("d/m/Y H:i:s", "Europe/Paris") }}</td>
             {% endif %}
-            <td><div class="detallereserva botoncarro">{% trans %}Detalle{% endtrans %}</div>
+            <td class="tdizquierda"><div class="detallereserva botoncarro">{% trans %}Detalle{% endtrans %}</div>
               {% if reserva.venta != null or chivato == 'no' %}
                 {% if reserva.venta %}
-               <div title="Venta número {{reserva.venta.id}}" class="botondesactivado convertiraventa">{% trans %}Convertir a venta{% endtrans %}</div></td>
+               <a title="{%trans%}Venta número{%endtrans%} {{reserva.venta.id}}" class="fancybox factura botondocumento" href="{{ path('facturapdf', { 'id': reserva.venta.id }) }}">{% trans %}Venta{% endtrans %}</a></td> 
                {% else %}
                <div title="{% trans %}No hay productos disponibles{% endtrans %}" class="botondesactivado convertiraventa">{% trans %}Convertir a venta{% endtrans %}</div></td>
                {% endif %}

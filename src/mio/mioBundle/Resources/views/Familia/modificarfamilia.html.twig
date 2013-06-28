@@ -26,7 +26,7 @@
 	<div class="botonescrud">
     <div class="contenedorcrud">
     {% if entity.getProductosfamilia().count() > 0 %}
-          <div  title="Los productos asociados se quedarán sin familia" class="botoneliminar" id="beliminarfamilia">{% trans %}Eliminar{% endtrans %}</div>
+          <div  title="{%trans%}Los productos asociados se quedarán sin familia{%endtrans%}" class="botoneliminar" id="beliminarfamilia">{% trans %}Eliminar{% endtrans %}</div>
       {% else %}
           <div class="botoneliminar" id="beliminarfamilia">{% trans %}Eliminar{% endtrans %}</div>
       {% endif %}

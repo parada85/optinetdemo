@@ -74,7 +74,7 @@
           <tr>
             <td padding="3%"><span font-style="bold"> {{venta.total}}</span></td>
             <td padding="3%"><span font-style="bold"> {{venta.totalpago}}</span></td>
-            <td padding="3%"><span font-style="bold"> {{ venta.totalpago - venta.total}}</span></td>
+            <td padding="3%"><span font-style="bold"> {{"%.2f" | format(venta.totalpago - venta.total)}}</span></td>
           </tr>
         </table>
         <p float="right"> {%trans%}Operación realizada{%endtrans%}: {%trans%}Efectivo{%endtrans%}</p>
