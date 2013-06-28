@@ -1,0 +1,27 @@
+{% extends 'miomioBundle:Default:index.html.twig' %}
+
+{% block title %}
+{% trans %}Nueva familia{% endtrans %}
+{% endblock %}
+
+{% block body %}
+
+<div class="notificaciones">
+<div id="titulo">{% trans %}Nueva familia{% endtrans %}:</div>
+
+{% if app.session.hasFlash('error') %}
+    <div class="notificacionerror">
+        <span>{{ app.session.flash('error') }}</span>
+    </div>
+{% endif %}
+</div>
+
+<form class="formulario" id="nuevafamilia" action="{{ path('familia_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+</form>
+	<div class="botonescrud">
+	<div class="contenedorcrud">
+		<div class="botoncheck" id="gfamilia">{% trans %}Crear{% endtrans %}</div>
+	</div>
+</div>
+{% endblock %}

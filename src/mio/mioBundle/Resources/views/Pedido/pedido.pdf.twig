@@ -1,0 +1,72 @@
+<pdf> 
+    <page>
+         <img src="{{ pdf_image('miomioBundle:saludvision.jpg') }}" float="left"/>
+         <h1 float="right" text-decoration="underline">{%trans%}Pedido Número{%endtrans%}: {{pedido.id}}</h1>
+          <h1 font-size="8pt"><p>Calle Miguel Martínez de Pinillos 1 </p>11008 Cádiz Tlf: 956284614</h1>
+        <p><h1 float="right">{%trans%}Fecha{%endtrans%}: {{ pedido.fecha | date("d/m/Y H:i:s", "Europe/Paris") }} </h1></p>
+        <table text-align="left" margin-bottom="30%">
+          <tr>
+            <td padding="3%"> {%trans%}Pedido a proveedor{%endtrans%}: <span font-style="bold"> {{proveedor.Nombre| capitalize}}</span></td>
+          </tr>
+        </table>
+
+        <table height="200px" text-align="center">
+          <tr padding="3%" margin-bottom="10%" border.radius="5%" >
+            <td padding="3%" color="blue" border.type="none"> {%trans%}Cantidad{%endtrans%}</td>
+            <td padding="3%" color="blue" border.type="none"> {%trans%}Código{%endtrans%}</td>
+            <td padding="3%" color="blue" border.type="none"> {%trans%}Descripción{%endtrans%}</td>
+            <td padding="3%" color="blue" border.type="none"> {%trans%}Iva{%endtrans%}</td>
+            <td padding="3%" color="blue" border.type="none"> {%trans%}Precio{%endtrans%} </td>
+            <td padding="3%" color="blue" border.type="none"> {%trans%}PrecioIva{%endtrans%} </td>
+            <td padding="3%" color="blue" border.type="none"> {%trans%}Importe{%endtrans%} </td>
+            <td padding="3%" color="blue" border.type="none"> {%trans%}ImporteIva{%endtrans%} </td>
+          </tr>
+            {% set suma = 0 %}
+              {% for linea in lineas %}
+              <tr>
+                   <td padding="3%" background.color="PowderBlue" border.type="bottom">{{linea.cantidad}}</td>
+                   <td padding="3%" border.type="bottom">{{linea.producto.id}}</td>
+                   <td width="150%" border.type="bottom">{{linea.producto.descripcion | capitalize}}</td>
+                   <td padding="3%" border.type="bottom">{{linea.iva}} %</td>
+                   <td padding="3%" background.color="pink" border.type="bottom"> {{"%.2f" | format(linea.precio - linea.precio * linea.iva / 100 )}}</td>
+                   <td padding="3%" background.color="PowderBlue" border.type="bottom">{{linea.precio}} </td>
+                   {% set suma = suma + (linea.precio - linea.precio * linea.producto.iva / 100 ) * linea.cantidad %}
+                   <td padding="3%" background.color="pink" border.type="bottom">{{"%.2f" | format((linea.precio - linea.precio * linea.iva / 100 ) * linea.cantidad )}}</td>
+                   <td padding="3%" background.color="PowderBlue" border.type="bottom">{{linea.precio * linea.cantidad}} </td>
+               </tr>
+                {% endfor %}
+              <tr>
+                   <td border.type="none"></td>
+                   <td border.type="none"></td>
+                   <td border.type="none"></td>
+                   <td border.type="none"></td>
+                   <td border.type="none"></td>
+                   <td border.type="none"></td>
+                   <td padding="3%" width="80%">Total Iva:</td>
+                   <td padding="3%" width="80%">{{pedido.total}} €</td>
+              </tr>
+        </table>
+        <table text-align="center" margin-top="30%">
+          <tr>
+            <td padding="3%" background.color="Lavender"> {%trans%}Importe inicial{%endtrans%} €</td>
+            <td padding="3%" background.color="Lavender"> {%trans%}Base imponible{%endtrans%} €</td>
+            <td padding="3%" background.color="Lavender"> Iva €</td>
+            <td padding="3%" background.color="Lavender"> Total €</td>
+          </tr>
+          <tr>
+            <td padding="3%"> {{"%.2f" | format(suma)}} </td>
+            <td padding="3%"> {{"%.2f" | format(suma)}} </td>
+            <td padding="3%"> {{pedido.total - "%.2f" | format(suma) }} </td>
+            <td padding="3%"><span font-style="bold"> {{pedido.total}}</span></td>
+          </tr>
+        </table>
+        <p float="right"> {%trans%}Documento generado por{%endtrans%}: <span color="blue">{{ app.user.nombre | capitalize}} {{ app.user.apellido1| capitalize }}</span></p>
+        <br />
+        <p float="right"> {%trans%}Pedido realizado por{%endtrans%}: <span color="blue">{{empleado.Nombre| capitalize}} {{empleado.Apellido1| capitalize}}</span></p>
+        <br />
+        {% if empleado1 %}
+        <p float="right"> {%trans%}Pedido recepcionado por{%endtrans%}: <span color="blue">{{empleado1.Nombre| capitalize}} {{empleado1.Apellido1| capitalize}}</span></p>
+        <br />
+        {% endif %}
+    </page>
+</pdf>

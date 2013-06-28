@@ -1,0 +1,44 @@
+{# src/Acme/BlogBundle/Resources/views/Blog/index.html.twig #} 
+
+{% extends 'miomioBundle:Default:index.html.twig' %}
+
+{% block title %}{% trans %}Nuevo apartado{% endtrans %}:{% endblock %}
+{% block body %}
+ <h3>{% trans %}Seleccione el cliente para realizar el apartado{% endtrans %}:</h3>
+
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="tablaseleccion">
+  <thead>
+    <tr>
+	 <th>{% trans %}Dni{% endtrans %}</th>
+   	 <th>{% trans %}Nombre{% endtrans %}</th>
+   	 <th>{% trans %}Apellido1{% endtrans %}</th>
+   	 <th>{% trans %}Apellido2{% endtrans %}</th>
+   	 <th>{% trans %}Acciones{% endtrans %}</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+      {% for cliente in clientes %}
+
+    <tr>	
+            <td>{{ cliente.dni }}</td>
+            <td>{{ cliente.nombre |capitalize }}</td>
+            <td>{{ cliente.apellido1 |capitalize }}</td>
+            <td>{{ cliente.apellido2 |capitalize }}</td>
+      		<td><a class="boton" href="{{ path('nuevo_apartado', { 'id': cliente.id }) }}">{% trans %}Seleccionar{% endtrans %}</a></td>
+		</tr>
+  {% endfor %}
+ </tbody>
+ 
+ <tfoot>
+		 <tr>
+	 <th>{% trans %}Dni{% endtrans %}</th>
+   	 <th>{% trans %}Nombre{% endtrans %}</th>
+   	 <th>{% trans %}Apellido1{% endtrans %}</th>
+   	 <th>{% trans %}Apellido2{% endtrans %}</th>
+   	 <th>{% trans %}Acciones{% endtrans %}</th>
+    </tr>
+	</tfoot>
+	
+ </table>
+{% endblock %}

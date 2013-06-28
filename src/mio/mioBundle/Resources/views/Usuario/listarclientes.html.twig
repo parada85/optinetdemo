@@ -1,0 +1,79 @@
+{% extends 'miomioBundle:Default:index.html.twig' %}
+
+{% block title %}
+{% trans %}Listar Clientes{% endtrans %}
+{% endblock %}
+
+{% block body %}
+
+<div id="titulo">{% trans %}Listar Clientes{% endtrans %}:</div>
+    
+{% if app.session.hasFlash('confirmacion') %}
+    <div class="notificacion">
+        <span>{{ app.session.flash('confirmacion') }}</span>
+    </div>
+{% endif %}
+
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="tablacliente">
+  <thead>
+    <tr>
+	   <th>{% trans %}Dni{% endtrans %}</th>
+   	 <th>{% trans %}Nombre{% endtrans %}</th>
+   	 <th>{% trans %}Apellido1{% endtrans %}</th>
+   	 <th>{% trans %}Apellido2{% endtrans %}</th>
+   	 <th>{% trans %}Dirección{% endtrans %}</th>
+   	 <th>{% trans %}Localidad{% endtrans %}</th>
+   	 <th>{% trans %}Provincia{% endtrans %}</th>
+   	 <th>{% trans %}Movil{% endtrans %}</th>
+   	 <th>{% trans %}Acciones{% endtrans %}</th>
+
+    </tr>
+  </thead>
+  
+  <tbody>
+      {% for entity in entities %}
+
+    <tr>
+            <td>{{ entity.dni }}</a></td>
+            <td>{{ entity.nombre |capitalize }}</td>
+            <td>{{ entity.apellido1 |capitalize }}</td>
+            <td>{{ entity.apellido2 |capitalize }}</td>
+            <td>{{ entity.direccion |capitalize }}</td>
+            <td>{{ entity.localidad |capitalize }}</td>
+            <td>{{ entity.provincia |capitalize }}</td>
+            <td>{{ entity.movil }}</td>
+      		<td>
+            <a class="botoneditar" href="{{ path('usuario_edit', { 'id': entity.id }) }}">{% trans %}Editar{% endtrans %}</a>
+            <select class="lista operacionescliente">
+              <option value="">{% trans %}Operaciones{% endtrans %}</option>
+              <option value="{{ path('nueva_venta', { 'id': entity.id }) }}">{% trans %}Venta{% endtrans %}</option>
+              <option value="{{ path('nueva_reserva', { 'id': entity.id }) }}">{% trans %}Reserva{% endtrans %}</option>
+              <option value="{{ path('nuevo_apartado', { 'id': entity.id }) }}">{% trans %}Apartado{% endtrans %}</option>
+              <option value="{{ path('newdevolucion') }}">{% trans %}Devolución{% endtrans %}</option>
+            </select>
+        </td>
+		</tr>
+  {% endfor %}
+ </tbody>
+ 
+ <tfoot>
+		 <tr>
+	   <th>{% trans %}Dni{% endtrans %}</th>
+   	 <th>{% trans %}Nombre{% endtrans %}</th>
+   	 <th>{% trans %}Apellido1{% endtrans %}</th>
+   	 <th>{% trans %}Apellido2{% endtrans %}</th>
+   	 <th>{% trans %}Dirección{% endtrans %}</th>
+   	 <th>{% trans %}Localidad{% endtrans %}</th>
+   	 <th>{% trans %}Provincia{% endtrans %}</th>
+   	 <th>{% trans %}Movil{% endtrans %}</th>
+   	 <th>{% trans %}Acciones{% endtrans %}</th>
+    </tr>
+	</tfoot>
+	
+ </table>
+
+{% endblock %}
+
+
+
+

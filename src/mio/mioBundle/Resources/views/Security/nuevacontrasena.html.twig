@@ -1,0 +1,17 @@
+{# src/Acme/BlogBundle/Resources/views/Blog/index.html.twig #} 
+{% extends '::base.html.twig' %}
+
+{% block title %}{% trans %}Confirmación{% endtrans %}{% endblock %}
+
+{% block menu %}
+{% if estado== true %}
+ <p id="confirmacioncontrasena"> {% trans %}Se ha mandado un nuevo mail con la nueva contraseña. Por favor revise su email{% endtrans %}.</p>
+{% else %}
+ <p id="confirmacioncontrasena"> {% trans %}Se ha producido un error. Contacte con el administrador{% endtrans %}.</p>
+{% endif %}
+  	<div class="botonescrud">
+		<div class="contenedorcrud">
+	<div><a class="botonvolver" href="{{ path('login') }}">{% trans %}Volver{% endtrans %}</a></div>
+	</div>
+</div>
+{% endblock %}

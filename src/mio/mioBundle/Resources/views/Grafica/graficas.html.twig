@@ -1,0 +1,72 @@
+{# src/Acme/BlogBundle/Resources/views/Blog/index.html.twig #} 
+
+{% extends 'miomioBundle:Default:index.html.twig' %}
+{% block graficas %}
+<script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/js/highcharts.js') }}"></script>
+<script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/js/highstock.js') }}"></script>
+<script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/js/exporting.js') }}"></script>
+
+{% if app.session.locale == 'en' %}
+
+	  {% javascripts '@miomioBundle/Resources/public/js/mio/graficas/ingles/graficasingles.js' filter='yui_js' %}
+			    <script type="text/javascript" language="javascript" src="{{ asset_url }}"></script>
+		{% endjavascripts %}
+
+	{% else %}
+
+	  {% javascripts '@miomioBundle/Resources/public/js/mio/graficas/espanol/graficas.js' filter='yui_js' %}
+			    <script type="text/javascript" language="javascript" src="{{ asset_url }}"></script>
+	  {% endjavascripts %}
+	{% endif %}
+	
+{% endblock %}
+
+{% block title %}{% trans %}Estadísticas{% endtrans %}{% endblock %}
+
+{% block body %}
+
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">{% trans %}Número de operaciones{% endtrans %}</a></li>
+		<li><a href="#tabs-2">{% trans %}Operaciones{% endtrans %}</a></li>
+		<li><a href="#tabs-3">{% trans %}Porcentaje ventas{% endtrans %}</a></li>
+		<li><a href="#tabs-4">{% trans %}Productos más vendidos{% endtrans %}</a></li>
+		<li><a href="#tabs-5">{% trans %}Facturación{% endtrans %}</a></li>
+		<li><a href="#tabs-6">{% trans %}Facturado{% endtrans %}</a></li>
+		<li><a href="#tabs-7">{% trans %}Facturado acumulado{% endtrans %}</a></li>
+		<li><a href="#tabs-8">{% trans %}Beneficio{% endtrans %}</a></li>
+		<li><a href="#tabs-9">{% trans %}Beneficio acumulado{% endtrans %}</a></li>
+		<li><a href="#tabs-10">{% trans %}Arqueos{% endtrans %}</a></li>
+	</ul>
+	<div id="tabs-1">
+		<div id="container"></div>
+	</div>
+	<div id="tabs-2">
+		<div id="container1"></div>
+	</div>
+	<div id="tabs-3">
+		<div id="container2"></div>
+	</div>
+	<div id="tabs-4">
+		<div id="container3"></div>
+	</div>
+	<div id="tabs-5">
+		<div id="container4"></div>
+	</div>
+	<div id="tabs-6">
+		<div id="container5"></div>
+	</div>
+	<div id="tabs-7">
+		<div id="container6"></div>
+	</div>
+	<div id="tabs-8">
+		<div id="container7"></div>
+	</div>
+	<div id="tabs-9">
+		<div id="container8"></div>
+	</div>
+	<div id="tabs-10">
+		<div id="container9"></div>
+	</div>
+</div>
+{% endblock %}

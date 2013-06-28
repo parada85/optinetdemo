@@ -1,0 +1,47 @@
+security:
+    
+    firewalls:
+        frontend:
+            pattern:  ^/
+            anonymous: ~
+            form_login:
+                login_path: /login
+                check_path: /login_check
+                default_target_path: /index
+                success_handler: authentication_handler
+            logout:
+                path: /logout
+                target: /login
+                delete_cookies:
+                    cssmio: { path: null, domain: null }
+                success_handler: authentication_handler
+            security: true
+            remember_me:
+                key:      loksea
+                lifetime: 1800
+                path:     /
+            access_denied_handler: accessdenied_handler
+          #primero deben de ir los usuarios anonimos si no se entra en loop redirect
+    access_control:
+        - { path: /login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /comprobarmail, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/nuevacontrasena, roles: IS_AUTHENTICATED_ANONYMOUSLY } 
+        - { path: ^/passolvidado, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/enviarmailpass, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/cambiarlocale, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/contacto, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/js, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin, roles: ROLE_A }
+        - { path: ^/nuevoinforme, roles: ROLE_M }
+        - { path: ^/, roles: IS_AUTHENTICATED_REMEMBERED }
+
+    providers:
+        user_db:
+            entity: { class: mio\mioBundle\Entity\Empleado, property: username }
+    role_hierarchy:
+        ROLE_M: ROLE_U
+        ROLE_A: ROLE_U
+
+    encoders:
+        mio\mioBundle\Entity\Empleado: { algorithm: sha1 }
+        Symfony\Component\Security\Core\User\User: plaintext

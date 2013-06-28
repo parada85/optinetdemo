@@ -1,0 +1,1 @@
+jQuery(function(A){A.datepicker.regional[""]={dateFormat:"dd/mm/yy"};A.datepicker.setDefaults(A.datepicker.regional[""])});

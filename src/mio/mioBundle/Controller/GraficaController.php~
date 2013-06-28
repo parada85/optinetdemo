@@ -1,0 +1,16 @@
+<?php
+
+namespace mio\mioBundle\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+class GraficaController extends Controller{
+	
+	
+	public function graficasoAction()
+	{	
+		return ($this->render('miomioBundle:Grafica:graficas.html.twig'));	
+	
+	}
+}
+?>

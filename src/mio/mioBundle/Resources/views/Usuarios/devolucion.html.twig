@@ -1,0 +1,106 @@
+{% extends 'miomioBundle:Default:index.html.twig' %}
+
+{% block title %}
+{% trans %} Devoluciones {% endtrans %}
+{% endblock %}
+
+{% block body %}
+
+<div id="infodevolucion">
+	<div> {% trans %}Venta{% endtrans %}:<span id="chivatoidventa">{{venta.id}}</span> {% trans %}Realizada{% endtrans %}: {{empleado.username|capitalize}}</div>
+	<div>{% trans %}Cliente{% endtrans %}<span id="chivatoidcliente">{{cliente.getId()}}</span>: {{cliente.getNombre()|capitalize}} {{cliente.apellido1|capitalize}} {{cliente.apellido2|capitalize}} </div>
+	<div>Total: {{venta.total}} €.</div>
+</div>
+
+<div id="titulo">{% trans %}Listar productos{% endtrans %}:</div>
+<div class="notificacion1">
+        <span>{% trans %}Debe introducir las cantidades de los productos{% endtrans %}.</span>
+    </div>
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="tabladevolucion">
+  <thead>
+    <tr>
+	  <th>{% trans %}Código{% endtrans %}</th>
+   	<th>{% trans %}Descripción{% endtrans %}</th>
+   	<th>{% trans %}Cantidad{% endtrans %}</th>
+		<th>{% trans %}Precio{% endtrans %}</th>
+		<th>{% trans %}Total{% endtrans %}</th>
+		<th>{% trans %}Devueltos{% endtrans %}</th>
+		<th>{% trans %}Cantidad a devolver{% endtrans %}</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+  {% for lineaventa in lineasventa %}
+
+    <tr>
+      <td>{{ lineaventa.producto.id }}</td>
+      <td>{{ lineaventa.producto.descripcion|capitalize }}</td>
+      <td>{{ lineaventa.cantidad }}  {% trans %}unidad/es{% endtrans %}</td>
+      <td>{{ lineaventa.precio }} €</td>
+      <td>{% set total = lineaventa.cantidad * lineaventa.precio %}{{total}} €</td>
+      <td>
+      {% if devoluciones is null %}
+      0
+      {% endif %}
+      {% set valor = 0 %}
+      {% for devolucion in devoluciones %}
+      	{% for linea in devolucion.lineas %}
+      		{% if linea.producto.id == lineaventa.producto.id %}
+      		{% set valor = valor + linea.cantidad %}
+      		{% endif %}
+      	  {% endfor %}
+      	{% endfor %}
+      	{{valor}}
+      </td>
+      <td class="ultimotd">
+      <select class="lista unidades">
+      		{% set value = 0 %}
+      		{% set chivato = 'no' %}
+      		{% set cantidadventa = lineaventa.cantidad %}
+      		
+      		{% for devolucion in devoluciones %}
+      			{% for linea in devolucion.lineas %}
+      			{%if linea.producto.id == lineaventa.producto.id%}
+							{% set value = value + linea.cantidad %}
+							{% set chivato = 'si' %}
+			  		{% endif %}
+			  	{% endfor %}
+			  	{% endfor %}
+			  	{% if chivato=='si'%}
+			  		{% set poner = cantidadventa - value%}
+			  		{% if poner==0%}
+			  			<option value="0">0  {% trans %}unidad/es{% endtrans %}</option>
+			  			{% else %}
+			  				{% for i in 0..poner%}
+			  					<option value="{{i}}">{{i}} {% trans %}unidad/es{% endtrans %}</option>
+			  				{% endfor %}
+			  		{% endif %}
+			  	{% endif %}
+			  	
+			  	{% if chivato=='no'%}
+			  		{% for i in 0..lineaventa.cantidad%}
+			  					<option value="{{i}}">{{i}} {% trans %}unidad/es{% endtrans %}</option>
+					{% endfor %}
+				{% endif %}
+      </select>
+      <label><input type="radio" name="{{ lineaventa.producto.id }}" value="bueno" checked />{% trans %}Buen estado{% endtrans %}</label>
+      <label><input type="radio" name="{{ lineaventa.producto.id }}" value="malo" />{% trans %}Mal estado{% endtrans %}</label>
+      </td>
+      </tr>
+
+  {% endfor %}
+ </tbody>
+	
+ </table>
+<div class="prueba">
+  <div class="ventabotones">
+    <div class="contenedor">
+      <p><textarea id="areatexto">...</textarea></p>
+    <input id="preguntadocumentodevolucion" type='checkbox' checked /><label for="preguntadocumentodevolucion">{% trans %}Generar documento{% endtrans %}</label> 
+   <div class="boton" id="botondevolver">{% trans %}Devolver{% endtrans %}</div>
+ </div>
+  </div>
+ </div>
+
+ <img id="ajax-loader" src="{{ asset('bundles/miomio/images/ajax-loader.gif') }}"/>
+{% endblock %}

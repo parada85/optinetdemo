@@ -1,0 +1,715 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		 <title>{% block title %}{% endblock %}</title>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="description" content="%description%" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="parada" />
+ 		<link id= "hojaestilo" rel="stylesheet" type="text/css" href="{{ asset('bundles/miomio/css/Cobalt/jquery-wijmo.css') }}" media="screen">
+    	<link href="{{ asset('bundles/miomio/css/jquery.wijmo-complete.all.2.0.0.min.css" rel="stylesheet" type="text/css" />
+ 		<link rel="stylesheet" type="text/css" href="{{ asset('bundles/miomio/development-bundle/themes/wijmo/jquery.wijmo.wijtextbox.css') }}" media="screen">
+    	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/miomio/css/style.css') }}" media="screen">
+    	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/miomio/css/demo_table2.css') }}" media="screen">
+    	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/miomio/css/jquery.ui.selectmenu.css') }}" media="screen">
+    	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/miomio/css/fullcalendar.css') }}" media="screen">
+      
+    <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+	<script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
+    <script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/js/jquery-1.7.1.min.js') }}"></script>
+    <script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/js/jquery-ui-1.8.18.custom.min.js') }}"></script>
+    <script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/development-bundle/ui/jquery.ui.mouse.js') }}"></script>
+    <script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/development-bundle/ui/jquery.ui.widget.js') }}"></script>
+    <script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/development-bundle/ui/jquery.ui.core.js') }}"></script>
+    <script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/development-bundle/ui/jquery.ui.selectable.js') }}"></script>
+    <script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/development-bundle/ui/jquery.ui.draggable.js') }}"></script>
+    <script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/development-bundle/external/jquery.mousewheel.min.js') }}"></script>
+    <script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/development-bundle/external/jquery.bgiframe-2.1.3-pre.js') }}"></script>
+    <script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/development-bundle/wijmo/jquery.wijmo.wijutil.js') }}"></script>
+    <script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/development-bundle/wijmo/jquery.wijmo.wijsuperpanel.js')}}"></script>
+    <script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/development-bundle/wijmo/jquery.wijmo.wijmenu.js')}}"></script>
+	 <script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/development-bundle/wijmo/jquery.wijmo.wijtextbox.js')}}"></script>
+	 <script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/js/jquery.dataTables.js') }}"></script>
+	 <script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/js/jquery.dataTables.columnFilter.js') }}"></script>
+	 <script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/js/ColVis.js') }}"></script>
+	 <script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/js/jquery.corner.js') }}"></script>
+	 <script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/js/tablas.js') }}"></script>
+	 <script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/js/dialogos.js') }}"></script>
+     <script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/js/calendario.js') }}"></script>
+	 <script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/js/operaciones.js') }}"></script>
+	 <script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/js/jquery.ui.selectmenu.js') }}"></script>
+	 <script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/js/fullcalendar.js') }}"></script>
+	 <script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/js/jquery.ui.datepicker-es.js') }}"></script>
+	 <script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/js/jquery.cookie.js') }}"></script>
+    {%block graficas%}{%endblock%}
+    {%block productos%}{%endblock%}
+    <script id="scriptInit" type="text/javascript">
+        $(document).ready(function () {
+
+			if($.cookie("cssmio")) 
+        		$("#hojaestilo").attr("href",$.cookie("cssmio"));
+
+        	$('.tema').click(function () {
+    		$("#hojaestilo").attr("href",$(this).attr('rel'));
+    		$.cookie("cssmio",$(this).attr('rel'), {expires: 7, path: '/'});
+    		return false;
+		});
+
+    $( "#sortable1, #sortable2" ).sortable({
+			connectWith: ".connectedSortable"
+		}).disableSelection();
+		
+	$( "#sortable2" ).bind( "sortreceive", function(event, ui) {
+	var id_producto = ui.item.attr('id');
+	var id_familia = $("#fam2").val();
+	var url1 = "{{ asset('bundles/miomio/php/moverfamilia.php') }}";
+	$.ajax({url: url1,data: {id_producto:id_producto,id_familia:id_familia}});
+	$("#contarproductofam2").text(parseInt($("#contarproductofam2").text())+1);
+	$("#contarproductofam1").text(parseInt($("#contarproductofam1").text())-1);
+	});
+	
+	$( "#sortable1" ).bind( "sortreceive", function(event, ui) {
+	var id_producto = ui.item.attr('id');
+	var id_familia = $("#fam1").val();
+	var url1 = "{{ asset('bundles/miomio/php/moverfamilia.php') }}";
+	$.ajax({url: url1,data: {id_producto:id_producto,id_familia:id_familia}});
+	$("#contarproductofam1").text(parseInt($("#contarproductofam1").text())+1);
+	$("#contarproductofam2").text(parseInt($("#contarproductofam2").text())-1);
+	});
+
+			$( "#tabs" ).tabs().find( ".ui-tabs-nav" ).sortable({ axis: "x" });
+			$( "#emptabs" ).tabs().find( ".ui-tabs-nav" ).sortable({ axis: "x" });
+
+			
+			$("#header1").corner("bite");
+			$("#contenido1").corner("28px");
+			$("#footer1").corner("28px");
+			$(".formulario > div > div").corner();
+			$(".formulario > div > div > input").corner();
+            $("#menu1").wijmenu({orientation: "horizontal"});
+            $(".menuboton").wijmenu({orientation: 'horizontal'});
+       		$(".formulario > div > div > input").wijtextbox();
+       		
+            $( "#autocomplete" ).autocomplete({
+                source: "{{ asset('bundles/miomio/php/search.php') }}",
+                minLength: 3,
+                select: function(event, ui) {
+                    url = Routing.generate('consultaventausuario', { id: ui.item.id });
+					 window.location = url;
+                  }
+            })
+
+            $( "#autocomplete_calendar" ).autocomplete({
+                source: "{{ asset('bundles/miomio/php/search.php') }}",
+                minLength: 3,
+                select: function(event, ui) {
+                     $("#oculto").val(ui.item.id );
+                  }
+            })
+            
+            $( "#autocomplete_editar" ).autocomplete({
+                source: "{{ asset('bundles/miomio/php/search.php') }}",
+                minLength: 3,
+                select: function(event, ui) {
+					 url = Routing.generate('usuario_edit', { id: ui.item.id });
+					 window.location = url;
+                  }
+            })
+            $( "#autocomplete_editarproveedor" ).autocomplete({
+                source: "{{ asset('bundles/miomio/php/searchproveedor.php') }}",
+                minLength: 3,
+                select: function(event, ui) {
+                    url = Routing.generate('proveedor_edit', { id: ui.item.id });
+					 window.location = url;
+                  }
+            })
+            $( "#autocompleteventa" ).autocomplete({
+                source: "{{ asset('bundles/miomio/php/search.php') }}",
+                minLength: 3,
+                select: function(event, ui) {
+                    url = Routing.generate('nueva_venta', { id: ui.item.id });
+					 window.location = url;
+                  }
+            })
+            $( "#autocompletepedido" ).autocomplete({
+                source: "{{ asset('bundles/miomio/php/searchproveedor.php') }}",
+                minLength: 3,
+                select: function(event, ui) {
+                    url = Routing.generate('nuevo_pedido', { id: ui.item.id });
+					 window.location = url;
+                  }
+            })
+            $( "#autocompletereserva" ).autocomplete({
+                source: "{{ asset('bundles/miomio/php/search.php') }}",
+                minLength: 3,
+                select: function(event, ui) {
+                    url = Routing.generate('nueva_reserva', { id: ui.item.id });
+					 window.location = url;
+                  }
+            })
+            $( "#autocompletedevolucion" ).autocomplete({
+                source: "{{ asset('bundles/miomio/php/searchventa.php') }}",
+                select: function(event, ui) {
+                    url = Routing.generate('nueva_devolucion', { id: ui.item.id });
+					 window.location = url;
+                  }
+            })
+            $( "#autocompleteproveedor" ).autocomplete({
+                source: "{{ asset('bundles/miomio/php/searchproveedor.php') }}",
+                minLength: 3,
+                select: function(event, ui) {
+							productosproveedor.fnFilter(ui.item.nombre);	
+                  }
+            })
+         $( "#accordion" ).accordion();
+			
+			$("#añadir").button({icons:{primary: 'ui-icon-cart'}});
+			$("#añadirapedido").button({icons:{primary: 'ui-icon-cart'}});
+			$("#añadirreserva").button({icons:{primary: 'ui-icon-cart'}});
+			$("#guardar").button();
+			$("#passolvidado").button();
+			$("#enviarpass").button();
+			$("#guardarpedido").button();
+			$("#format").buttonset();
+			$("#botondevolver").button();
+			$("#volver").button();
+			$("#restringida").button();
+			$(".recepcionar").button();
+			$("#restablecer").button();
+			$("#ingresar").button();
+			$("#guardarreserva").button();
+         $(".boton").button();
+         $("#gempleado").button();
+         $("#gproducto").button();
+         $("#gproveedor").button();
+         $("#gfamilia").button();
+			$(".activo").button();
+			$(".avisada").button();
+			$("#gusuario").button();
+			$(".fguardar").button();
+			$(".detalleventa").button({icons:{primary: 'ui-icon-cart'}});
+			$(".detalledevolucionventa").button({icons:{primary: 'ui-icon-cart'}});
+			$(".detalledevolucion").button({icons:{primary: 'ui-icon-cart'}});
+			$(".detallereserva").button({icons:{primary: 'ui-icon-cart'}});
+			$(".detallepedido").button({icons:{primary: 'ui-icon-cart'}});
+			$(".factura").button();
+			$("#pruebaboton1").button();
+			$( ".radio" ).buttonset();
+				
+				$("#guardar").live('click', function () {
+				
+						var contador = tabla2.fnSettings().fnRecordsTotal();
+						
+						if (contador==0)
+							$("#error").dialog('open');
+						else
+						$("#confirmar").dialog('open');
+				})
+				
+				$("#guardarpedido").live('click', function () {
+						$("#confirmar23").dialog('open');
+				})
+
+				$("#passolvidado").live('click', function () {
+						url = Routing.generate('passolvidado');
+						window.location = url;
+				})
+
+				$("#enviarpass").live('click', function () {
+						var mail = $("#mail").val();
+						url = Routing.generate('enviarmailpass', { mail: mail });
+						$.ajax({url: url});
+						alert("Se ha enviado un nuevo mail con la contraseña.Gracias")
+
+				})
+
+				$("#volver").live('click', function () {
+						url = Routing.generate('login');
+						window.location = url;
+				})
+
+				$("#editarproducto").live('click', function () {
+					var nTds = $('td', this.parentNode.parentNode);
+					var id = $(nTds[0]).text();
+					url = Routing.generate('producto_edit', { id: id });
+					window.location = url;
+				})
+
+				$("#editarempleado").live('click', function () {
+					var nTds = $('td', this.parentNode.parentNode);
+					var id = $(nTds[0]).text();
+					url = Routing.generate('empleado_edit', { id: id });
+					window.location = url;
+				})
+
+        $("#editarproveedor").live('click', function () {
+          var nTds = $('td', this.parentNode.parentNode);
+          var id = $(nTds[0]).text();
+          url = Routing.generate('proveedor_edit', { id: id });
+          window.location = url;
+        })
+					
+				$("#guardarreserva").live('click', function () {
+						var input = $("#adelanto").val();
+						var contador = tabla4.fnSettings().fnRecordsTotal();
+						
+						if (isNaN(input) || contador == 0 || input == "" || input < 0 )
+							$("#error").dialog('open');
+						else
+							$("#confirmar8").dialog('open');
+				})
+				
+				$("#contacto").live('click', function () {
+						//if (window.location.href.indexOf('login')==-1){
+						
+						//($("#nombre").attr('readonly', 'readonly');}
+						$("#mensajecontacto").dialog('open');
+				})
+
+				$("#restringida").live('click', function () {
+						url = Routing.generate('homepage');
+						window.location = url;
+				})
+
+
+				$("#productomostrar").change(function() {	
+					tablalistaproductos.fnFilter($(this).val(),null,false,false,false,false);
+					tablalistaproductos.fnDraw();
+    			});
+				
+				$(".tipo_user").change(	function() {	
+					var nTds = $('td', this.parentNode.parentNode);
+					var id = $(nTds[0]).text();
+					var url1 = "{{ asset('bundles/miomio/php/ajaxrole.php') }}?nombre="+ id;
+					$.ajax({url: url1});	//por get si no se especifica nada		
+    			});
+    			
+    			$("#fam1").change(function() {
+					id_familia = $(this).val();
+					ruta = '/Symfony/web/bundles/miomio/php/ajaxfamilia.php' + '?id=' + id_familia;
+					$.getJSON(ruta,function(data){
+					$("#sortable1 div").remove();
+  					$.each(data, function(key, value) {
+    					$("#sortable1").append('<div class="gelou" id="'+value.id+'"> '+ value.descripcion + '</div>');
+    					$('.gelou').button();
+  					});
+  				$("#contarproductofam1").text(data.length);
+    			});
+    			})
+    			
+    			  $("#fam2").change(function() {	
+					id_familia = $(this).val();
+					$.getJSON("{{ asset('bundles/miomio/php/ajaxfamilia.php') }}", { 'id': id_familia}, function(data){
+  					var items = [];
+					$("#sortable2 div").remove();
+  					$.each(data, function(key, value) {
+    					items.push(value.id);
+    					$("#sortable2").append('<div class="gelou" id='+value.id+'> '+ value.descripcion + '</div>');
+    					$('.gelou').button();
+  					});
+  					$("#contarproductofam2").text(data.length);
+    			});
+    			})
+    			
+    			$('.fechas').change(function () {
+					document.getElementById("divajax").style.display='';
+					var id_devolucion = $(this).val();
+					var ruta = "{{ asset('bundles/miomio/php/ajax_ventareserva.php') }}?id="+id_devolucion;
+					ajaxventareserva.fnReloadAjax(ruta);
+				})
+
+    			
+				$("#listaproductos").change(function() {
+					var buscar =$("#listaproductos").val();
+					productosproveedor.fnFilter(buscar);		
+    			});
+    			
+			   $('.activo').live('click', function () {
+			   
+			   	var nTds = $('td', this.parentNode.parentNode);
+					var id = $(nTds[0]).text();
+				   var url1 = "{{ asset('bundles/miomio/php/ajaxactivo.php') }}?nombre="+ id;
+   				$.ajax({url: url1});	//por get si no se especifica nada
+					var aPos = tabla5.fnGetPosition(this.parentNode.parentNode);
+					var html = $(nTds[10]).html();
+					if (html.indexOf("Cross1")==-1)
+        				tabla5.fnUpdate( "<img src='{{ asset('bundles/miomio/images/soft-icons-48/Cross1.png') }}'\> <input type='button' class='activo' value='Cambiar'\>", aPos, 10 );
+					else
+						tabla5.fnUpdate( "<img src='{{ asset('bundles/miomio/images/soft-icons-48/Tick1.png') }}'\> <input type='button' class='activo' value='Cambiar'\>", aPos, 10 );    				  				
+    				$(".activo").button();
+    				})
+
+    				$('.avisada').live('click', function () {	   
+			   	var nTds = $('td', this.parentNode.parentNode);
+					var id = $(nTds[0]).text();
+				   var url1 = "{{ asset('bundles/miomio/php/ajaxavisada.php') }}?nombre="+ id;
+   				$.ajax({url: url1});	//por get si no se especifica nada
+					var aPos = listarreserva.fnGetPosition(this.parentNode.parentNode);
+					var html = $(nTds[5]).html();
+					listarreserva.fnUpdate( "<img src='{{ asset('bundles/miomio/images/soft-icons-48/Tick1.png') }}'\>", aPos, 5 );    				  				
+    				})	
+				
+				$('.detalleventa').live('click', function () {
+					document.getElementById("divajax").style.display='';
+					var nTds = $('td', this.parentNode.parentNode);
+					var id = $(nTds[0]).text();
+					var ruta = "{{ asset('bundles/miomio/php/ajax_ventareserva.php') }}?id="+id;
+					ajaxventareserva.fnReloadAjax(ruta);
+					
+				})
+				$('.detalledevolucion').live('click', function () {
+					document.getElementById("divajax").style.display='';
+					var nTds = $('td', this.parentNode.parentNode);
+					var id = $(nTds[0]).text();
+					var ruta = "{{ asset('bundles/miomio/php/ajax_ventareserva.php') }}?id="+id;
+					ajaxventareserva.fnReloadAjax(ruta);
+					
+				})
+				
+				$('.detalledevolucionventa').live('click', function () {
+					document.getElementById("divajax").style.display='';
+					var id = tablalistaventa.fnGetData(this.parentNode.parentNode)[5];
+					var ruta = "{{ asset('bundles/miomio/php/ajax_ventareserva.php') }}?id="+id;
+					ajaxventareserva.fnReloadAjax(ruta);
+					
+				})
+				
+				$('.detallepedido').live('click', function () {
+					document.getElementById("divajax").style.display='';
+					var nTds = $('td', this.parentNode.parentNode);
+					var id = $(nTds[0]).text();
+					var ruta = "{{ asset('bundles/miomio/php/ajax_pedido.php') }}?id="+id;
+					ajaxpedido.fnReloadAjax(ruta);	
+				})
+
+				$('.recepcionar').live('click', function () {
+					
+					 	momentoActual = new Date() ;
+ 						var hora = momentoActual.getHours(); 
+   					var minuto = momentoActual.getMinutes(); 
+   					var segundo = momentoActual.getSeconds();
+   					var dia = momentoActual.getDate();
+						var mes = momentoActual.getMonth()+1;
+						
+						var str_dia = new String (dia) ;
+   					if (str_dia.length == 1) 
+      	 				dia = "0" + dia;
+      	 			
+      	 			var str_mes = new String (mes) ;
+   					if (str_mes.length == 1) 
+      	 				mes = "0" + mes;
+      	 					
+						var	str_segundo = new String (segundo);
+   					if (str_segundo.length == 1) 
+      	 				segundo = "0" + segundo;
+
+   				var  str_minuto = new String (minuto) ;
+   					if (str_minuto.length == 1) 
+      	 				minuto = "0" + minuto;
+
+   	 			var str_hora = new String (hora) ;
+   					if (str_hora.length == 1) 
+      	 				hora = "0" + hora;
+   	
+
+   				var horaImprimible = dia + "/" + mes +"/" + momentoActual.getFullYear() +" "+ hora + ":" + minuto + ":" + segundo;
+					var nTds = $('td', this.parentNode.parentNode);
+					var id = $(nTds[0]).text();
+          var username = $("#chivatoempleado").text();
+					url = Routing.generate('recepcion');
+ 					$.ajax({url: url,data: {id: id}});
+ 					var aPos = listapedido.fnGetPosition(this.parentNode.parentNode);
+ 					listapedido.fnUpdate(horaImprimible,aPos,3);
+ 					listapedido.fnUpdate('Nodo',aPos,6);
+ 					listapedido.fnUpdate(username,aPos,6);
+				})
+				
+				$('.detallereserva').live('click', function () {
+					document.getElementById("divajax").style.display='';
+					var nTds = $('td', this.parentNode.parentNode);
+					var id = $(nTds[0]).text();
+					var ruta = "{{ asset('bundles/miomio/php/ajax_ventareserva.php') }}?id="+id;
+					ajaxventareserva.fnReloadAjax(ruta);
+					
+				})
+				
+				$("#botondevolver").live('click', function () {
+						$("#confirmardevolver").dialog('open');
+					//var unidad = $(nTds[5]).find("select").val();
+					
+				})
+				
+				$(".tipo_user").selectmenu();
+				$('.unidades').selectmenu();
+				$('.fechas').selectmenu();
+				$("#fam1").selectmenu();
+				$("#fam2").selectmenu();
+				$('.select_filter').selectmenu();
+				//$("#mostrarproductofamilia").selectmenu();
+				$("#mio_miobundle_productotype_familia").selectmenu();
+       			$("#mio_miobundle_productotype_proveedor").selectmenu();
+				$("#mio_miobundle_empleadotype_role").selectmenu();
+
+				//document.getElementById("divajax").style.display='none';//qui existe un problema
+			
+				$('.factura').live('click', function () {
+					var nTds = $('td', this.parentNode.parentNode);
+					var id_venta = $(nTds[0]).text();
+					var variable= "http://localhost/jquery/web/app_dev.php/factpdf/"+id_venta;
+					  window.location.href = variable;
+				})
+	
+});
+	</script>
+	
+</head>
+<body>
+{% block header %}
+<div id="header1">
+	<p> Software web para gestión empresarial</p>
+	<img id="logo" src="{{ asset('bundles/miomio/images/soft-icons-48/optinet.png') }}"/>
+	<p> {{ "now" | date("d/m/Y") }} </p>
+
+			<img class="bandera" src="{{ asset('bundles/miomio/images/banderas/spain.gif') }}"/>
+			<img class ="bandera" src="{{ asset('bundles/miomio/images/banderas/england.gif') }}"/>
+			<img class="bandera" src="{{ asset('bundles/miomio/images/banderas/germany.gif') }}"/>
+</div>
+{% endblock %}
+
+{% block menu %} 
+
+			<div id="menufunciona">
+            <ul id="menu1">
+                <li><a href="{{ path('homepage') }}"><span class="ui-icon ui-icon-home wijmo-wijmenu-icon-left"></span><span class="wijmo-wijmenu-text"> Inicio</span></a></li>
+                <li><a><span class="ui-icon ui-icon-person wijmo-wijmenu-icon-left"></span><span class="wijmo-wijmenu-text">Clientes</span></a>
+                <ul style="font-size:9pt;">
+                        <li><a href="{{ path('usuario_new') }}">Nuevo Cliente</a></li>
+                        <li><a href="{{ path('usuario_editar') }}">Modificar Cliente</a></li>
+                        <li><a>Baja Cliente</a></li>
+                        <li><a>Cliente Preferente</a></li>
+                        <li><a href="{{ path('usuario') }}">Listar Clientes</a></li>
+                    </ul>
+                </li>
+                <li><a><span class="ui-icon ui-icon-bullet wijmo-wijmenu-icon-left"></span><span class="wijmo-wijmenu-text">Productos</span></a>
+                <ul style="font-size:9pt;">
+                        <li><a href="{{ path('producto_new') }}" >Nuevo producto</a></li>
+                        <li><a>Modificar producto</a></li>
+                        <li><a href="{{ path('producto') }}">Listar productos</a></li>
+                        <li><a href="{{ path('familia_new') }}" >Nueva familia</a></li>
+                        <li><a>Modificar producto</a></li>
+                        <li><a href="{{ path('familia') }}">Listar familias</a></li>
+                        <li><a href="{{ path('moverfamilia') }}">Mover familias</a></li>
+                    </ul>
+                </li>
+                
+                </li>
+                <li><a><span class="ui-icon ui-icon-bullet wijmo-wijmenu-icon-left"></span><span class="wijmo-wijmenu-text">Operaciones</span></a>
+                <ul style="font-size:9pt;">
+                        <li><a href="{{ path('newventa') }}">Nueva venta</a></li>
+                        <li><a href="{{ path('newreserva') }}">Nueva reserva</a></li>
+                        <li><a href="{{ path('newdevolucion') }}">Nueva devolución</a></li>
+                        <li><a href="{{ path('listaventa') }}">Listar ventas</a></li>
+                        <li><a href="{{ path('listareserva') }}">Listar reservas</a></li>
+                        <li><a href="{{ path('listadevolucion') }}">Listar devoluciones</a></li>
+                    </ul>
+                </li>
+                <li><a><span class="ui-icon ui-icon-bullet wijmo-wijmenu-icon-left"></span><span class="wijmo-wijmenu-text">Proveedores</span></a>
+                <ul style="font-size:9pt;">
+                        <li><a href="{{ path('proveedor_new') }}">Nuevo proveedor</a></li>
+                        <li><a href="{{ path('proveedor_editar') }}">Modificar proveedor</a></li>
+                        <li><a href="{{ path('proveedor') }}">Listar proveedores</a></li>
+                        <li><a href="{{ path('listaproductos') }}">Listar produtos</a></li>
+                        <li><a href="{{ path('homepage') }}">Listar pedidos</a></li>
+                    </ul>
+                </li>
+                
+                
+                <li><a><span class="ui-icon ui-icon-bullet wijmo-wijmenu-icon-left"></span><span class="wijmo-wijmenu-text">Pedidos</span></a>
+                    <ul style="font-size:9pt;">
+                        <li><a href="{{ path('newpedido') }}">Nuevo pedido</a></li>
+                        <li><a>Eliminar pedido</a></li>
+                        <li><a  href="{{ path('listapedido') }}">Lista de pedidos</a></li>
+                    </ul>
+                </li>
+
+                <li><a><span class="ui-icon ui-icon-bullet wijmo-wijmenu-icon-left"></span><span class="wijmo-wijmenu-text">Citas</span></a>
+                  <ul style="font-size:9pt;">
+                        <li><a href="{{ path('gestionfestivo') }}">Gestionar festivos</a></li>
+                        <li><a href="{{ path('newcita') }}">Gestionar citas</a></li>
+                    </ul>
+                </li>
+
+					{% if is_granted('ROLE_A') %}                
+                 <li><a><span class="ui-icon ui-icon-wrench wijmo-wijmenu-icon-left"></span><span class="wijmo-wijmenu-text">Administracion</span></a>
+                    <ul style="font-size:9pt;">
+                        <li><a href="{{ path('empleado_new') }}">Nuevo empleado</a></li>
+                        <li><a href="{{ path('empleado') }}">Empleados</a></li>
+                        <li><a href="{{ path('conexiones') }}">Conexiones</a></li>
+                        <li><a href="{{ path('cambios') }}">Cambios</a></li>
+                        <li><a>Modificar producto</a></li>
+                    </ul>
+                </li>
+                {% endif %} 
+                <li><a href="{{ path('graficas') }}"><span class="ui-icon ui-icon-arrowrefresh-1-s wijmo-wijmenu-icon-left"></span><span class="wijmo-wijmenu-text">Estadísticas</span></a></li>
+                <li><a><span class="ui-icon ui-icon-person wijmo-wijmenu-icon-left"></span><span id="chivatoempleado" class="wijmo-wijmenu-text">{{ app.user.username | capitalize }}</span></a>
+                	 <ul style="font-size:9pt;">
+                        <li><a href="{{ path('empleado_edit',{'id': app.user.id}) }}">Ver empleado</a></li>
+                        <li><a href="{{ path('graficasemp')}}">Estadísticas</a></li>
+                        <li><a href="{{ path('homepage') }}">Información</a></li>
+                    </ul>
+                </li>
+
+                <li><a><span class="ui-icon ui-icon-wrench wijmo-wijmenu-icon-left"></span><span class="wijmo-wijmenu-text">Temas</span></a>
+                	<ul style="font-size:9pt;">
+				<li><a class="tema" href="#" title="Arctic" rel="http://cdn.wijmo.com/themes/arctic/jquery-wijmo.css"><img src="{{ asset('bundles/miomio/images/imagenes_temas/arctic.png') }}" alt="Arctic"> <span class="theme-smalltitle">Arctic</span> </a></li>
+				<li><a class="tema" href="#" title="Midnight" rel="http://cdn.wijmo.com/themes/midnight/jquery-wijmo.css"><img src="{{ asset('bundles/miomio/images/imagenes_temas/midnight.png') }}" alt="Midnight"> <span class="theme-smalltitle">Midnight</span> </a></li>
+				<li><a class="tema" href="#" title="Aristo" rel="http://cdn.wijmo.com/themes/aristo/jquery-wijmo.css">
+    			<img src="{{ asset('bundles/miomio/images/imagenes_temas/aristo.png') }}" alt="Aristo">
+    			<span class="theme-smalltitle">Aristo</span> </a></li>
+				<li><a class="tema" href="#" title="Rocket" rel="http://cdn.wijmo.com/themes/rocket/jquery-wijmo.css">
+    			<img src="{{ asset('bundles/miomio/images/imagenes_temas/rocket.png') }}" alt="Rocket">
+    			<span class="theme-smalltitle">Rocket</span> </a></li>
+				<li><a class="tema" href="#" title="Cobalt" rel="http://cdn.wijmo.com/themes/cobalt/jquery-wijmo.css">
+    			<img src="{{ asset('bundles/miomio/images/imagenes_temas/cobalt.png') }}" alt="Cobalt">
+    			<span class="theme-smalltitle">Cobalt</span> </a></li>
+				<li><a class="tema" href="#" title="Sterling" rel="http://cdn.wijmo.com/themes/sterling/jquery-wijmo.css">
+    			<img src="{{ asset('bundles/miomio/images/imagenes_temas/sterling.png') }}" alt="Sterling">
+    			<span class="theme-smalltitle">Sterling</span></a></li>
+    				</ul>
+                </li>
+                <li><a href="{{ path('logout') }}"><span class="ui-icon ui-icon-power wijmo-wijmenu-icon-left"></span><span class="wijmo-wijmenu-text">Salir</span>
+                </a></li>
+            </ul>
+            </div>
+ {% endblock %}
+
+<div id="contenido1">
+ {% block body %}
+ {% endblock %}
+</div>
+
+<div id="footer1">
+<p>Herramienta desarrollada por <a style="cursor:pointer;" id="contacto">Jose Angel Parada Jiménez</a> para Optinet</p>
+</div>
+
+<div id="calendardialog" title="Seleccione:">
+  <div>
+    <form action="" method="post">
+      <fieldset>
+      <legend align="left">Formulario para nuevo evento:</legend>
+        <p><label>Cliente:</label>
+        <input style="width :250px;" type="text" id="autocomplete_calendar" value=""/>
+        <input id="oculto" name="oculto" type="hidden" value="" /></p>
+
+        <p><label>Médico</label>
+        <input style="width :250px;" type="text" value=""/></p>
+        </fieldset>
+    </form>
+  </div>
+</div>
+
+<div id="calendardialogedit" title="Confirmación:">
+  <p>¿Esta seguro que desea borrar?</p>
+</div>
+
+<div id="festivos" title="Confirmación:">
+  <p>¿Esta seguro que desea guardar?</p>
+</div>
+
+<div id="borrarfestivo" title="Confirmación:">
+  <p>¿Esta seguro que desea borrar?</p>
+</div>
+
+<div id="confirmar" title="Confirmación">
+	<p>¿Esta seguro que desea guardar?</p>
+</div>
+
+<div id="confirmardevolver" title="Confirmación">
+	<p>¿Esta seguro que desea guardar?</p>
+</div>
+
+<div id="confirmar1" title="Confirmación">
+	<p>¿Esta seguro que desea guardar cambios?</p>
+</div>
+
+<div id="confirmar2" title="Confirmación">
+	<p>¿Esta seguro que desea guardar cambios?</p>
+</div>
+
+<div id="confirmar3" title="Confirmación">
+	<p>¿Esta seguro que desea guardar cambios?</p>
+</div>
+<div id="confirmar5" title="Confirmación">
+	<p>¿Esta seguro que desea guardar cambios?</p>
+</div>
+<div id="confirmar6" title="Confirmación">
+	<p>¿Esta seguro que desea guardar cambios?</p>
+</div>
+<div id="confirmar7" title="Confirmación">
+	<p>¿Esta seguro que desea guardar cambios?</p>
+</div>
+<div id="confirmar8" title="Confirmación">
+	<p>¿Esta seguro que desea guardar cambios?</p>
+</div>
+<div id="confirmar4" title="Confirmación">
+	<p>¿Esta seguro que desea guardar cambios?</p>
+</div>
+<div id="confirmar10" title="Confirmación">
+	<p>¿Esta seguro que desea guardar cambios?</p>
+</div>
+<div id="confirmar13" title="Confirmación">
+	<p>¿Esta seguro que desea guardar cambios?</p>
+</div>
+<div id="confirmar14" title="Confirmación">
+	<p>¿Esta seguro que desea guardar cambios?</p>
+</div>
+<div id="confirmar15" title="Confirmación">
+	<p>¿Esta seguro que desea guardar cambios?</p>
+</div>
+<div id="confirmar16" title="Confirmación">
+	<p>¿Esta seguro que desea guardar cambios?</p>
+</div>
+<div id="confirmar17" title="Confirmación">
+	<p>¿Esta seguro que desea guardar cambios?</p>
+</div>
+<div id="confirmar11" title="Confirmación">
+	<p>¿Esta seguro que desea guardar cambios?</p>
+</div>
+<div id="confirmar21" title="Confirmación">
+	<p>¿Esta seguro que desea guardar cambios?</p>
+</div>
+<div id="confirmar22" title="Confirmación">
+	<p>¿Esta seguro que desea guardar cambios?</p>
+</div>
+<div id="confirmar23" title="Confirmación">
+  <p>¿Esta seguro que desea guardar cambios?</p>
+</div>
+
+<div id="error" title="Error">
+	<p>La cantidad introducida es incorrecta</p>
+</div>
+
+<div id="ok" title="Confirmación">
+	<p>Se han realizado los cambios correctamente.</p>
+</div>
+
+<div id="mensajecontacto" title="Contacto">
+	<div id="contactooo">
+		<form action="" method="post">
+			<fieldset>
+			<legend align="left">Formulario contacto:</legend>
+    		<p><label>Email:</label>
+    		<input style="width :250px;" type="text" id="email" value=""/></p>
+
+    		<label>Mensaje:</label>
+    		<textarea  style="width :250px;height:250px;" id="mensaje">Hola </textarea>
+    		</fieldset>
+		</form>
+	</div>
+</div>
+
+	</body>
+</html>

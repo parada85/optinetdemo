@@ -1,0 +1,89 @@
+{# src/Acme/BlogBundle/Resources/views/Blog/index.html.twig #} 
+
+{% extends 'miomioBundle:Default:index.html.twig' %}
+
+{% block title %}{% trans %}Calendario arqueos{% endtrans %}{% endblock %}
+
+{% block body %}
+<div id="gestionarqueo">
+<div id="tituloarqueo">{% trans %}Calendario arqueos{% endtrans %}:</div>
+
+ <p class="colores"> {% trans %}Seleccione un empleado para ver sus arqueos {% endtrans %}:
+ <select class="lista" id="calendarioemparqueo">
+ 	<option value="0">{% trans %}Todos{% endtrans %}</option>
+ 	{% for empleado in empleados %}
+   <option value="{{empleado.id}}">{{empleado.nombre}}</option>
+   {% endfor %}
+ </select>
+</p>
+<div class="boton" id="mostrartabla1">{% trans %}Mostrar tabla{% endtrans %}</div>
+ <div id='calendarioarqueo'></div>
+</div>
+
+ <div id="tabladetalle" title="{% trans %}Detalle{% endtrans %}">
+
+ <div id="tablaarqueos">
+<div id="botonesbuscar"> 
+    <div id="mostraremparqueo"></div>
+    <div id="estadoarqueo"></div>
+    <div id="datepicker1"></div>
+</div>
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="tablalistaarqueo">
+  <thead>
+    <tr>
+	   <th class="th">{% trans %}Número{% endtrans %}</th>
+   	 <th>{% trans %}Fecha{% endtrans %}</th>
+   	 <th>{% trans %}Hora{% endtrans %}</th>
+   	 <th>{% trans %}Efectivo{% endtrans %}</th>
+		<th>{% trans %}Efectivo contado{% endtrans %}</th>
+    <th>{% trans %}Dif{% endtrans %}</th>
+   	 <th>{% trans %}Boletas{% endtrans %}</th>
+     <th>{% trans %}Boletas contadas{% endtrans %}</th>
+     <th>{% trans %}Dif{% endtrans %}</th>
+      <th>{% trans %}Empleado{% endtrans %}</th>
+      <th>{% trans %}Estado{% endtrans %}</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    {% for arqueo in arqueos %}
+      <tr>
+              <td>{{ arqueo.id }}</td>
+              <td>{{ arqueo.fechaarqueo | date("d/m/Y", "Europe/Paris")  }}</td>
+              <td>{{ arqueo.fechaarqueo | date("H:i:s", "Europe/Paris")  }}</td>
+              <td>{{ arqueo.efectivo }} €</td>
+              <td>{{ arqueo.efectivocont }} €</td>
+              <td>{{ "%.2f" | format(arqueo.efectivocont -  arqueo.efectivo) }} € </td>
+              <td>{{ arqueo.boletas }}</td>
+              <td>{{ arqueo.boletascont }}</td>
+              <td>{{ arqueo.boletascont - arqueo.boletas }}</td>
+              <td>{{ arqueo.empleado.username }}</td>
+              {% if arqueo.estado %} 
+              <td>{%trans%}Confirmado{%endtrans%}</td>
+              {% else %}
+               <td>{%trans%}No confirmado{%endtrans%}</td>
+              {% endif %}
+  		</tr>
+  {% endfor %}
+ </tbody>
+ 
+ <tfoot>
+		 <tr>
+     <th>{% trans %}Número{% endtrans %}</th>
+     <th>{% trans %}Fecha{% endtrans %}</th>
+     <th>{% trans %}Hora{% endtrans %}</th>
+     <th>{% trans %}Efectivo{% endtrans %}</th>
+    <th>{% trans %}Efectivo contado{% endtrans %}</th>
+    <th>{% trans %}Dif{% endtrans %}</th>
+     <th>{% trans %}Boletas{% endtrans %}</th>
+     <th>{% trans %}Boletas contadas{% endtrans %}</th>
+     <th>{% trans %}Dif{% endtrans %}</th>
+     <th>{% trans %}Empleado{% endtrans %}</th>
+     <th>{% trans %}Estado{% endtrans %}</th>
+    </tr>
+	</tfoot>
+	
+ </table>
+</div>
+</div>
+ {% endblock %}

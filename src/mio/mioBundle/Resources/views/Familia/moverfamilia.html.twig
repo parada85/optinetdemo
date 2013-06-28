@@ -1,0 +1,32 @@
+{# src/Acme/BlogBundle/Resources/views/Blog/index.html.twig #} 
+
+{% extends 'miomioBundle:Default:index.html.twig' %}
+{% block title %}{% trans %}Mover productos{% endtrans %}{% endblock %}
+
+{% block body %}
+ <h3>{% trans %}Mover productos{% endtrans %}:</h3>
+ <div id="familia1">
+ <p>{% trans %}La familia tiene{% endtrans %} <span id="contarproductofam1"> 0 </span> {% trans %}producto/s{% endtrans %}.</p>
+ <select class="lista" id="fam1">
+ {% for familia in familias %}
+ 	<option value="{{familia.id}}">{{familia.nombre}}</option>
+	{% endfor %}
+	<option value="0">{%trans%}No tiene{%endtrans%}</option>
+</select>
+<div id="productos1">
+<div id="sortable1" class="connectedSortable"></div>
+</div>
+</div>
+	
+<div id="familia2">
+	<p>{% trans %}La familia tiene{% endtrans %} <span id="contarproductofam2"> 0 </span> {% trans %}producto/s{% endtrans %}.</p>
+	<select class="lista" id="fam2">
+ 	{% for familia in familias %}
+ 		<option value="{{familia.id}}">{{familia.nombre}}</option>
+		{% endfor %}
+		<option value="0">{%trans%}No tiene{%endtrans%}</option>
+	</select>
+	<div id="productos2"> 
+		<div id="sortable2" class="connectedSortable"></div></div>
+</div>
+{% endblock %}

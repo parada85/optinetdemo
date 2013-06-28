@@ -1,0 +1,58 @@
+{% extends 'miomioBundle:Default:index.html.twig' %}
+
+{% block title %}
+{% trans %}Conexiones de los empleados{% endtrans %}
+{% endblock %}
+
+{% block body %}
+
+<h3 class="h3busquedalado">{% trans %}Conexiones de los empleados{% endtrans %}</h3>
+<form class="busqueda">
+<fieldset>
+<div class="botonesbuscar">
+ <div id="mostrarconexion"></div>
+ <div id="mostrarempconexion"></div>
+ <div id="datepicker"></div>
+</div>
+ </fieldset>
+</form>
+
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="tablalog">
+  <thead>
+    <tr>
+    <th class="th">{% trans %}Fecha{% endtrans %}</th>
+    <th>{% trans %}Usuario{% endtrans %}</th>
+   	<th>{% trans %}Empleado{% endtrans %}</th>
+    <th>{% trans %}fechaoculta{% endtrans %}</th>
+		<th>{% trans %}Tipo{% endtrans %}</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+  {% for log in logs %}
+
+    <tr>
+      <td>{{ log.fechalog  | date("d/m/Y H:i:s", "Europe/Paris") }} </td>
+      <td>{{ log.empleado.username | capitalize }}</td>
+      <td><a href="{{ path('empleado_show', { 'id': log.empleado.getId() }) }}">{{ log.empleado.getNombre() | capitalize }} {{ log.empleado.apellido1 | capitalize }} {{ log.empleado.apellido2 | capitalize }}</a></td>
+      <td>{{ log.fechalog  | date("d/m/Y", "Europe/Paris") }} </td>
+      <td>{{ log.tipo | trans}} </td>
+      </tr>
+
+  {% endfor %}
+ </tbody>
+ 
+ <tfoot>
+    <tr>
+    <th>{% trans %}Fecha{% endtrans %}</th>
+    <th>{% trans %}Usuario{% endtrans %}</th>
+    <th>{% trans %}Empleado{% endtrans %}</th>
+    <th>{% trans %}fechaoculta{% endtrans %}</th>
+    <th>{% trans %}Tipo{% endtrans %}</th>
+    </tr>
+	</tfoot>
+	
+ </table>
+ 
+ </div>
+{% endblock %}

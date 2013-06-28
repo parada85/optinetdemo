@@ -1,0 +1,209 @@
+{% extends 'miomioBundle:Default:index.html.twig' %}
+
+{% block title %}
+{% trans %}Cambios realizados por los empleados{% endtrans %}
+{% endblock %}
+
+{% block body %}
+
+<h3 class="h3busquedalado">{% trans %}Cambios{% endtrans %}:</h3>
+<form class="busqueda">
+<fieldset>
+<div class="botonesbuscar">
+  <div class="boton todoscambios">{%trans%}Todos{%endtrans%}</div>
+ <div id="cempleado1"></div>
+ <div id="cempleado"></div>
+ <div id="cempleado2"></div>
+ <div id="datepicker"></div>
+</div>
+ </fieldset>
+</form>
+
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="tablacambios">
+  <thead>
+    <tr>
+    <th>{% trans %}Fechaoculto{% endtrans %}</th>
+    <th class="th1">{% trans %}Fecha{% endtrans %}</th>
+    <th>{% trans %}Empleado{% endtrans %}</th>
+    <th>{% trans %}Entidad{% endtrans %}</th>
+    <th>{% trans %}Tipo{% endtrans %}</th>
+    <th>{% trans %}Info{% endtrans %}</th>
+    <th>{% trans %}Acciones{% endtrans %}</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+  {% for modificacion in modificaciones %}
+    <tr>
+      <td>{{ modificacion.fechamod  | date("d/m/Y", "Europe/Paris") }} </td>
+      <td>{{ modificacion.fechamod  | date("d/m/Y H:i:s", "Europe/Paris") }} </td>
+      {% if modificacion.empleado %}
+        {% if modificacion.empleado.role == 'ROLE_M' %}
+        <td><a href="{{ path('medico_show', { 'id': modificacion.empleado.getId() }) }}">{{ modificacion.empleado.username | capitalize }}</a></td>
+        {% else %}
+      <td><a href="{{ path('empleado_show', { 'id': modificacion.empleado.getId() }) }}">{{ modificacion.empleado.username | capitalize }}</a></td>
+      {% endif %}
+      {% else %}
+       <td>Fixtures</td>
+       {% endif %}
+      <td>{{ modificacion.entidad | trans}} </td>
+      <td>{{ modificacion.tipo | trans }} </td>
+      <td>{{ modificacion.info | trans }} </td>
+      {% if modificacion.entidad == 'Usuario' %}
+        {% if modificacion.tipo != 'Eliminación' %}
+        <td><a class="boton" href="{{ path('usuario_show', { 'id': modificacion.identificador }) }}">{% trans %}Ver{% endtrans %}</a></td>
+        {% else %} <td></td>
+        {% endif %} {% endif %}
+      {% if modificacion.entidad == 'Producto'  %}
+      {% if modificacion.tipo != 'Eliminación' %}
+        <td><a class="boton" href="{{ path('producto_show', { 'id': modificacion.identificador }) }}">{% trans %}Ver{% endtrans %}</a></td>
+        {% else %} <td></td>
+        {% endif %} {% endif %}
+      {% if modificacion.entidad == 'Proveedor'  %}
+      {% if modificacion.tipo != 'Eliminación' %}
+        <td><a class="boton" href="{{ path('proveedor_show', { 'id': modificacion.identificador }) }}">{% trans %}Ver{% endtrans %}</a></td>
+        {% else %} <td></td>
+        {% endif %}{% endif %}
+      {% if modificacion.entidad == 'Familia'  %}
+      {% if modificacion.tipo != 'Eliminación' %}
+        <td><a class="boton" href="{{ path('familia_show', { 'id': modificacion.identificador }) }}">{% trans %}Ver{% endtrans %}</a></td>
+        {% else %} <td></td>
+        {% endif %}{% endif %}
+      {% if modificacion.entidad == 'Venta'  %}
+        <td><a id="{{modificacion.identificador}}" class="botoncarro detalleventa">{% trans %}Detalle{% endtrans %}</a></td>
+        {% endif %}
+      {% if modificacion.entidad == 'Reserva'  %}
+        <td><a id="{{modificacion.identificador}}" class="botoncarro detallereserva">{% trans %}Detalle{% endtrans %}</a></td>
+        {% endif %}
+      {% if modificacion.entidad == 'Devolucion'  %}
+        <td><a id="{{modificacion.identificador}}" class="botoncarro detalledevolucion">{% trans %}Detalle{% endtrans %}</a></td>
+        {% endif %}
+      {% if modificacion.entidad == 'Cita'  %}
+       {% if modificacion.tipo != 'Eliminación' %}
+         <td><a class="boton" href="{{ path('cita_show', { 'id': modificacion.identificador }) }}">{% trans %}Ver{% endtrans %}</a></td>
+          {% else %} <td></td>
+        {% endif %}{% endif %}
+      {% if modificacion.entidad == 'Festivo'  %}
+        {% if modificacion.tipo != 'Eliminación' %}
+         <td><a class="boton" href="{{ path('festivo_show', { 'id': modificacion.identificador }) }}">{% trans %}Ver{% endtrans %}</a></td>
+          {% else %} <td></td>
+        {% endif %}{% endif %}
+      {% if modificacion.entidad == 'Pedido'  %}
+        <td><a id="{{modificacion.identificador}}" class="botoncarro detallepedido">{% trans %}Detalle{% endtrans %}</a></td>
+        {% endif %}
+      {% if modificacion.entidad == 'Empleado'  %}
+        <td><a class="boton" href="{{ path('empleado_show', { 'id': modificacion.identificador }) }}">{% trans %}Ver{% endtrans %}</a></td>
+        {% endif %}
+      {% if modificacion.entidad == 'Medico'  %}
+        <td><a class="boton" href="{{ path('medico_show', { 'id': modificacion.identificador }) }}">{% trans %}Ver{% endtrans %}</a></td>
+        {% endif %}
+      {% if modificacion.entidad == 'miomioBundleEntityProductoProxy'  %}
+        <td>{{ modificacion.identificador }}</td>
+        {% endif %}
+
+      </tr>
+
+  {% endfor %}
+ </tbody>
+ 
+ <tfoot>
+    <tr>
+    <th>{% trans %}Fechaoculto{% endtrans %}</th>
+    <th>{% trans %}Fecha{% endtrans %}</th>
+    <th>{% trans %}Empleado{% endtrans %}</th>
+    <th>{% trans %}Entidad{% endtrans %}</th>
+    <th>{% trans %}Tipo{% endtrans %}</th>
+    <th>{% trans %}Info{% endtrans %}</th>
+    <th>{% trans %}Acciones{% endtrans %}</th>
+    </tr>
+  </tfoot>
+  
+ </table>
+
+ <div id="detalles" title="{% trans %}Detalle{% endtrans %}">
+
+ <div class="divajax">
+ <p><span class="id ui-state-highlight ui-corner-all"></span><span class="id1"></span></p>
+ <table cellpadding="0" cellspacing="0" border="0" class="display" id="ajaxventa">
+ <thead>
+    <tr>
+      <th>{% trans %}Código{% endtrans %}</th>
+      <th>{% trans %}Descripción{% endtrans %}</th>
+     <th>{% trans %}Cantidad{% endtrans %}</th>
+     <th>{% trans %}Precio venta{% endtrans %}</th>
+     <th>{% trans %}Iva{% endtrans %}</th>
+     <th>{% trans %}Total{% endtrans %}</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+ </tbody>
+ 
+ </table>
+  
+  </div>
+
+   <div class="divajax2">
+ <p><span class="id ui-state-highlight ui-corner-all"></span><span class="id1"></span></p>
+ <table cellpadding="0" cellspacing="0" border="0" class="display" id="ajaxreserva">
+ <thead>
+    <tr>
+      <th>{% trans %}Código{% endtrans %}</th>
+      <th>{% trans %}Descripción{% endtrans %}</th>
+     <th>{% trans %}Cantidad{% endtrans %}</th>
+     <th>{% trans %}Precio venta{% endtrans %}</th>
+     <th>{% trans %}Iva{% endtrans %}</th>
+     <th>{% trans %}Total{% endtrans %}</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+ </tbody>
+
+ </table>
+  
+  </div>
+
+  <div class="divajax1">
+    <p><span class="id ui-state-highlight ui-corner-all"></span><span class="id1"></span></p>
+ <table cellpadding="0" cellspacing="0" border="0" class="display" id="listardevolucion">
+ <thead>
+    <tr>
+      <th>{% trans %}Código{% endtrans %}</th>
+      <th>{% trans %}Descripción{% endtrans %}</th>
+     <th>{% trans %}Cantidad{% endtrans %}</th>
+     <th>{% trans %}Estado{% endtrans %}</th>
+     <th>{% trans %}Precio venta{% endtrans %}</th>
+     <th>{% trans %}Iva{% endtrans %}</th>
+     <th>{% trans %}Total{% endtrans %}</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+ </tbody>
+ 
+ </table>
+  
+  </div>
+  <div class="divajaxpedido">
+  <p><span class="id ui-state-highlight ui-corner-all"></span><span class="id1"></span></p>
+ <table cellpadding="0" cellspacing="0" border="0" class="display" id="ajaxpedido">
+ <thead>
+    <tr>
+      <th>{% trans %}Id producto{% endtrans %}</th>
+      <th>{% trans %}Descripción{% endtrans %}</th>
+     <th>{% trans %}Cantidad{% endtrans %}</th>
+     <th>{% trans %}Precio compra{% endtrans %}</th>
+     <th>{% trans %}Iva{% endtrans %}</th>
+     <th>{% trans %}Total{% endtrans %}</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+ </tbody>
+ 
+ </table>
+  
+  </div>
+</div>
+{% endblock %}

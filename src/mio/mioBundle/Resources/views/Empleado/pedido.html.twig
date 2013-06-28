@@ -1,0 +1,104 @@
+{% extends 'miomioBundle:Default:index.html.twig' %}
+
+{% block title %}
+Nuevo Pedido al proveedor: {{proveedor.nombre|capitalize}}
+{% endblock %}
+
+{% block body %}
+
+<p>{% trans %}Nuevo pedido{% endtrans %}<span id="chivatoidproveedor">{{proveedor.id}} </span> {{proveedor.nombre|capitalize}}</p>
+
+<div id="titulo">{% trans %}Listar productos{% endtrans %}:</div>
+
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="tablapedido">
+  <thead>
+    <tr>
+	  <th>{% trans %}Código{% endtrans %}</th>
+   	<th>{% trans %}Descripción{% endtrans %}</th>
+   	<th>{% trans %}Stock{% endtrans %}</th>
+    <th>{% trans %}Reservado{% endtrans %}</th>
+    <th>{% trans %}Apartado{% endtrans %}</th>
+		<th>{% trans %}Precio venta{% endtrans %}</th>
+		<th>{% trans %}Precio compra{% endtrans %}</th>
+		<th>{% trans %}Cantidad{% endtrans %}</th>
+
+    </tr>
+  </thead>
+  
+  <tbody>
+  {% for producto in productos %}
+
+    <tr>
+      <td>{{ producto.id }}</td>
+      <td>{{ producto.descripcion|capitalize }}</td>
+      {% if producto.stock == 0 or producto.stock < 10 %}
+          <td class="tdstock">{{ producto.stock }} {% trans %}unidad/es{% endtrans %}</td>
+      {% else %}
+          <td>{{ producto.stock }} {% trans %}unidad/es{% endtrans %}</td>
+      {% endif %}
+      {% if producto.reservado > 0 %}
+        <td class="tdreservado">{{ producto.reservado }} {% trans %}unidad/es{% endtrans %}</td>
+      {% else %}
+        <td>{{ producto.reservado }} {% trans %}unidad/es{% endtrans %}</td>
+      {% endif %}
+      <td>{{ producto.apartado }} {% trans %}unidad/es{% endtrans %}</td>
+      <td>{{ producto.pventa }} €</td>
+      <td>{{ producto.pcompra }} €</td>
+      <td><input type="text" id="cantidadpedido"/> <div class="botoncarro" id="añadirapedido">{% trans %}Añadir{% endtrans %}</div></td>
+      </tr>
+
+  {% endfor %}
+ </tbody>
+ 
+ <tfoot>
+		 <tr>
+    <th>{% trans %}Código{% endtrans %}</th>
+    <th>{% trans %}Descripción{% endtrans %}</th>
+    <th>{% trans %}Stock{% endtrans %}</th>
+    <th>{% trans %}Reservado{% endtrans %}</th>
+    <th>{% trans %}Apartado{% endtrans %}</th>
+    <th>{% trans %}Precio venta{% endtrans %}</th>
+    <th>{% trans %}Precio compra{% endtrans %}</th>
+    <th>{% trans %}Cantidad{% endtrans %}</th>
+    </tr>
+	</tfoot>
+	
+ </table>
+
+<div class="prueba"> 
+<h3>{% trans %}Productos insertados en el pedido{% endtrans %}:</h3>
+
+ <table cellpadding="0" cellspacing="0" border="0" class="display" id="tabla4">
+  <thead>
+    <tr>
+	  <th>{% trans %}Identificador{% endtrans %}</th>
+   	<th>{% trans %}Descripción{% endtrans %}</th>
+		<th>{% trans %}Cantidad{% endtrans %}</th>
+		<th>{% trans %}Precio unidad{% endtrans %}</th>
+		<th>{% trans %}Precio total{% endtrans %}</th>
+		<th>{% trans %}Modificar{% endtrans %}</th>
+
+    </tr>
+  </thead>
+  
+  <tbody id="body">
+
+ </tbody>
+	
+ </table>
+
+<div id="divtotalventa">
+
+<h3>{% trans %}El total del pedido son{% endtrans %}: <span id="totalventa">0</span> €.</h3>
+
+</div>
+<div class="ventabotones">
+<div id="botonescrud">
+    <div class="contenedorcrud">
+    <div class="boton" id="guardarpedido">{% trans %}Guardar{% endtrans %}</div>
+  </div>
+</div>
+</div>
+</div>
+<img id="ajax-loader" src="{{ asset('bundles/miomio/images/ajax-loader.gif') }}"/>
+{% endblock %}

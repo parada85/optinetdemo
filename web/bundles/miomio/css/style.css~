@@ -1,0 +1,337 @@
+body{
+	font-size: 11pt;
+	height: 100%;
+	}
+	
+.ui-widget{
+	font-size:9pt !important;
+	}
+.unidades{
+	font-weight: bold;
+	width: 140px;
+}
+
+#mio_miobundle_usuariotype div{
+	
+	width: 500px;
+	float:right;
+	margin-right: 220px;
+}
+
+#mio_miobundle_productotype div{
+	
+	width: 500px;
+	float:right;
+	margin-right: 220px;
+}
+
+#mio_miobundle_empleadotype div{
+	
+	width: 500px;
+	float:right;
+	margin-right: 220px;	
+}
+
+#mio_miobundle_empleadotype_role +div{
+	width: 10px;
+}
+
+
+#mio_miobundle_proveedortype div{
+	width: 500px;
+	float:right;
+}
+
+#mio_miobundle_proveedortype{
+	margin-right: 300px;
+}
+
+#gempleado{
+	float:right;
+	margin-top: 100px;
+}
+#gproveedor{
+	
+	margin-left: 600px;
+	}
+
+#bmodificarproveedor, #beliminarproveedor{
+	
+	float:left;
+	margin-left: 300px;
+}
+
+
+#gproducto{
+	margin-left: 600px;
+	margin-top: 150px;
+}
+#gfamilia{
+margin-left: 300px;	
+	}
+
+#mio_miobundle_productotype_familia +div{
+	width: 10px;
+}
+
+#mio_miobundle_productotype_familia-button{
+width: 170px !important;
+}
+#mio_miobundle_productotype_familia-menu{
+	width: 170px !important;
+}
+
+.bandera{
+	float:left;
+	padding:10px;
+	cursor: pointer;	
+	
+	}
+
+
+#sortable1, #sortable2 { list-style-type: none; margin: 0; padding: 0 0 2.5em; float: left; margin-right: 10px;position: absolute;	width: 700px; height: 520px;}
+
+.gelou{
+margin-left: 20px;
+width: 200px;
+margin-bottom: 10px;
+	}
+	
+.fechas{
+	font-weight: bold;
+	width: 180px;
+}
+
+#productos1{
+	height: 20px;
+	width: 20px;
+	}
+
+#fam1-button{
+	font-weight: bold;
+	width: auto !important;
+	margin-left:300px;
+	margin-bottom:15px;
+}
+#fam2-button{
+	font-weight: bold;
+	width: auto !important;
+	margin-left:300px;
+	margin-bottom:15px;
+}
+
+#fam1-menu{
+	width: auto !important;
+}
+#fam2-menu{
+	width: auto !important;
+}
+
+#familia2{
+	width:700px;
+	height:600px;
+   border-style:groove;
+   float:left;
+}
+#familia1{
+	width:700px;
+	height:600px;
+	border-style:groove;
+	float:left;
+	margin-right: 100px;
+
+}
+#todo{
+		margin-left:300px;
+		width:900px;
+		border-style:groove;
+		position:absolute;
+		clear:both;
+}
+.ultimotd div:first-child{
+	float:left;
+}
+
+.tipo_user{
+	font-weight: bold;
+	width: 80px;
+}
+	
+#accordion {
+width: 1100px;
+margin-left: 100px;
+padding-bottom: 100px;
+
+	}
+
+#container,#container1, #container2, #container3, #container4{
+	width: 1000px;
+	height: 500px;
+	margin-left: 100px;
+	margin-top: 50px;
+}
+
+#tabs{
+	width: 1200px;
+	height: 600px;
+	margin-left: 100px;
+	margin-top: 50px;
+}
+
+#tabs ul{
+	margin-left: 200px;
+}
+
+.activo{
+	
+}
+
+#tablafamilia_wrapper{
+width: 900px;
+margin-left:300px;	
+	
+	}
+
+#logueo {
+    border: 5px none blue;
+    height: 200px;
+    margin-left: 400px;
+    width: 300px;
+    margin-bottom: 18px;
+    margin-top: 15px;
+}
+
+#logueo >form>fieldset>input{
+	margin-left: 16px;
+}
+
+#ingresar{
+	margin-left: 100px;
+}
+#gusuario{
+	position:relative;
+	margin-left: 687px;
+	margin-top: 70px;
+}
+
+#menufunciona >div{
+width: 95%;
+margin-left: 2%;
+}
+
+ul{
+
+float:right;	
+position:absolute;
+	}
+
+#volver{
+margin-left: 300px;
+}
+
+.formulario >div > div{
+background-color: #DFDFDF;
+margin-left: 40px;
+width: 450px;
+height:30px;
+margin-bottom: 35px;
+padding-left: 20px;
+padding-top: 9px;
+padding-right: 20px;
+	}
+	
+.formulario > div > div > input{
+	width: 300px;
+	text-align: center;
+}
+.formulario > div > div > select{
+	margin-left: 80px;
+}
+
+#header1{
+margin-top: 10px;
+margin-left:2%;
+height: 100px;
+border: 1px solid #ff6c19;
+width:95%;
+background-image:url(7lqzSL.png);
+background-repeat:repeat-x; 
+}
+
+#wijmenu1{
+	display: none;
+	}
+
+#logo{
+	margin-bottom: 40px;
+	margin-left: 150px;
+	width: 300px;
+	height: 100px;
+}
+
+#header1 > p{
+float:right;
+margin-top: 30px;
+font-size: 15pt;
+margin-right: 50px;
+text-decoration: underline;
+text-transform: capitalize;
+	}
+	
+#titulo
+{
+margin-top:30px;
+font-size:20pt;
+}
+
+#ca{
+width: 70px;
+	}
+
+#guardar{
+
+margin-left: 500px;	
+	
+	}
+	
+#añadir{
+	margin-top: 5px;
+	}
+
+#contenido1{
+width:95%;
+padding-left:30px;
+padding-bottom: 30px;
+margin-left:10px;
+background-image:url(7lqzSL.png);
+background-repeat:repeat-x;
+overflow:auto;
+}
+
+#bienvenida1{
+	padding-bottom: 300px;
+}
+
+#bienvenida2{
+	margin-top: 100px;
+}
+
+#footer1{
+
+background-color:#DCDCDC;
+height: 50px;
+border: 1px solid #ff6c19;
+margin-top: 10px;
+margin-left:2%;
+width:95%;
+text-align: center;
+}
+
+#footer1 > p > a{
+	text-decoration: underline;
+}
+	
+.sf-menu{
+padding-top: 100px;	
+padding-left: 240px;
+}

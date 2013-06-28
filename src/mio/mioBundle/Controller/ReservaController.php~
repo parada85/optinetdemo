@@ -1,0 +1,29 @@
+<?php
+
+namespace mio\mioBundle\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use mio\mioBundle\Entity\Usuario;
+use mio\mioBundle\Entity\Operacion;
+use mio\mioBundle\Entity\Venta;
+use mio\mioBundle\Entity\Reserva;
+use mio\mioBundle\Entity\Lineasoperacion;
+
+class ReservaController extends Controller{
+	
+	public function newreservaAction()
+	{	
+		return ($this->render('miomioBundle:Reserva:newreserva.html.twig'));	
+	
+	}
+	
+	public function indexAction()
+	{	
+		$operaciones = $this->getDoctrine()->getRepository('miomioBundle:Operacion')->findAll();
+		return ($this->render('miomioBundle:Reserva:listareserva.html.twig',array('operaciones' => $operaciones)));	
+	
+	}
+
+}
+?>

@@ -1,0 +1,6 @@
+FileETag None
+Header unset ETag
+<FilesMatch "\.(js|css)$">
+Header set Cache-Control "max-age=290304000, public, must-revalidate"
+</FilesMatch>
+AddOutputFilterByType DEFLATE text/html text/css application/javascript

@@ -1,0 +1,21 @@
+<?php
+
+namespace mio\mioBundle\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use mio\mioBundle\Entity\Usuario;
+use mio\mioBundle\Entity\Operacion;
+use mio\mioBundle\Entity\Venta;
+use mio\mioBundle\Entity\Lineasoperacion;
+
+class DevolucionController extends Controller{
+	
+	public function newdevolucionAction()
+	{	
+		return ($this->render('miomioBundle:Devolucion:newdevolucion.html.twig'));	
+	
+	}
+
+}
+?>

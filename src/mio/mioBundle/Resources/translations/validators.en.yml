@@ -1,0 +1,7 @@
+El campo no puede estar vacío.: The field can not be empty.
+El campo debe tener sólo números.: The field should have only numbers.
+El email {{ value }} no es un email válido.: The email {{ value }} is not a valid email.
+El campo debe tener {{ limit }} números.: The field must have {{ limit }} numbers.
+Este valor ya se ha utilizado.: This value is already used.
+Este valor no es válido.: This value is not valid
+El dni es inválido.: The dni is not valid.

@@ -1,0 +1,31 @@
+{# src/Acme/BlogBundle/Resources/views/Blog/index.html.twig #} 
+
+{% extends 'miomioBundle:Default:index.html.twig' %}
+
+{% block title %}{% trans %}Gestión de festivos{% endtrans %}{% endblock %}
+
+{% block body %}
+ <div id="titulo">{% trans %}Gestión de festivos{% endtrans %}:</div>
+ <div class="boton" id="mostrartablafestivo">{% trans %}Mostrar tabla{% endtrans %}</div>
+ 
+ <div id='calendar1'></div>
+
+
+ <div id="tabladetalle" title="{% trans %}Tabla{% endtrans %}">
+ <div id="tablafestivosdiv">
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="tablafestivos">
+  <thead>
+    <tr>
+     <th class="th">{% trans %}Fecha{% endtrans %}</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+ </tbody>
+  
+ </table>
+
+</div>
+</div>
+
+{% endblock %}

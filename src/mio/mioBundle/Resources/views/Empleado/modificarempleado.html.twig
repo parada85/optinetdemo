@@ -1,0 +1,95 @@
+{% extends 'miomioBundle:Default:index.html.twig' %}
+
+{% block title %}
+{% trans %}Modificar empleado{% endtrans %}
+{% endblock %}
+
+{% block body %}
+
+<div class="notificaciones">
+<div id="titulo">{% trans %}Modificar empleado{% endtrans %}:</div>
+
+{% if app.session.hasFlash('errorempleado') %}
+    <div class="notificacionerror">
+        <span>{{ app.session.flash('errorempleado') }}</span>
+    </div>
+{% endif %}
+{% if app.session.hasFlash('confirmacion') %}
+    <div class="notificacion">
+        <span>{{ app.session.flash('confirmacion') }}</span>
+    </div>
+{% endif %}
+</div>
+
+<form  class="formulario" id="modificarempleado" action="{{ path('empleado_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+	<div id="mio_miobundle_empleadotype">
+    {{ form_row(edit_form.username) }}
+    {{ form_row(edit_form.dni) }}
+    {{ form_row(edit_form.nombre) }}
+    {{ form_row(edit_form.apellido1) }}
+    {{ form_row(edit_form.apellido2) }}
+    {{ form_row(edit_form.localidad) }}
+    {{ form_row(edit_form.provincia) }}
+    {{ form_row(edit_form.direccion) }}
+    {{ form_row(edit_form.email) }}
+    {{ form_row(edit_form.telefono) }}
+    {{ form_row(edit_form.movil) }}
+    {{ form_row(edit_form.fechaalta)}}
+    {% if is_granted('ROLE_A') %}
+        {% if entity.id == app.user.id %}
+         {{ form_row(edit_form.password) }}
+            <div class="empoculto"> 
+                {{ form_row(edit_form.activo) }}
+                {{ form_row(edit_form.generar) }}
+            </div>
+        {% else %}
+        {{ form_row(edit_form.generar) }}
+        {{ form_row(edit_form.activo) }}
+		<div class="empoculto">
+            {{ form_row(edit_form.password) }}
+    	</div>
+        {% endif %}
+ 	{% else %}
+         {{ form_row(edit_form.password) }}
+        <div class="empoculto">
+        {{ form_row(edit_form.generar) }}
+        {{ form_row(edit_form.activo) }}
+        </div>
+		{% endif %}
+        {{ form_rest(edit_form) }}
+
+    </div>
+</form>
+	<div class="botonescrud">
+        <div class="contenedorcrud">
+      <div class="botoneditar" id="bmodificarempleado"> {% trans %}Modificar{% endtrans %}</div>
+      {% if entity.permisos | length > 0 %}
+          <div id="{{entity.id}}" class="boton vervacaciones"> {% trans %}Permisos{% endtrans %}</div>
+      {% else %}
+          <div id="{{entity.id}}" class="botondesactivado vervacaciones"> {% trans %}Permisos{% endtrans %}</div>
+      {% endif %}
+      <div> <a class="botonvolver" href="javascript:history.go(-1)">{%trans%}Volver{%endtrans%}</a></div>
+     </div>
+ </div>
+
+
+<div id="dialogovacaciones" title="{% trans %}Permisos de{% endtrans %} {{entity.username}}">
+<h2 class="ui-state-highlight ui-corner-all">{% trans %}Permisos de{% endtrans %}: {{entity.nombre | capitalize}} {{entity.apellido1 | capitalize}} {{entity.apellido2 | capitalize}}</h2> 
+
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="tablapermisos1">
+  <thead>
+    <tr>
+     <th class="th">{% trans %}Tipo{% endtrans %}</th>
+     <th>{% trans %}Realizada{% endtrans %}</th>
+     <th>{% trans %}Inicio{% endtrans %}</th>
+     <th>{% trans %}Fin{% endtrans %}</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+ </tbody>
+  
+ </table>
+</div>
+
+{% endblock %}

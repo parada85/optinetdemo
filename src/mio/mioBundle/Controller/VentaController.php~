@@ -1,0 +1,59 @@
+<?php
+
+namespace mio\mioBundle\Controller;
+
+require_once('fpdf17/fpdf.php');
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use mio\mioBundle\Entity\Usuario;
+use mio\mioBundle\Entity\Operacion;
+use mio\mioBundle\Entity\Venta;
+use mio\mioBundle\Entity\Reserva;
+use mio\mioBundle\Entity\Lineasoperacion;
+
+class VentaController extends Controller{
+	
+	public function ventausuarioAction()
+	{	
+		return ($this->render('miomioBundle:Venta:ventausuario.html.twig'));	
+	
+	}
+	
+	public function newventaAction()
+	{	
+		return ($this->render('miomioBundle:Venta:newventa.html.twig'));	
+	
+	}
+	
+	public function indexAction()
+	{	
+		$ventas = $this->getDoctrine()->getRepository('miomioBundle:Venta')->findAll();
+		return ($this->render('miomioBundle:Venta:listaventa.html.twig',array('ventas' => $ventas)));	
+	
+	}
+	
+	
+	public function consultaventausuarioAction($id)
+	
+	{			
+		$cliente = $this->getDoctrine()->getRepository('miomioBundle:Usuario')->find($id);
+		
+		$ventas = $this->getDoctrine()->getRepository('miomioBundle:Venta')->findBy(array('cliente' => $cliente->getId()));
+		
+			return ($this->render('miomioBundle:Venta:consultaventausuario.html.twig',array('ventas' => $ventas, 'cliente' => $cliente)));	
+		}
+		
+	public function pdffacturaAction($id)
+	
+	{			
+		
+	$pdf = new FPDF();
+	$pdf->AddPage();
+	$pdf->SetFont('Arial','B',16);
+	$pdf->Cell(40,10,'¡Hola, Mundo!');
+	$pdf->Output();
+	
+	}
+	}
+?>

@@ -1,0 +1,90 @@
+{# src/Acme/BlogBundle/Resources/views/Blog/index.html.twig #} 
+
+{% extends 'miomioBundle:Default:index.html.twig' %}
+
+{% block title %}{% trans %}Gestión de citas{% endtrans %}{% endblock %}
+
+{% block body %}
+<div id="gestioncita">
+ <p id="tituloarqueo">{% trans %}Calendario citas{% endtrans %}:</p>
+<p class="colores"> {% trans %}Seleccione el médico para ver su calendario{% endtrans %}:
+ <select class="lista" id="select1">
+ 	<option value="0">{% trans %}Todos{% endtrans %}</option>
+ 	{% for medico in medicos %}
+   <option value="{{medico.id}}">{{medico.nombre}}</option>
+   {% endfor %}
+ </select>
+</p>
+<p class="colores">{% trans %}Médicos{% endtrans %}:</p>
+{% for medico in medicos %}
+<p class="colores" style="color:{{medico.color}};"> {{medico.nombre | capitalize}}</p>
+{% endfor %}
+<div class="boton" id="mostrartabla">{% trans %}Mostrar tabla{% endtrans %}</div>
+</div>
+ <div id='calendar'></div>
+
+<div id="dialogonuevacita" title="{% trans %}Selección para cita{% endtrans %}">
+<p> {% trans %}Seleccione el médico{% endtrans %}:
+ <select id="seleccionmedico">
+ </select>
+</p>
+
+<p id="fechadialogo" class="ui-state-highlight ui-corner-all">aqui se pondra la fecha</p> 
+
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="tablaseleccion">
+  <thead>
+    <tr>
+	   <th class="th">{% trans %}Id{% endtrans %}</th>
+   	 <th>{% trans %}Nombre{% endtrans %}</th>
+   	 <th>{% trans %}Apellido1{% endtrans %}</th>
+   	 <th>{% trans %}Apellido2{% endtrans %}</th>
+   	 <th>{% trans %}Dni{% endtrans %}</th>
+   	 <th>{% trans %}Acciones{% endtrans %}</th>
+
+    </tr>
+  </thead>
+  
+  <tbody>
+      {% for cliente in clientes %}
+
+    <tr>
+            <td>{{ cliente.id }}</td>
+            <td>{{ cliente.nombre |capitalize }}</td>
+            <td>{{ cliente.apellido1 |capitalize }}</td>
+            <td>{{ cliente.apellido2 |capitalize }}</td>
+            <td>{{ cliente.dni }}</td>
+          <td><div class="seleccionparacita boton">{% trans %}Seleccionar{% endtrans %}</div></td>	
+		</tr>
+  {% endfor %}
+ </tbody>
+	
+ </table>
+ <img id="ajax-loader" src="{{ asset('bundles/miomio/images/ajax-loader.gif') }}"/>
+</div>
+
+ <div id="tabladetalle" title="{% trans %}Tabla{% endtrans %}">
+<div id="tablacitasdiv">
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="tablacitas">
+  <thead>
+    <tr>
+     <th class="th">{% trans %}Dni{% endtrans %}</th>
+     <th>{% trans %}Nombre{% endtrans %}</th>
+     <th>{% trans %}Apellido1{% endtrans %}</th>
+     <th>{% trans %}Apellido2{% endtrans %}</th>
+     <th>{% trans %}Realizada{% endtrans %}</th>
+     <th>{% trans %}Médico{% endtrans %}</th>
+     <th>{% trans %}Fecha{% endtrans %}</th>
+     <th>{% trans %}Fecha cita{% endtrans %}</th>
+
+    </tr>
+  </thead>
+  
+  <tbody>
+ </tbody>
+  
+ </table>
+
+</div>
+</div>
+
+{% endblock %}

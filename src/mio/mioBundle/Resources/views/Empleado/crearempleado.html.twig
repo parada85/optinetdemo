@@ -1,0 +1,47 @@
+{% extends 'miomioBundle:Default:index.html.twig' %}
+
+{% block title %}
+{% trans %}Nuevo empleado{% endtrans %}
+{% endblock %}
+
+{% block body %}
+
+<div class="notificaciones">
+<div id="titulo">{% trans %}Nuevo empleado{% endtrans %}:</div>
+
+{% if app.session.hasFlash('errorempleado') %}
+    <div class="notificacionerror">
+        <span>{{ app.session.flash('errorempleado') }}</span>
+    </div>
+{% endif %}
+</div>
+<form class="formulario" id="nuevoempleado" action="{{ path('empleado_create') }}" method="post" {{ form_enctype(form) }}>
+	<div id="mio_miobundle_empleadotype">
+	{{ form_row(form.username) }}
+    {{ form_row(form.dni) }}
+	{{ form_row(form.nombre) }}
+	{{ form_row(form.apellido1) }}
+	{{ form_row(form.apellido2) }}
+	{{ form_row(form.localidad) }}
+	{{ form_row(form.provincia) }}
+	{{ form_row(form.direccion) }}
+	{{ form_row(form.email) }}
+	{{ form_row(form.telefono) }}
+	{{ form_row(form.movil) }}
+    {{ form_row(form.activo) }}
+	<div class="empoculto">
+	{{ form_row(form.generar) }}
+	{{ form_row(form.password) }}
+	{{ form_row(form.fechaalta)}}   
+    </div>
+	{{ form_rest(form) }}
+</div>
+</form>
+
+	<div class="botonescrud">
+		<div class="contenedorcrud">
+		<div class="botoncheck" id="gempleado">{% trans %}Crear{% endtrans %}</div>
+	</div>
+</div>
+
+{% endblock %}

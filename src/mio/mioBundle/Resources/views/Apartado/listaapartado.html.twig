@@ -1,0 +1,172 @@
+{% extends 'miomioBundle:Default:index.html.twig' %}
+
+{% block title %}
+{% trans %}Listar apartados{% endtrans %}
+{% endblock %}
+
+{% block productos %}
+
+<script type="text/javascript" language="javascript">
+$(document).ready(function () {
+
+    var totales = [];
+    $.each(listarapartado.fnGetData(), function(i, row) { totales.push(row[6]);});
+    max1 = Math.max.apply(null, totales);
+    min1 = Math.min.apply(null, totales);
+    
+        $("#slideroperaciones").slider({
+        range: true,
+        min: min1,
+        max: max1,
+        values: [ min1, max1],
+        slide: function( event, ui ) {
+            $( "#amountoperaciones" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] + " €.");
+        },
+        change: function( event, ui ) {
+            $('#listarapartado_range_from_6').val(ui.values[0]);
+            $('#listarapartado_range_to_6').val(ui.values[1]);
+            $('#listarapartado_range_from_6').keyup();
+            $('#listarapartado_range_to_6').keyup();
+        }
+    })
+
+        $( "#amountoperaciones" ).val($("#slideroperaciones").slider( "values", 0 ) + " - " + $("#slideroperaciones").slider( "values", 1 )+ " €." );
+
+    $('.restablecer').live('click', function () { 
+    $('#listarapartado_range_from_4').val("");
+    $('#listarapartado_range_to_4').val("");
+    listarapartado.fnFilter( '' );
+    $("#slideroperaciones" ).slider( "option", "values", [ min1, max1 ] );
+    $( "#amountoperaciones" ).val($("#slideroperaciones").slider( "values", 0 ) + " - " + $("#slideroperaciones").slider( "values", 1 )+ " €." );
+                })  
+});
+</script>
+{% endblock %}
+
+{% block body %}
+<h3 class="h3busquedalado">{% trans %}Listar apartados{% endtrans %}:</h3>
+
+<form class="busqueda">
+<fieldset>
+
+<div class="sliders">
+    <div id="slideroperaciones"></div>
+    <label for="amountoperaciones">{% trans %}Total{% endtrans %}:</label>
+    <input type="text" id="amountoperaciones" style="border: 0; color: #f6931f; font-weight: bold;" />
+ </div>
+ <div class="restablecer boton">{% trans %}Restaurar{% endtrans %}</div>
+<div class="botonesbuscar"> 
+    <div class="mostrarempleado"></div>
+    <div class="mostrarpago"></div>
+    <div id="datepicker"></div>
+</div>
+ </fieldset>
+</form>
+ <p class="numeros1"></p>
+<div class="noti">
+  {% if app.session.hasFlash('confirmacion') %}
+    <div class="notificacion">
+        <span>{{ app.session.flash('confirmacion') }}</span>
+    </div>
+</div>
+{% endif %}
+
+<table cellpadding="0" cellspacing="0" border="0" class="display" id ="listarapartado">
+  <thead>
+    <tr>
+     <th class="th">{% trans %}Número{% endtrans %}</th>
+     <th>{% trans %}Dni{% endtrans %}</th>
+     <th>{% trans %}Cliente{% endtrans %}</th>
+     <th>{% trans %}Fecha{% endtrans %}</th>
+     <th>fechaoculto</th>
+     <th>{% trans %}Total{% endtrans %}</th>
+     <th>totaloculto</th>
+     <th>{% trans %}Adelanto{% endtrans %}</th>
+     <th>{% trans %}Pago{% endtrans %}</th>
+     <th>{% trans %}Realizada{% endtrans %}</th>
+     <th>{% trans %}Acciones{% endtrans %}</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+      {% for reserva in reservas %}
+    <tr>
+            <td>{{ reserva.id }}</td>
+            <td>{{ reserva.cliente.getDni() }}</td>
+            <td><a href="{{ path('usuario_show', { 'id': reserva.cliente.getId() }) }}">{{ reserva.cliente.getNombre() | capitalize }} {{ reserva.cliente.apellido1 | capitalize }}</a></td>
+            <td>{{ reserva.fechaoper | date("d/m/Y H:i:s", "Europe/Paris") }}</td>
+            <td>{{ reserva.fechaoper | date("d/m/Y", "Europe/Paris") }}</td>
+            <td>{{ reserva.total }} €</td>
+            <td>{{ reserva.total }}</td>
+            <td>{{ reserva.adelanto }} €</td>
+            <td>{{ reserva.pago | capitalize | trans }}</td>
+            <td>{{ reserva.empleado.username | capitalize }}</td>
+            <td><div class="detallereserva botoncarro">{% trans %}Detalle{% endtrans %}</div>
+              {% if reserva.venta == null %}
+            <div class="boton convertiraventa">{% trans %}Convertir a venta{% endtrans %}</div> </td>
+            {% else %}
+            <div title="{%trans%}Venta número{%endtrans%} {{reserva.venta.id}} "class="botondesactivado convertiraventa">{% trans %}Convertir a venta{% endtrans %}</div> </td>
+            {% endif %}
+		</tr>
+  {% endfor %}
+ </tbody>
+ 
+ <tfoot>
+		 <tr>
+     <th class="th">{% trans %}Número{% endtrans %}</th>
+     <th>{% trans %}Dni{% endtrans %}</th>
+     <th>{% trans %}Cliente{% endtrans %}</th>
+     <th>{% trans %}Fecha{% endtrans %}</th>
+     <th>fechaoculto</th>
+     <th>{% trans %}Total{% endtrans %}</th>
+     <th>totaloculto</th>
+     <th>{% trans %}Adelanto{% endtrans %}</th>
+     <th>{% trans %}Pago{% endtrans %}</th>
+     <th>{% trans %}Realizada{% endtrans %}</th>
+     <th>{% trans %}Acciones{% endtrans %}</th>
+    </tr>
+	</tfoot>
+	
+ </table>
+
+  <div id="detalles" title="{% trans %}Detalle{% endtrans %}">
+ <div class="divajax2">
+  <p><span class="id ui-state-highlight ui-corner-all"></span> <span class="id1"></span></p>
+ <table cellpadding="0" cellspacing="0" border="0" class="display" id="ajaxreserva">
+ <thead>
+    <tr>
+      <th>{% trans %}Código{% endtrans %}</th>
+      <th>{% trans %}Descripción{% endtrans %}</th>
+     <th>{% trans %}Cantidad{% endtrans %}</th>
+     <th>{% trans %}Precio venta{% endtrans %}</th>
+     <th>{% trans %}Iva{% endtrans %}</th>
+     <th>{% trans %}Total{% endtrans %}</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+ </tbody>
+
+ </table>
+  
+  </div>
+  </div>
+
+  <div id="dialogoconvertirventa" title="Convertir a venta">
+   <p>{%trans%}Se va a convertir el apartado{%endtrans%} <span id="idreserva"> </span> {%trans%}a una venta{%endtrans%}.</p> 
+   <p>{%trans%}Quedan por pagar{%endtrans%} <span id="totaldialogo"> </span> €</p>
+<div class="ventabotones">
+    <div class="contenedor">
+<input id="preguntafacturareserva" type='checkbox'/><label for="preguntafacturareserva">{% trans %}Generar factura{% endtrans %}</label> 
+  <select class="lista" id="formapagoreserva">
+    <option value="efectivo">{% trans %}Efectivo{% endtrans %}</option>
+    <option value="tarjeta">{% trans %}Tarjeta{% endtrans %}</option>
+  </select>
+  <div class="entregado1">{%trans%}Entregado{%endtrans%}:<input type='text' /></div>
+</div>
+</div>
+<p class="ui-state-highlight ui-corner-all" id="msgconvertir">{%trans%}Debe devolver{%endtrans%} <span id="devolucioncliente"></span>€ {%trans%}al cliente{%endtrans%}.</p>
+</div>
+<img id="ajax-loader" src="{{ asset('bundles/miomio/images/ajax-loader.gif') }}"/>
+
+{% endblock %}

@@ -1,0 +1,740 @@
+
+miomioBundle:
+    resource: "@miomioBundle/Resources/config/routing.yml"
+    prefix:   /
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+# Internal routing configuration to handle ESI
+#_internal:
+#   resource: "@FrameworkBundle/Resources/config/routing/internal.xml"
+#   prefix:   /_internal
+    
+homepage:
+   pattern: /index
+   defaults: { _controller: miomioBundle:Default:index }
+   options:
+     expose: true
+
+graficasajax:
+   pattern: admin/graficas/{id}
+   defaults: { _controller: miomioBundle:Grafica:pintar }
+   options:
+        expose: true
+
+graficasajaxemp:
+   pattern: graficasajaxemp/{id}
+   defaults: { _controller: miomioBundle:Grafica:pintar1 }
+   options:
+        expose: true
+
+conexiones:
+   pattern: /admin/conexiones
+   defaults: { _controller: miomioBundle:Log:listarconexiones }
+
+cambios:
+   pattern: /admin/cambios/{id}
+   defaults: { _controller: miomioBundle:Modificacion:listarcambios }
+   options:
+        expose: true
+
+calendarioarqueos:
+   pattern: /admin/calendarioarqueos
+   defaults: { _controller: miomioBundle:Arqueo:calendarioarqueos }
+   options:
+        expose: true
+
+denegado:
+   pattern: /denegado
+   defaults: { _controller: miomioBundle:Security:denegado }
+
+noencontrada:
+   pattern: /noencontrada
+   defaults: { _controller: miomioBundle:Security:noencontrada }
+
+# CRUD PROVEDOR
+
+proveedor:
+   pattern: /proveedor
+   defaults: { _controller: miomioBundle:Proveedor:listarproveedores }   
+
+proveedor_show:
+   pattern: /{id}/proveedor_show
+   defaults: { _controller: miomioBundle:Proveedor:verproveedor }
+   
+proveedor_edit:
+   pattern: /{id}/proveedor_edit
+   defaults: { _controller: miomioBundle:Proveedor:modificarproveedor }
+   options:
+        expose: true
+   
+proveedor_new:
+   pattern: /proveedor_new
+   defaults: { _controller: miomioBundle:Proveedor:crearproveedor }
+   
+proveedor_create:
+   pattern: /proveedor_create
+   defaults: { _controller: miomioBundle:Proveedor:create}
+  
+proveedor_update:
+   pattern: /{id}/proveedor_update
+   defaults: { _controller: miomioBundle:Proveedor:update }
+   
+proveedor_delete:
+   pattern: /{id}/proveedor_delete
+   defaults: { _controller: miomioBundle:Proveedor:eliminarproveedor }
+
+#CRUD USUARIO
+   
+usuario:
+   pattern: /usuario
+   defaults: { _controller: miomioBundle:Usuario:listarclientes }
+   
+usuario_show:
+   pattern: /{id}/show
+   defaults: { _controller: miomioBundle:Usuario:vercliente }
+   options:
+      expose: true
+   
+usuario_edit:
+   pattern: /usuario/{id}/edit
+   defaults: { _controller: miomioBundle:Usuario:modificarcliente }
+   options:
+        expose: true
+   
+usuario_new:
+   pattern: /new
+   defaults: { _controller: miomioBundle:Usuario:crearcliente }
+
+usuario_create:
+   pattern: /create
+   defaults: { _controller: miomioBundle:Usuario:create } 
+   
+usuario_update:
+   pattern: /{id}/update
+   defaults: { _controller: miomioBundle:Usuario:update }
+   
+usuario_delete:
+   pattern: /{id}/delete
+   defaults: { _controller: miomioBundle:Usuario:eliminarcliente } 
+   
+#CRUD PRODUCTO
+   
+producto:
+   pattern: /producto
+   defaults: { _controller: miomioBundle:Producto:listarproductos }
+   
+producto_show:
+   pattern: /producto/{id}/show
+   defaults: { _controller: miomioBundle:Producto:verproducto }
+   
+producto_edit:
+   pattern: /producto/{id}/edit
+   defaults: { _controller: miomioBundle:Producto:modificarproducto }
+   options:
+      expose: true
+   
+producto_new:
+   pattern: /producto/new
+   defaults: { _controller: miomioBundle:Producto:crearproducto}
+
+producto_create:
+   pattern: /producto/create
+   defaults: { _controller: miomioBundle:Producto:create } 
+   
+producto_update:
+   pattern: /producto/{id}/update
+   defaults: { _controller: miomioBundle:Producto:update }
+   
+producto_delete:
+   pattern: /producto/{id}/delete
+   defaults: { _controller: miomioBundle:Producto:eliminarproducto }
+   
+#CRUD FAMILIA
+   
+familia:
+   pattern: /familia/familia
+   defaults: { _controller: miomioBundle:Familia:listarfamilias }
+   
+familia_show:
+   pattern: /familia/{id}/show
+   defaults: { _controller: miomioBundle:Familia:verfamilia }
+   
+familia_edit:
+   pattern: /familia/{id}/edit
+   defaults: { _controller: miomioBundle:Familia:modificarfamilia }
+   
+familia_new:
+   pattern: /familia/new
+   defaults: { _controller: miomioBundle:Familia:crearfamilia }
+
+familia_create:
+   pattern: /familia/create
+   defaults: { _controller: miomioBundle:Familia:create } 
+   
+familia_update:
+   pattern: /familia/{id}/update
+   defaults: { _controller: miomioBundle:Familia:update }
+   
+familia_delete:
+   pattern: /familia/{id}/delete
+   defaults: { _controller: miomioBundle:Familia:eliminarfamilia }
+   
+
+#CRUD CITA
+
+cita_show:
+   pattern: /cita/{id}/show
+   defaults: { _controller: miomioBundle:Cita:vercita }
+
+festivo_show:
+   pattern: /festivo/{id}/show
+   defaults: { _controller: miomioBundle:Cita:verfestivo }
+
+guardarfestivo:
+   pattern: /guardarfestivo
+   defaults: { _controller: miomioBundle:Cita:guardarfestivo }
+   options:
+        expose: true
+
+gestionfestivo:
+   pattern: /admin/gestionfestivo
+   defaults: { _controller: miomioBundle:Cita:gestionfestivo }
+
+gestionpermisos:
+   pattern: /admin/gestionpermisos
+   defaults: { _controller: miomioBundle:Empleado:gestionpermisos }
+
+newcita:
+   pattern: /newcita
+   defaults: { _controller: miomioBundle:Cita:newcita }
+   options:
+        expose: true
+
+guardarcita:
+   pattern: /guardarcita
+   defaults: { _controller: miomioBundle:Cita:guardarcita }
+   options:
+        expose: true
+
+modificarcita:
+   pattern: /modificarcita
+   defaults: { _controller: miomioBundle:Cita:modificarcita }
+   options:
+        expose: true
+
+guardarpermiso:
+   pattern: /guardarpermiso
+   defaults: { _controller: miomioBundle:Permiso:guardarpermiso }
+   options:
+        expose: true
+   
+borrarcita:
+  pattern: /borrarcita/{id}
+  defaults: { _controller: miomioBundle:Cita:borrarcita }
+  options:
+        expose: true
+
+borrarpermiso:
+  pattern: /borrarpermiso/{id}
+  defaults: { _controller: miomioBundle:Permiso:borrarpermiso }
+  options:
+        expose: true
+
+borrarfestivo:
+  pattern: /borrarfestivo/{id}
+  defaults: { _controller: miomioBundle:Cita:borrarfestivo }
+  options:
+        expose: true
+
+listarcitascalendario:
+   pattern: /listarcitascalendario/{id}
+   defaults: { _controller: miomioBundle:Cita:listarcitascalendario }
+   options:
+        expose: true
+
+listarpermisos:
+   pattern: /listarpermisos/{id}
+   defaults: { _controller: miomioBundle:Permiso:listarpermisos }
+   options:
+        expose: true
+
+listarcitas:
+   pattern: /listarcitas
+   defaults: { _controller: miomioBundle:Cita:listarcitas }
+   options:
+        expose: true
+
+listarfestivos:
+   pattern: /listarfestivos
+   defaults: { _controller: miomioBundle:Cita:listarfestivos }
+   options:
+        expose: true
+
+listarpermisoscalendario:
+   pattern: /listarpermisoscalendario
+   defaults: { _controller: miomioBundle:Permiso:listarpermisoscalendario }
+   options:
+        expose: true
+
+festivosajax:
+   pattern: /festivosajax
+   defaults: { _controller: miomioBundle:Cita:festivos }
+   options:
+        expose: true
+
+comprobarcita:
+   pattern: /comprobarcita
+   defaults: { _controller: miomioBundle:Cita:comprobarcita }
+   options:
+        expose: true
+
+comprobarpermiso:
+   pattern: /comprobarpermiso
+   defaults: { _controller: miomioBundle:Permiso:comprobarpermiso }
+   options:
+        expose: true
+
+comprobarfestivo:
+   pattern: /comprobarfestivo
+   defaults: { _controller: miomioBundle:Cita:comprobarfestivo }
+   options:
+        expose: true
+
+obtenerdatoscita:
+   pattern: /obtenerdatoscita
+   defaults: { _controller: miomioBundle:Cita:obtenerdatoscita }
+   options:
+        expose: true
+
+verclientecita:
+   pattern: /verclientecita
+   defaults: { _controller: miomioBundle:Cita:verclientecita }
+   options:
+        expose: true
+
+comprobarcitafestivo:
+   pattern: /comprobarcitafestivo
+   defaults: { _controller: miomioBundle:Cita:comprobarcitafestivo }
+   options:
+        expose: true
+        
+#CRUD EMPLEADO
+   
+empleado:
+   pattern: /admin/empleado
+   defaults: { _controller: miomioBundle:Empleado:listarempleados }
+   
+empleado_show:
+   pattern: /admin/{id}/show
+   defaults: { _controller: miomioBundle:Empleado:verempleado }
+   
+empleado_edit:
+   pattern: empleado/{id}/edit
+   defaults: { _controller: miomioBundle:Empleado:modificarempleado }
+   options:
+        expose: true
+   
+empleado_new:
+   pattern: /admin/new
+   defaults: { _controller: miomioBundle:Empleado:crearempleado }
+
+empleado_create:
+   pattern: /admin/create
+   defaults: { _controller: miomioBundle:Empleado:create } 
+   
+empleado_update:
+   pattern: /empleado/{id}/update
+   defaults: { _controller: miomioBundle:Empleado:update }
+   
+empleado_delete:
+   pattern: /admin/{id}/delete
+   defaults: { _controller: miomioBundle:Empleado:eliminarempleado } 
+   
+listaoperaciones:
+   pattern: /listaoperaciones
+   defaults: { _controller: miomioBundle:Operacion:index } 
+   options:
+     expose: true
+
+listaventa:
+   pattern: /listaventa
+   defaults: { _controller: miomioBundle:Venta:listarventas }
+   options:
+      expose: true
+   
+listadevolucion:
+   pattern: /listadevolucion
+   defaults: { _controller: miomioBundle:Devolucion:listardevoluciones } 
+   options:
+     expose: true
+   
+listareserva:
+   pattern: /listareserva
+   defaults: { _controller: miomioBundle:Reserva:listarreservas }
+   options:
+      expose: true
+
+listaapartado:
+   pattern: /listaapartado
+   defaults: { _controller: miomioBundle:Apartado:listarapartados }
+   options:
+      expose: true
+   
+listapedido:
+   pattern: /listarpedidos
+   defaults: { _controller: miomioBundle:Pedido:listarpedidos }
+   options:
+      expose: true
+
+pedidopdf:
+  pattern:  /pedidopdf/{id}
+  defaults: { _controller: miomioBundle:Pedido:generardocumentopedido, _format: pdf }
+  options:
+      expose: true
+
+reservapdf:
+  pattern:  /reservapdf/{id}
+  defaults: { _controller: miomioBundle:Reserva:generardocumentoreserva, _format: pdf }
+  options:
+      expose: true
+
+facturapdf:
+  pattern:  /facturapdf/{id}
+  defaults: { _controller: miomioBundle:Venta:generardocumentoventa, _format: pdf }
+  options:
+      expose: true
+
+documentodevolucionpdf:
+  pattern:  /documentodevolucionpdf/{id}
+  defaults: { _controller: miomioBundle:Devolucion:generardocumentodevolucion, _format: pdf }
+  options:
+      expose: true
+
+informepdf:
+  pattern:  /informepdf/{id}
+  defaults: { _controller: miomioBundle:Informe:generardocumentoinforme, _format: pdf }
+  options:
+      expose: true
+
+newventa:
+   pattern: /newventa
+   defaults: { _controller: miomioBundle:Venta:newventa }
+   
+newdevolucion:
+   pattern: /newdevolucion
+   defaults: { _controller: miomioBundle:Devolucion:newdevolucion }
+   
+newreserva:
+   pattern: /newreserva
+   defaults: { _controller: miomioBundle:Reserva:newreserva }
+
+newapartado:
+   pattern: /newapartado
+   defaults: { _controller: miomioBundle:Apartado:newapartado }
+
+newpedido:
+   pattern: /newpedido
+   defaults: { _controller: miomioBundle:Pedido:newpedido }
+
+nueva_venta:
+   pattern:  /venta/{id}
+   defaults: { _controller: miomioBundle:Usuario:venta }
+   options:
+        expose: true
+   
+nueva_devolucion:
+   pattern:  /devolucion/{id}
+   defaults: { _controller: miomioBundle:Usuario:devolucion }
+   options:
+        expose: true
+
+nuevo_pedido:
+   pattern:  /pedido/{id}
+   defaults: { _controller: miomioBundle:Empleado:pedido }
+   options:
+        expose: true
+
+nuevo_pedidou:
+   pattern:  /pedidou
+   defaults: { _controller: miomioBundle:Usuario:pedidou }
+   options:
+        expose: true
+   
+nueva_reserva:
+   pattern:  /reserva/{id}
+   defaults: { _controller: miomioBundle:Usuario:reserva }
+   options:
+        expose: true
+
+nuevo_apartado:
+   pattern:  /apartado/{id}
+   defaults: { _controller: miomioBundle:Usuario:apartado }
+   options:
+        expose: true
+   
+nueva_ventau:
+   pattern:  /ventau
+   defaults: { _controller: miomioBundle:Usuario:ventau}
+   options:
+        expose: true
+
+convertiru:
+   pattern:  /convertiru
+   defaults: { _controller: miomioBundle:Usuario:convertiru}
+   options:
+        expose: true
+
+nueva_devolucionu:
+   pattern:  /devolucionu
+   defaults: { _controller: miomioBundle:Usuario:devolucionu }
+   options:
+        expose: true
+
+nueva_reservau:
+   pattern:  /reservau
+   defaults: { _controller: miomioBundle:Usuario:reservau }
+   options:
+        expose: true
+
+formusuarios:
+   pattern: /nuevousuario
+   defaults: { _controller: miomioBundle:Usuario:registro }
+   
+modificar_usuario:
+   pattern:  /modificar/{id}
+   defaults: { _controller: miomioBundle:Usuario:modificar } 
+
+nuevaoperacion:
+   pattern: /nuevaoperacion
+   defaults: { _controller: miomioBundle:Operacion:nuevaoperacion }
+   
+login:
+    pattern:   /login
+    defaults:  { _controller: miomioBundle:Security:login}
+    options:
+      expose: true
+
+login_check:
+    pattern:   /login_check
+logout:
+    pattern:   /logout
+
+passolvidado:
+   pattern: /passolvidado
+   defaults: { _controller: miomioBundle:Security:passolvidado }
+   options:
+        expose: true
+
+enviarmailpass:
+   pattern: /enviarmailpass
+   defaults: { _controller: miomioBundle:Security:enviarmailpass }
+   options:
+        expose: true
+
+comprobarmail:
+   pattern: /comprobarmail/{clave}
+   defaults: { _controller: miomioBundle:Security:comprobarmail }
+
+nuevacontrasena:
+   pattern: /nuevacontrasena/{empleado}
+   defaults: { _controller: miomioBundle:Security:nuevacontrasena }
+
+confirmacion:
+   pattern: /confirmacion
+   defaults: { _controller: miomioBundle:Confirmacion:confirmacion }
+   
+contacto:
+   pattern: /contacto
+   defaults: { _controller: miomioBundle:Contacto:contacto }
+   options:
+        expose: true
+   
+recepcion:
+   pattern: /recepcion
+   defaults: { _controller: miomioBundle:Recepcion:recepcion }
+   options:
+        expose: true
+   
+listaproductoproveedor:
+   pattern: /productoproveedor
+   defaults: { _controller: miomioBundle:Proveedor:listaproductoproveedor }
+   
+graficas:
+   pattern: /admin/graficas
+   defaults: { _controller: miomioBundle:Grafica:graficas }
+
+graficasemp:
+   pattern: /graficasemp
+   defaults: { _controller: miomioBundle:Grafica:graficasemp }
+   
+moverfamilia:
+   pattern: /moverfamilia
+   defaults: { _controller: miomioBundle:Familia:moverfamilia }
+
+moverfamiliaajax:
+   pattern: /moverfamiliaajax/{id}
+   defaults: { _controller: miomioBundle:Familia:moverfamiliaajax }
+   options:
+      expose: true
+
+moverfamiliaajax1:
+   pattern: /moverfamiliaajax1
+   defaults: { _controller: miomioBundle:Familia:moverfamiliaajax1 }
+   options:
+      expose: true
+
+#CRUD MEDICO
+   
+medico_show:
+   pattern: /medico/{id}/show
+   defaults: { _controller: miomioBundle:Medico:vermedico }
+   
+medico_edit:
+   pattern: /medico/{id}/edit
+   defaults: { _controller: miomioBundle:Medico:modificarmedico }
+   options:
+        expose: true
+   
+medico_new:
+   pattern: /admin/medico/new
+   defaults: { _controller: miomioBundle:Medico:crearmedico }
+
+medico_create:
+   pattern: /admin/medico/create
+   defaults: { _controller: miomioBundle:Medico:create } 
+   
+medico_update:
+   pattern: /medico/{id}/update
+   defaults: { _controller: miomioBundle:Medico:update }
+   
+medico_delete:
+   pattern: /admin/medico/{id}/delete
+   defaults: { _controller: miomioBundle:Medico:eliminarmedico }
+
+comprobarmedico:
+   pattern: /comprobarmedico
+   defaults: { _controller: miomioBundle:Cita:comprobarmedico }
+   options:
+        expose: true
+
+comprobarmedico1:
+   pattern: /comprobarmedico1
+   defaults: { _controller: miomioBundle:Cita:comprobarmedico1 }
+   options:
+        expose: true
+
+#CRUD INFORME
+
+informe:
+   pattern: /informe
+   defaults: { _controller: miomioBundle:Informe:listarinformes }
+   
+informe_show:
+   pattern: /informe/{id}/show
+   defaults: { _controller: miomioBundle:Informe:verinforme }
+   
+informe_new:
+   pattern: nuevoinforme/informe/new/{id}/{id1}
+   defaults: { _controller: miomioBundle:Informe:crearinforme }
+   options:
+       expose: true
+
+informe_create:
+   pattern: nuevoinforme/informe/create/{id}/{id1}
+   defaults: { _controller: miomioBundle:Informe:create }
+   options:
+       expose: true
+
+nuevoinforme:
+   pattern: /nuevoinforme
+   defaults: { _controller: miomioBundle:Informe:nuevo }
+
+informesincita:
+  pattern:  nuevoinforme/nuevoinforme1
+  defaults: { _controller: miomioBundle:Informe:nuevo1 }
+
+cambiarlocale:
+   pattern: /cambiarlocale/{idioma}
+   defaults: { _controller: miomioBundle:Security:cambiarlocale }
+   options:
+        expose: true
+
+arqueo:
+  pattern: /arqueo
+  defaults: { _controller: miomioBundle:Arqueo:nuevoarqueo }
+
+confirmararqueo:
+   pattern: /confirmararqueo
+   defaults: { _controller: miomioBundle:Arqueo:confirmararqueo }
+   options:
+        expose: true
+
+guardararqueo:
+   pattern: /guardararqueo
+   defaults: { _controller: miomioBundle:Arqueo:guardararqueo }
+   options:
+        expose: true
+
+listararqueoscalendario:
+   pattern: /listararqueoscalendario/{idemp}
+   defaults: { _controller: miomioBundle:Arqueo:listararqueoscalendario }
+   options:
+        expose: true
+
+productosreserva:
+   pattern: /ajaxreserva/{operacionid}
+   defaults: { _controller: miomioBundle:Venta:productosventareserva }
+   options:
+        expose: true
+
+productosventa:
+   pattern: /ajaxventa/{operacionid}
+   defaults: { _controller: miomioBundle:Venta:productosventareserva }
+   options:
+        expose: true
+
+productosdevolucion:
+   pattern: /ajaxdevolucion/{operacionid}
+   defaults: { _controller: miomioBundle:Devolucion:productosdevolucion }
+   options:
+        expose: true
+
+productospedido:
+   pattern: /ajaxpedido/{id}
+   defaults: { _controller: miomioBundle:Pedido:productospedido }
+   options:
+        expose: true
+
+ajaxproductos:
+   pattern: /ajaxproductos/{idfamilia}
+   defaults: { _controller: miomioBundle:Producto:ajaxproductos }
+   options:
+        expose: true
+
+ajaxproductos1:
+   pattern: /ajaxproductos1/{idproveedor}
+   defaults: { _controller: miomioBundle:Producto:ajaxproductos1 }
+   options:
+        expose: true
+
+ajaxproductos2:
+   pattern: /ajaxproductos2/{idproveedor}
+   defaults: { _controller: miomioBundle:Producto:ajaxproductos2 }
+   options:
+        expose: true
+
+avisada:
+   pattern: /avisada/{id}
+   defaults: { _controller: miomioBundle:Reserva:avisada }
+   options:
+        expose: true
+
+manualing:
+   pattern: /manualing
+   defaults: { _controller: miomioBundle:Manual:manualing, _format: pdf }
+
+manualesp:
+   pattern: /manualesp
+   defaults: { _controller: miomioBundle:Manual:manualesp }

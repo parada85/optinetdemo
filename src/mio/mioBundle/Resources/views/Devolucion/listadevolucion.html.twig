@@ -1,0 +1,171 @@
+{% extends 'miomioBundle:Default:index.html.twig' %}
+
+{% block title %}
+{% trans %}Lista de devoluciones{% endtrans %}
+{% endblock %}
+
+{% block productos %}
+
+<script type="text/javascript" language="javascript">
+$(document).ready(function () {
+
+    var totales = [];
+    $.each(tablalistadevolucion.fnGetData(), function(i, row) { totales.push(row[6]);});
+    max1 = Math.max.apply(null, totales);
+    min1 = Math.min.apply(null, totales);
+    
+        $("#slideroperaciones").slider({
+        range: true,
+        min: min1,
+        max: max1,
+        values: [ min1, max1],
+        slide: function( event, ui ) {
+            $( "#amountoperaciones" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] + " €.");
+        },
+        change: function( event, ui ) {
+            $('#tablalistadevolucion_range_from_6').val(ui.values[0]);
+            $('#tablalistadevolucion_range_to_6').val(ui.values[1]);
+            $('#tablalistadevolucion_range_from_6').keyup();
+            $('#tablalistadevolucion_range_to_6').keyup();
+        }
+    })
+
+        $( "#amountoperaciones" ).val($("#slideroperaciones").slider( "values", 0 ) + " - " + $("#slideroperaciones").slider( "values", 1 )+ " €." );
+
+    $('.restablecer').live('click', function () {            
+     $("#slideroperaciones" ).slider( "option", "values", [ min1, max1 ] );
+    $( "#amountoperaciones" ).val($("#slideroperaciones").slider( "values", 0 ) + " - " + $("#slideroperaciones").slider( "values", 1 )+ " €." );
+                })  
+});
+</script>
+{% endblock %}
+
+{% block body %}
+<h3 class="h3busquedalado">{% trans %}Listar devoluciones{% endtrans %}:</h3>
+
+<form class="busqueda">
+<fieldset>
+
+<div class="sliders">
+    <div id="slideroperaciones"></div>
+    <label for="amountoperaciones">{% trans %}Total{% endtrans %}:</label>
+    <input type="text" id="amountoperaciones" style="border: 0; color: #f6931f; font-weight: bold;" />
+ </div>
+ <div class="restablecer boton">{% trans %}Restaurar{% endtrans %}</div>
+<div class="botonesbuscar"> 
+    <div class="mostrarempleado"></div>
+    <div class="mostrarpago"></div>
+    <div id="datepicker"></div>
+</div>
+ </fieldset>
+</form>
+ <p class="numeros1"></p>
+<div class="noti">
+  {% if app.session.hasFlash('confirmacion') %}
+    <div class="notificacion">
+        <span>{{ app.session.flash('confirmacion') }}</span>
+    </div>
+    </div>
+{% endif %}
+
+<table cellpadding="0" cellspacing="0" border="0" class="display" id= "tablalistadevolucion">
+  <thead>
+    <tr>
+	   <th class="th">{% trans %}Número{% endtrans %}</th>
+     <th>{% trans %}Dni{% endtrans %}</th>
+   	 <th>{% trans %}Cliente{% endtrans %}</th>
+   	 <th>{% trans %}Fecha{% endtrans %}</th>
+     <th>fechaoculto</th>
+     <th>{% trans %}Total{% endtrans %}</th>
+     <th>totaloculto</th>
+     <th>{% trans %}Pago{% endtrans %}</th>
+   	 <th>{% trans %}Realizada{% endtrans %}</th>
+   	 <th>{% trans %}Descripción{% endtrans %}</th>
+   	 <th>{% trans %}Acciones{% endtrans %}</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+      {% for devolucion in devoluciones %}
+
+    <tr>
+            <td>{{ devolucion.id }}</td>
+            <td>{{ devolucion.cliente.getDni() }}</td>
+            <td><a href="{{ path('usuario_show', { 'id': devolucion.cliente.getId() }) }}">{{ devolucion.cliente.getNombre() | capitalize }} {{ devolucion.cliente.apellido1 | capitalize }}</a></td>
+            <td>{{ devolucion.fechaoper | date("d/m/Y H:i:s", "Europe/Paris")  }}</td>
+            <td>{{ devolucion.fechaoper | date("d/m/Y", "Europe/Paris")  }}</td>
+            <td>{{ devolucion.total }} €</td>
+            <td>{{ devolucion.total }}</td>
+            <td>{{ devolucion.venta.pago |capitalize |trans }} </td>
+            <td>{{ devolucion.empleado.username |capitalize }}</td>
+            <td>{{ devolucion.descripcion |capitalize }}</td>
+            <td><div class="{{devolucion.venta.id}} detalledevolucion botoncarro">{% trans %}Detalle{% endtrans %}</div>
+            </td>
+		</tr>
+  {% endfor %}
+ </tbody>
+ 
+ <tfoot>
+		 <tr>
+	   <th>{% trans %}Número{% endtrans %}</th>
+     <th>{% trans %}Dni{% endtrans %}</th>
+   	 <th>{% trans %}Cliente{% endtrans %}</th>
+   	 <th>{% trans %}Fecha{% endtrans %}</th>
+     <th>fechaoculto</th>
+     <th>{% trans %}Total{% endtrans %}</th>
+     <th>totaloculto</th>
+     <th>{% trans %}Pago{% endtrans %}</th>
+   	 <th>{% trans %}Realizada{% endtrans %}</th>
+   	 <th>{% trans %}Descripción{% endtrans %}</th>
+   	 <th>{% trans %}Acciones{% endtrans %}</th>
+    </tr>
+	</tfoot>
+	
+ </table>
+ 
+   <div id="detalles" title="{% trans %}Detalle{% endtrans %}">
+  <div class="divajax">
+  <p><span class="id ui-state-highlight ui-corner-all"></span><span class="id1"></span></p>
+ <table cellpadding="0" cellspacing="0" border="0" class="display" id="ajaxventa">
+ <thead>
+    <tr>
+      <th>{% trans %}Código{% endtrans %}</th>
+      <th>{% trans %}Descripción{% endtrans %}</th>
+     <th>{% trans %}Cantidad{% endtrans %}</th>
+     <th>{% trans %}Precio venta{% endtrans %}</th>
+     <th>{% trans %}Iva{% endtrans %}</th>
+     <th>{% trans %}Total{% endtrans %}</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+ </tbody>
+ 
+ </table>
+  
+  </div>
+
+  <div class="divajax1">
+    <p><span class="id ui-state-highlight ui-corner-all"></span><span class="id1"></span></p>
+ <table cellpadding="0" cellspacing="0" border="0" class="display" id="listardevolucion">
+ <thead>
+    <tr>
+      <th>{% trans %}Código{% endtrans %}</th>
+      <th>{% trans %}Descripción{% endtrans %}</th>
+     <th>{% trans %}Cantidad{% endtrans %}</th>
+     <th>{% trans %}Estado{% endtrans %}</th>
+     <th>{% trans %}Precio venta{% endtrans %}</th>
+     <th>{% trans %}Iva{% endtrans %}</th>
+     <th>{% trans %}Total{% endtrans %}</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+ </tbody>
+ 
+ </table>
+  
+  </div>
+</div>
+
+{% endblock %}

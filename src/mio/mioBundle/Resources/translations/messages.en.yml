@@ -1,0 +1,399 @@
+Clave: Password
+Usuario*: Username*
+Entrar: Login
+Contraseña olvidada: Forgot password
+Herramienta desarrollada por: Application by
+para Optinet: for Optinet
+Bienvenido, Administrador: Welcome, Admin
+Bienvenido, Médico: Welcome Doctor
+Bienvenido, Usuario: Welcome, User
+Bienvenido, Anónimo: Welcome, Anonymous
+Bienvenido a la aplicación Optinet: Welcome to the application Optinet
+Software web para gestión empresarial: Web software for business management
+Inicio: Home
+Operaciones: Operations
+Proveedores: Providers
+Clientes: Clients
+Salir: Logout
+Citas: Appointments
+Informes: Reports
+Administración: Administration
+Estadísticas: Graphs
+Temas: Themes
+Productos: Products
+Pedidos: Orders
+Nuevo Cliente: New customer
+Modificar cliente: Modify customer
+Listar clientes: Customer list
+Listar Clientes: Customer list
+Nuevo producto: New product
+Listar productos: Products list
+Nueva familia: New family
+Listar familias: List families
+Mover productos: Moving products
+Nueva venta: New sale
+Nueva reserva: New reserve
+Nueva devolución: New return
+Listar ventas: Sale list
+Listar reservas: Reserve list
+Listar devoluciones: Returns list
+Nuevo proveedor: New provider
+Listar proveedores: Providers list
+Modificar proveedor: Modify provider
+Listar productos: Products list
+Nuevo pedido: New Order
+Listar pedidos: Orders list
+Gestionar festivos: Manage holidays
+Gestionar citas: Manage appointments
+Nuevo empleado: New employee
+Nuevo médico: New doctor
+Cambios: Changes
+Conexiones: Connections
+Listar empleados: List employees
+Crear informe sin cita: Create report without appointment
+Crear informe con cita: Create report with appointment
+Listar informes: List reports
+Id: Id
+Nombre*: Name*
+Apellido1*: Last name1*
+Apellido2*: Last name2*
+Dirección*: Address*
+Localidad*: Location*
+Provincia*: Province*
+Nombre: Name
+Apellido1: Last name1
+Apellido2: Last name2
+Dirección: Address
+Localidad: Location
+Provincia: Province
+Teléfono: Phone
+Email: Email
+Movil: Mobile
+Móvil: Mobile 
+Acciones: Actions
+Gestión de festivos: Manage holidays
+Gestión de citas: Manage appointments
+Seleccione el médico para ver su calendario: Select doctor to show the calendar
+Bienvenido a la gestion Optinet: Welcome to the manage Optinet
+Lista de devoluciones: Return list
+Cliente: Customer
+Fecha: Date
+Total: Total
+Realizada: Made by
+Descripción*: Description*
+Descripción: Description
+Detalle: Detail
+Id producto: Id product
+Cantidad: Quantity
+Precio venta*: Sale price*
+Precio venta: Sale price
+Introduce el identificador de la venta: Enter the identifier of the sale
+Nueva devolución: New return
+Modificar empleado: Modify employee
+Modificar: Modify
+Volver: Back
+Usuario: User
+Dni: Dni
+Rol: Role
+Ver empleado: Show employee
+Médico: Doctor
+Administrador: Administrator
+Cambiar: Change
+Crear: Create
+Modificar familia: Modify family
+Eliminar: Delete
+Editar: Edit
+La familia tiene: The family have
+producto/s: products
+Gráfica: Graph
+Empleado: Employee
+Fecha informe: Date report
+Fecha realizada: Date make
+Fecha cita: Date appointment
+Nuevo informe: New report
+Ojo Izquierdo: Left eye
+Ojo Derecho: Right eye
+Otros: Others
+Guardar: Save
+Seleccione la cita a la que generar el informe: Select the appointment you generate the report
+Generar informe: Generate report
+Conexiones de los empleados: Connections of employees
+Tipo: Type
+Cambios realizados por los empleados: Changes make for employees
+Entidad: Entity
+Identificador: Identifier
+Producto: Producto
+Venta: Sale
+Cita: Appointment
+Pedido: Order
+Festivo: Holiday
+Inserción: Insertion
+Modificación: Modification
+Eliminación: Elimination
+Nuevo operación: New operation
+Seleccione el proveedor para realizar el pedido: Enter the provider to make a order
+Proveedor: Provider
+Fecha recepción: Reception date
+Descripción: Description
+Precio compra*: Purchase price*
+Precio compra: Purchase price
+Modificar producto: Modify product
+Precio: Price
+Unidades: Units
+Restaurar: Restore
+Marca*: Trademark*
+Familia: Family
+Stock reservado: Reservation stock
+Reservado: Reserve
+Introduce el cliente: Insert the client
+Acceso denegado: Access denied
+Usted está accediendo a una zona restringida. Por favor, presione el botón para volver atrás: You are accessing a restricted area. Please press the button to go back
+Logueo de usuarios: Users Login
+Usted está accediendo a una página no encontrada. Por favor, presione el botón para volver atrás: You are accessing a page not found. Please press the button to go back
+Página no encontrada: Page not found
+Se ha mandado un nuevo mail con la nueva contraseña. Por favor revise su email: It has sent a new mail with the new password. Please check your email
+Confirmación: Confirmation
+Contraseña olvidada: Forgotten password
+Introduce el email: Enter the email
+Enviar: Send
+Introduce el cliente para editar: Enter the client to edit
+Devoluciones: Returns
+Devolver: Return
+Devueltos: Return products
+Cantidad a devolver: Return Quantity
+unidad/es: unit/s
+Introduzca adelanto: Enter advance
+El total de la reserva son: The total reserve are
+Precio unidad: Unit price
+Precio total: Total price
+Productos insertados en la reserva: Inserted into the reserve products
+Añadir: Add
+Productos insertados en la venta: Inserted into the sale products
+El total de la venta son: The total sale are
+Generar factura: Generate invoice
+Factura: Invoice
+No tiene: There is no
+Seleccione el cliente para realizar la venta: Select a customer to make the sale
+Seleccione el cliente para realizar la reserva: Select customer to make a reservation
+Seleccione una venta para realizar la devolución: Select a sale for the return
+Seleccione el cliente para realizar el apartado: Select the client to perform put aside
+Documento: Document
+Realizar reserva: Reserve create
+Realizar venta: Sale create
+Realizar devolución: Return create
+Editar cliente: Customer edit
+Idioma: Language
+Tema: Theme
+Idioma*: Language*
+Tema*: Theme*
+Número: Number
+Titulación: Titling
+Español: Spanish
+Inglés: English
+Nueva contraseña: New password
+Repite contraseña: Repeat password
+Fecha de registro: Registration date
+Informe: Report
+¿Esta seguro que desea guardar cambios?: Are you sure you want to save changes?
+Validar: Validate
+Entrada: Entry
+Salida: Exit
+Reserva: Reserve
+Devolución: Return
+Formulario de contacto: Contact form
+Mensaje: Message
+Escribe algo aqui: Write something here
+Código: Code
+Seleccionar: Select
+Seleccione: Select
+La cantidad introducida es incorrecta.: The quantity is not correct.
+Tarjeta: Card
+Efectivo: Cash
+Productos de la venta: Sale products
+Productos de la devolución: Return products
+Productos del pedido: Order products
+Productos del proveedor: Provider products
+Listar operaciones: Operations list
+Avisada: Notify
+Adelanto: Advancement
+Convertir a venta: Convert to sale
+Productos insertados en el pedido: Products inserts in order
+El total del pedido son: The total order is
+Recepcionar: Reception
+No recepcionado: Not reception
+Recepcionado: Reception
+Productos de la reserva: Reserve products
+Información del cliente: Client information
+Mostrar tabla: Show table
+Ocultar tabla: Hide table
+Médicos: Doctors
+Todos: All
+Ver: See
+Arqueos: Cash audits
+Nuevo arqueo: New cash audit
+Listar arqueos: Cash audit list
+Calendario arqueos: Cash audit calendar
+Información del informe: Report information
+No se puede eliminar existen pedidos: Can not delete orders exist
+No se puede eliminar existen operaciones: Can not delete operations exist
+Mostrar productos: Show products
+Ocultar productos: Ocult products
+Productos de la familia: Family products
+El proveedor no suministra ningún producto: The provider does not supply any products
+No existen productos en la familia: There are no products in the family
+Introduzca nombre de usuario: Enter Username
+Introduzca contraseña: Entrer password
+bueno: good
+malo: bad
+Estado: State
+Realizado por: Made by
+Hora: Hour
+Boletas: Ballots
+Efectivo contado: Cash counted
+Boletas contadas: Ballots counted
+Introduzca email: Enter email
+Contraseña: Password
+Recuérdame: Remember me
+Apartado: Put Aside
+Pago: Payment
+Seleccione un empleado para ver sus arqueos: Select an employee to view their cash audits
+La devolución %nombre% ha sido creada correctamente.: The return %nombre% was created correctly.
+La venta %nombre% ha sido creada correctamente.: The sale %nombre% was created correctly.
+El informe %nombre% ha sido creado correctamente.: The report %nombre% was created correctly.
+El cliente %nombre% ha sido modificado correctamente.: The client %nombre% was modified correctly.
+El empleado %nombre% ha sido modificado correctamente.: The employee %nombre% was modified correctly.
+El médico %nombre% ha sido modificado correctamente.: The doctor %nombre% was modified correctly.
+El cliente %nombre% ha sido creado correctamente.: The client %nombre% was created correctly.
+El cliente %nombre% ha sido eliminado correctamente.: The client %nombre% was deleted correctly.
+El producto %descripcion% ha sido modificado correctamente.: The product %descripcion% was modified correctly.
+El producto %descripcion% ha sido creado correctamente.: The product %descripcion% was created correctly.
+El producto %descripcion% ha sido eliminado correctamente.: The product %descripcion% was deleted correctly.
+El proveedor %nombre% ha sido modificado correctamente.: The provider %nombre% was modified correctly.
+El proveedor %nombre% ha sido creado correctamente.: The provider %nombre% was created correctly.
+El proveedor %nombre% ha sido eliminado correctamente.: The provider %nombre% was deleted correctly.
+La familia %nombre% ha sido modificada correctamente.: The family %nombre% was modified correctly.
+La familia %nombre% ha sido creada correctamente.: The family %nombre% was created correctly.
+La familia %nombre% ha sido eliminada correctamente.: The family %nombre% was deleted correctly.
+La reserva %nombre% ha sido creada correctamente.: The reserve %nombre% was created correctly.
+El apartado %nombre% ha sido creado correctamente.: The put aside %nombre% was created correctly.
+El pedido %nombre% ha sido creado correctamente.: The order %nombre% was created correctly.
+El arqueo ha sido almacenado correctamente: The cash audit was created correctly
+Se ha producido algún error. Revise los datos.: An error has occurred. Review the data.
+Debe introducir las cantidades de los productos: Must enter the amounts of products
+Generar documento: Generate document
+Buen estado: Good state
+Mal estado: Bad state
+Nuevo apartado: New put aside
+Listar apartados: Put aside list
+Avisar: Notify
+Se ha convertido en venta o los productos no están disponibles: Has become sale or products are not available.
+No hay productos disponibles: There are no products available
+El total del apartado son: The total put aside are
+Productos insertados en el apartado: Inserted into the put aside products
+Productos del apartado: Put aside products
+Productos del: Products of 
+Productos reservados de: Products reserves of 
+No existe ningun producto reservado: There is no product reserved
+Reservados: Reserves
+Calendario citas: Appointment calendar
+Debe elegir un dia posterior a hoy: You should choose a day after today
+Selección para cita: Select for appointment
+Seleccione el médico: Select the doctor
+Activo: Active
+Activo*: Active*
+Generar contraseña: Generate password
+Modificar médico: Modify doctor
+Permisos: Permissions
+Información empleado: Employee information
+Festivo: Holiday
+¿Esta seguro que desea borrar?: Are you sure you want to delete?
+Gestionar permisos: Manage permissions
+Gestión de permisos: Manage permissions
+Vacaciones de invierno: Winter vacation
+Vacaciones de verano: Summer vacation
+Baja laboral: Absence from work
+Baja: Absence
+Invierno: Winter
+Verano: Summer
+Número de operaciones: Number of operations
+Operaciones: Operations
+Porcentaje ventas: Percentaje sales
+Productos más vendidos: Best sellers
+Facturación: Invoicing
+Facturado: Manufactured
+Facturado acumulado: Manufactured accumulated
+Beneficio: Benefit
+Beneficio acumulado: Accrued benefit
+Estadísticas del empleado: Statistics employee
+Arqueo: Cash audit
+Se va a realizar un nuevo arqueo de caja con fecha: It will make a new dated cash audit
+Contacto: Contact
+Debe completar todos los campos: Must complete all fields
+Población: Location
+Domicilio: Address
+Importe inicial: Initial amount
+Base imponible: Taxable income
+Documento generado por: Document generated by
+Venta realizada por: Sale carried out by
+Reserva realizada por: Reserve carried out by
+Apartado realizado por: Put aside carried out by
+Devolución realizada por: Return carried out by
+Pedido realizado por: Order carried out by
+Pedido Número: Order number
+Venta Número: Sale number
+Importe: Purchase
+PrecioIva: PriceIva
+Pagado: Paid
+Devuelto: Returned
+ImporteIva: PurchaseIva
+Firmado: Signed
+Reserva Número: Reserve number
+Apartado Número: Put aside number
+Quedan por pagar: Missing to pay
+Devolución Número: Return number
+Total devuelto: Total return
+Pedido recepcionado por: Order reception by
+Pedido a proveedor: Order to provider
+Informe Número: Report number
+Esfera: Sphere
+Cilindro: Cylinder
+Eje: Axis
+Defecto: Defect
+Astigmatismo: Astigmatism
+Hipermetropia: Hyperopia
+Emetrope: Emmetrope
+Presbicia: Presbyopia 
+Miopia: Myopia
+Reacción pupilar: Pupillary reaction
+Test de Worth: Worth test
+Defecto visión: Vision defect
+Rejilla de Amsler: Amsler grid
+ESF: Sphere
+CIL: CYL
+EJE: AXIS
+Alterada: Altered
+Evaluación del estado refractivo/Agudeza visual: Evaluation of the refractive state/Visual acuity
+Pruebas complementarias: Complementary tests
+Óptico-Optometrista Colegiado nº: Optician optometrist number
+No existe ningún permiso registrado: There is no recorded permission
+Seleccione el cliente para realizar el informe: Select the client to make the report
+Debe completar todos los campos correctamente: Must complete all fields correctly
+No se puede realizar el arqueo, ya existe un arqueo en el dia de hoy: Unable to perform the cash audit, there is already a Cash audit in the present day
+Operación realizada: Operation performed
+Confirmado: Confirmed
+No confirmado: Unconfirmed
+__**Sin familia**__: __**Without family**__
+Permisos de: Permissions of
+Fecha alta: Registration date
+Contraseña cambiada: Change password
+Producto: Product
+Devolucion: Return
+Medico: Doctor
+Venta número: Sale number
+Se va a convertir el apartado: It will become the put aside
+Se va a convertir la reserva: It will become the reserve
+a una venta: to a sale
+Quedan por pagar: Amount to be pay
+Entregado: Money given
+Debe devolver: Must return
+al cliente: to customer

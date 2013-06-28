@@ -1,0 +1,64 @@
+<pdf> 
+    <page>
+         <img src="{{ pdf_image('miomioBundle:saludvision.jpg') }}" float="left"/>
+        <h1 float="right" text-decoration="underline">{%trans%}Informe Número{%endtrans%}: {{informe.id}}</h1>
+        <h1 font-size="8pt"><p>Calle Miguel Martínez de Pinillos 1 </p>11008 Cádiz Tlf: 956284614</h1>
+        <table text-align="left" margin-bottom="30%" margin-top="30%">
+          <tr>
+            <td padding="3%"> {%trans%}Cliente{%endtrans%}: <span font-style="bold"> {{cliente.Nombre| capitalize}}</span></td>
+            <td padding="3%"> Dni: <span font-style="bold"> {{cliente.Dni}}</span></td>
+          </tr>
+          <tr>
+            <td padding="3%"> {%trans%}Población{%endtrans%}: <span font-style="bold"> {{cliente.Localidad| capitalize}}</span></td>
+            <td padding="3%"> {%trans%}Domicilio{%endtrans%}: <span font-style="bold"> {{cliente.Direccion| capitalize}}</span></td>
+          </tr>
+        </table>
+
+        <p margin-left="120%" font-style="bold"> {% trans %}Evaluación del estado refractivo/Agudeza visual{%endtrans%}</p>
+        <table height="100px" text-align="center">
+          <tr padding="3%" margin-bottom="10%">
+            <td padding="3%" color="blue" border.type="none"></td>
+            <td padding="3%" color="blue"> A.V. s/c</td>
+            <td padding="3%" color="blue"> A.V. con su c</td>
+            <td padding="3%" color="blue"> {%trans%}Esfera{%endtrans%}</td>
+            <td padding="3%" color="blue"> {%trans%}Cilindro{%endtrans%} </td>
+            <td padding="3%" color="blue"> {%trans%}Eje{%endtrans%} </td>
+            <td padding="3%" color="blue"> A.V. </td>
+          </tr>
+           <tr>
+                   <td padding="3%" background.color="PowderBlue" border.type="bottom">{%trans%}Ojo Izquierdo{%endtrans%}</td>
+                   <td padding="3%" border.type="bottom">{{informe.oiavsc}}</td>
+                   <td padding="3%" border.type="bottom">{{informe.oiavcc}}</td>
+                   <td padding="3%" border.type="bottom">{{informe.oiesf}}</td>
+                   <td padding="3%" border.type="bottom">{{informe.oicil}}</td>
+                   <td padding="3%"  border.type="bottom">{{informe.oieje}} </td>
+                   <td padding="3%" border.type="bottom">{{informe.oiav}} </td>
+               </tr>
+              <tr>
+                   <td padding="3%" background.color="PowderBlue" border.type="bottom">{%trans%}Ojo Derecho{%endtrans%}</td>
+                   <td padding="3%"  border.type="bottom">{{informe.odavsc}}</td>
+                   <td padding="3%" border.type="bottom">{{informe.odavcc}}</td>
+                   <td padding="3%" border.type="bottom">{{informe.odesf}}</td>
+                   <td padding="3%"  border.type="bottom">{{informe.odcil}}</td>
+                   <td padding="3%"  border.type="bottom">{{informe.odeje}} </td>
+                   <td padding="3%"  border.type="bottom">{{informe.odav}} </td>
+              </tr>
+        </table>
+        <p>{%trans%}Defecto{%endtrans%}: <span font-style="bold">{{informe.problema}}</span></p>
+
+        <h1> {%trans%}Pruebas complementarias{%endtrans%} </h1>
+
+        <p> {%trans%}Reacción pupilar{%endtrans%}: <span font-style="bold">{{informe.pupilar}}</span> </p>
+        <p> {%trans%}Test de Worth{%endtrans%}: <span font-style="bold">{{informe.worth}}</span></p>
+        <p> {%trans%}Rejilla de Amsler{%endtrans%}: <span font-style="bold">{{informe.Amsler}}</span></p>
+
+        <p float="right"> D/Dña <span font-style="bold">{{medico.Nombre| capitalize}} {{medico.Apellido1| capitalize}}</span></p><br />
+        <p float="right"> {%trans%}Óptico-Optometrista Colegiado nº{%endtrans%} <span font-style="bold">{{medico.numero| capitalize}}</span></p><br />
+        <p float="right"> {%trans%}Titulación{%endtrans%} <span font-style="bold">{{medico.titulacion| capitalize}}</span></p><br />
+
+
+        <br />
+         <p><h1 float="right">{%trans%}Fecha{%endtrans%}: {{ "now" | date("d/m/Y") }} </h1></p>
+        <p margin-top="50%" float="right"> {%trans%}Firmado{%endtrans%}:_________________________________</p>
+    </page>
+</pdf>

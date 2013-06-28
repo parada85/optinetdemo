@@ -1,0 +1,72 @@
+{# src/Acme/BlogBundle/Resources/views/Blog/index.html.twig #} 
+
+{% extends 'miomioBundle:Default:index.html.twig' %}
+
+{% block title %}{% trans %}Gestión de permisos{% endtrans %}{% endblock %}
+
+{% block body %}
+ <div id="titulo">{% trans %}Gestión de permisos{% endtrans %}:</div>
+  <div id="btablapermiso" class="boton">{% trans %}Mostrar tabla{% endtrans %}</div>
+
+<div id="floatizquierda">
+           <div class='wrap'>
+                <div class='invierno1'>
+                <p>{% trans %}Vacaciones de invierno{% endtrans %}:</p>
+                <div class="botoneliminar botoninvierno">{% trans %}Invierno{% endtrans %}</div>
+                    {% for empleado in empleados %}
+                        <div id="#0B610B" class="invierno">{{empleado.username | capitalize}}</div>
+                  {% endfor %}
+                </div>
+        </div>
+
+         <div class='wrap'>
+              <div class='verano1'>
+              <p>{% trans %}Vacaciones de verano{% endtrans %}:</p>
+              <div class="botoneliminar botonverano">{% trans %}Verano{% endtrans %}</div>
+              {% for empleado in empleados %}
+                        <div id="#9A2EFE" class="verano">{{empleado.username | capitalize}}</div>
+                  {% endfor %}
+              </div>
+        </div>
+
+</div>
+
+ <div id='vacaciones'></div>
+
+<div id="floatvacaciones">
+              <div class='wrap'>
+                    <div class='baja1'>
+                    <p>{% trans %}Baja laboral{% endtrans %}:</p>
+                    <div class="botoneliminar botonbaja">{% trans %}Baja{% endtrans %}</div>
+                    {% for empleado in empleados %}
+                            <div id="#FA5858" class="baja">{{empleado.username | capitalize }}</div>
+                      {% endfor %}
+                  </div>
+            </div>
+</div>
+
+
+<div id="tablapermisosdiv">
+
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="tablapermisos">
+  <thead>
+    <tr>
+     <th class="th">{% trans %}Dni{% endtrans %}</th>
+     <th>{% trans %}Username{% endtrans %}</th>
+     <th>{% trans %}Nombre{% endtrans %}</th>
+     <th>{% trans %}Apellido1{% endtrans %}</th>
+     <th>{% trans %}Tipo{% endtrans %}</th>
+     <th>{% trans %}Realizada{% endtrans %}</th>
+     <th>{% trans %}Inicio{% endtrans %}</th>
+     <th>{% trans %}Fin{% endtrans %}</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+ </tbody>
+  
+ </table>
+
+</div>
+
+{% endblock %}

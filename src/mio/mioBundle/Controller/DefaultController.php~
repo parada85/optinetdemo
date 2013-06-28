@@ -1,0 +1,17 @@
+<?php
+
+namespace mio\mioBundle\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+
+class DefaultController extends Controller
+{
+    
+    public function indexAction()
+    {
+    	$titulo = $this->get('translator')->trans('Bad credentials');
+    	echo $titulo;
+        return $this->render('miomioBundle:Default:index.html.twig');
+    }
+}

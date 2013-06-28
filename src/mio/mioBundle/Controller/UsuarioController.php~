@@ -1,0 +1,420 @@
+<?php
+
+namespace mio\mioBundle\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Doctrine\Common\Collections\ArrayCollection;
+
+use mio\mioBundle\Entity\Usuario;
+use mio\mioBundle\Entity\Venta;
+use mio\mioBundle\Entity\Empleado;
+use mio\mioBundle\Entity\Devolucion;
+use mio\mioBundle\Entity\Reserva;
+use mio\mioBundle\Entity\Lineasoperacion;
+use mio\mioBundle\Form\UsuarioType;
+
+/**
+ * Usuario controller.
+ *
+ * @Route("/usuario")
+ */
+class UsuarioController extends Controller
+{
+	
+	public function ventaAction($id)
+	{
+		$em = $this->get('doctrine')->getEntityManager();
+		$productos = $em->getRepository('miomioBundle:Producto')->listaproducto();
+		$user = $this->getDoctrine()->getRepository('miomioBundle:Usuario')->find($id);
+	 	return $this->render('miomioBundle:Usuarios:venta.html.twig',array('productos' => $productos,'identificador' => $id,'user'=>$user));
+	
+	}
+	public function reservaAction($id)
+	{
+		$em = $this->get('doctrine')->getEntityManager();
+		$productos = $em->getRepository('miomioBundle:Producto')->listaproducto();
+		$user = $this->getDoctrine()->getRepository('miomioBundle:Usuario')->find($id);
+	 	return $this->render('miomioBundle:Usuarios:reserva.html.twig',array('productos' => $productos,'identificador' => $id,'user'=>$user));
+	
+	}
+	
+	public function devolucionAction($id)
+	{
+		$lineasdevolucion = new ArrayCollection();
+		$em = $this->get('doctrine')->getEntityManager();
+		$venta = $this->getDoctrine()->getRepository('miomioBundle:Venta')->find($id);
+		$empleado = $venta->getEmpleado();
+		$cliente = $venta->getCliente();
+		$lineasventa = $venta->getLineas();
+		$devoluciones = $venta->getDevoluciones();
+	 	return $this->render('miomioBundle:Usuarios:devolucion.html.twig',array('lineasventa' => $lineasventa,'empleado' => $empleado,'cliente'=>$cliente, 'venta'=>$venta, 'devoluciones'=>$devoluciones));
+	}
+	
+	public function devolverajaxAction()
+	{
+		$unidades = $this->getRequest()->query->get('unidad');
+		$id = $this->getRequest()->query->get('id');
+		$descripcion = $this->getRequest()->query->get('descripcion');
+		$estado = $this->getRequest()->query->get('estado');
+		$precio = $this->getRequest()->query->get('precio');
+		$idventa = $this->getRequest()->query->get('idventa');
+		$em = $this->get('doctrine')->getEntityManager();
+		$producto = $this->getDoctrine()->getRepository('miomioBundle:Producto')->find($id);
+		$venta = $this->getDoctrine()->getRepository('miomioBundle:Venta')->find($idventa);
+		$empleado = $this->get('security.context')->getToken()->getUser();
+		$total = $precio*$unidades;
+    
+		$devolucion=new Devolucion();
+		$devolucion->setVenta($venta);
+		$devolucion->setTotal($total);
+	   $devolucion->setFechaoper(new \DateTime('now'));
+	   $devolucion->setDescripcion($descripcion);
+	   $devolucion->setCliente($venta->getCliente());// cliente
+		$devolucion->setEmpleado($empleado);
+		if ($estado == 'Bueno')
+			$producto->setStock($producto->getStock()+$unidades);		
+		$em->persist($devolucion);
+		$em->flush();
+		$loper = new Lineasoperacion();
+    		$loper->setOperacion($devolucion);//asociacion de lineaoperacion a operacion
+    		$loper->setProducto($producto);
+    		$loper->setPrecio($precio);
+    		$loper->setCantidad($unidades);
+    		$em->persist($loper);
+    		$devolucion->addLineasoperacion($loper);//añado el producto con la cantidad a la venta.
+   	 	$em->persist($devolucion);
+    		$em->flush();
+
+    return new Response();
+    }
+	
+	public function editarAction()
+	{
+	 	return $this->render('miomioBundle:Usuario:editar.html.twig');
+	
+	}
+	
+	public function ventauAction($id)
+	{
+		$em = $this->get('doctrine')->getEntityManager();
+		
+		$pieces = explode(",", $id);
+		
+		$venta=new Venta();
+
+	   $venta->setFechaoper(new \DateTime('now'));
+		
+		//el primero en el vector es el usuario que compra
+		$cliente = $this->getDoctrine()->getRepository('miomioBundle:Usuario')->find($pieces[0]);
+		$empleado = $this->get('security.context')->getToken()->getUser();
+		$venta->setEmpleado($empleado);
+
+		$cliente->addOperacion($venta);//asociacion de usuario a operacion (add porque es una coleccion)
+		$venta->setCliente($cliente);//asociacion de operacion a cliente.
+		$total=0;
+		$venta->setTotal($total);
+		
+		$em->persist($cliente);
+		$em->persist($venta);
+    	$em->flush();
+    	
+    	for($i=1;$i<count($pieces);$i=$i+2){
+    		 $producto = $this->getDoctrine()->getRepository('miomioBundle:Producto')->find($pieces[$i]);
+    		 $cantidad = $pieces[$i+1];
+    		 $loper = new Lineasoperacion();
+    		 $loper->setOperacion($venta);//asociacion de lineaoperacion a operacion
+    		 $loper->setProducto($producto);
+    		 $loper->setPrecio($producto->getPventa());
+    		 $loper->setCantidad($cantidad);
+    		 $venta->addLineasoperacion($loper);//añado el producto con la cantidad a la venta.
+    		 $em->persist($loper);
+    		 $em->flush();
+    		 $producto->setStock($producto->getStock()-$cantidad);
+    		 $total1=$cantidad * $producto->getPventa();
+    		 $total+=$total1;
+    	}
+    	
+    	$venta->setTotal($total);
+    	$em->persist($venta);
+    	$em->flush();
+    	
+    	//$operaciones = $cliente->getOperaciones();
+		//foreach($operaciones as $operacion){
+		//    echo $operacion->getCliente()->getNombre();
+		//}
+		
+		// $operaciones = $cliente->getOperaciones();
+		//foreach($operaciones as $operacion){
+		//	$lineas=$operacion->getLineas();
+		//	}
+			
+		//foreach($lineas as $linea){
+		//	echo $linea->getProducto()->getDescripcion();
+		//	}
+    	
+		//return ($this->render('miomioBundle:Default:index.html.twig'));
+		return new RedirectResponse($this->generateUrl('homepage'));
+	}
+	
+		public function reservauAction($id)
+	{
+		$em = $this->get('doctrine')->getEntityManager();
+		
+		$pieces = explode(",", $id);
+		
+		$reserva=new Reserva();
+
+	   $reserva->setFechaoper(new \DateTime('now'));
+		
+		//el primero en el vector es el usuario que reserva
+		$cliente = $this->getDoctrine()->getRepository('miomioBundle:Usuario')->find($pieces[0]);
+
+		$cliente->addOperacion($reserva);//asociacion de usuario a operacion (add porque es una coleccion)
+		$reserva->setCliente($cliente);//asociacion de operacion a cliente.
+		$total=0;
+		$reserva->setTotal($total);
+    	$reserva->setAdelanto($pieces[1]);
+    	$reserva->setAvisada(0);
+    	
+		$empleado = $this->get('security.context')->getToken()->getUser();
+		$reserva->setEmpleado($empleado);
+		
+		$em->persist($cliente);
+		$em->persist($reserva);
+    	$em->flush();
+    	
+    	for($i=2;$i<count($pieces);$i=$i+2){
+    		 $producto = $this->getDoctrine()->getRepository('miomioBundle:Producto')->find($pieces[$i]);
+    		 $cantidad = $pieces[$i+1];
+    		 $loper = new Lineasoperacion();
+    		 $loper->setOperacion($reserva);//asociacion de lineaoperacion a operacion
+    		 $loper->setProducto($producto);
+    		 $loper->setCantidad($cantidad);
+    		 $loper->setPrecio($producto->getPventa());
+    		 $reserva->addLineasoperacion($loper);//añado el producto con la cantidad a la reserva.
+    		 $em->persist($loper);
+    		 $em->flush();
+    		 $stock = $producto->getStock();
+    		 $dif = $stock - $cantidad;
+    		 if ($dif < 0 ){
+    		 	$producto->setStock(0);
+    		 	$positivo = $dif * -1 ; 
+    		 	$producto->setStockreservado($producto->getStockreservado() + $positivo);
+				}    		 
+    		 else{
+    		 	$producto->setStock($producto->getStock()-$cantidad);
+    		 	}
+    		 	$total1=$cantidad * $producto->getPventa();
+    		 $total+=$total1;
+    	}
+    	
+    	$reserva->setTotal($total);
+    	$em->persist($reserva);
+    	$em->flush();
+    	
+    	//$operaciones = $cliente->getOperaciones();
+		//foreach($operaciones as $operacion){
+		//    echo $operacion->getCliente()->getNombre();
+		//}
+		
+		// $operaciones = $cliente->getOperaciones();
+		//foreach($operaciones as $operacion){
+		//	$lineas=$operacion->getLineas();
+		//	}
+			
+		//foreach($lineas as $linea){
+		//	echo $linea->getProducto()->getDescripcion();
+		//	}
+    	
+		//return ($this->render('miomioBundle:Default:index.html.twig'));
+		return new RedirectResponse($this->generateUrl('homepage'));
+	}
+    /**
+     * Lists all Usuario entities.
+     *
+     * @Route("/", name="usuario")
+     * @Template()
+     */
+    public function indexAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entities = $em->getRepository('miomioBundle:Usuario')->findAll();
+
+        return array('entities' => $entities);
+    }
+
+    /**
+     * Finds and displays a Usuario entity.
+     *
+     * @Route("/{id}/show", name="usuario_show")
+     * @Template()
+     */
+    public function showAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('miomioBundle:Usuario')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Usuario entity.');
+        }
+		  $editForm = $this->createForm(new UsuarioType(), $entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+        return array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),        );
+    }
+    /**
+     * Displays a form to create a new Usuario entity.
+     *
+     * @Route("/new", name="usuario_new")
+     * @Template()
+     */
+    public function newAction()
+    {
+        $entity = new Usuario();
+        $form   = $this->createForm(new UsuarioType(), $entity);
+
+        return array(
+            'entity' => $entity,
+            'form'   => $form->createView()
+        );
+    }
+
+    /**
+     * Creates a new Usuario entity.
+     *
+     * @Route("/create", name="usuario_create")
+     * @Method("post")
+     * @Template("miomioBundle:Usuario:new.html.twig")
+     */
+    public function createAction()
+    {
+        $entity  = new Usuario();
+        $request = $this->getRequest();
+        $form    = $this->createForm(new UsuarioType(), $entity);
+        $form->bindRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('usuario'));
+            
+        }
+
+        return array(
+            'entity' => $entity,
+            'form'   => $form->createView()
+        );
+    }
+
+    /**
+     * Displays a form to edit an existing Usuario entity.
+     *
+     * @Route("/{id}/edit", name="usuario_edit")
+     * @Template()
+     */
+    public function editAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('miomioBundle:Usuario')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Usuario entity.');
+        }
+
+        $editForm = $this->createForm(new UsuarioType(), $entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+        return array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
+
+    /**
+     * Edits an existing Usuario entity.
+     *
+     * @Route("/{id}/update", name="usuario_update")
+     * @Method("post")
+     * @Template("miomioBundle:Usuario:edit.html.twig")
+     */
+    public function updateAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('miomioBundle:Usuario')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Usuario entity.');
+        }
+
+        $editForm   = $this->createForm(new UsuarioType(), $entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+        $request = $this->getRequest();
+
+        $editForm->bindRequest($request);
+
+        if ($editForm->isValid()) {
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('usuario_edit', array('id' => $id)));
+        }
+
+        return array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
+
+    /**
+     * Deletes a Usuario entity.
+     *
+     * @Route("/{id}/delete", name="usuario_delete")
+     * @Method("post")
+     */
+    public function deleteAction($id)
+    {
+        $form = $this->createDeleteForm($id);
+        $request = $this->getRequest();
+
+        $form->bindRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getEntityManager();
+            $entity = $em->getRepository('miomioBundle:Usuario')->find($id);
+
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find Usuario entity.');
+            }
+
+            $em->remove($entity);
+            $em->flush();
+        }
+
+        return $this->redirect($this->generateUrl('usuario'));
+    }
+
+    private function createDeleteForm($id)
+    {
+        return $this->createFormBuilder(array('id' => $id))
+            ->add('id', 'hidden')
+            ->getForm()
+        ;
+    }
+}

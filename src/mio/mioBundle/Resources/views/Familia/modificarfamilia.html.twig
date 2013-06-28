@@ -1,0 +1,38 @@
+{% extends 'miomioBundle:Default:index.html.twig' %}
+
+{% block title %}
+{% trans %}Modificar familia{% endtrans %}
+{% endblock %}
+
+{% block body %}
+
+<div class="notificaciones">
+<div id="titulo">{% trans %}Modificar familia{% endtrans %}:</div>
+
+{% if app.session.hasFlash('error') %}
+    <div class="notificacionerror">
+        <span>{{ app.session.flash('error') }}</span>
+    </div>
+{% endif %}
+</div>
+
+<form  class="formulario" id="modificarfamilia" action="{{ path('familia_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    {{ form_widget(edit_form) }}
+</form>
+
+<form  id="eliminarfamilia" action="{{ path('familia_delete', { 'id': entity.id }) }}" method="post">
+     {{ form_widget(delete_form) }}
+</form>
+	<div class="botonescrud">
+    <div class="contenedorcrud">
+    {% if entity.getProductosfamilia().count() > 0 %}
+          <div  title="Los productos asociados se quedarán sin familia" class="botoneliminar" id="beliminarfamilia">{% trans %}Eliminar{% endtrans %}</div>
+      {% else %}
+          <div class="botoneliminar" id="beliminarfamilia">{% trans %}Eliminar{% endtrans %}</div>
+      {% endif %}
+      <div class="botoneditar" id="bmodificarfamilia">{% trans %}Modificar{% endtrans %}</div>
+      <div><a class="botonvolver" href="{{ path('familia') }}">{% trans %}Volver{% endtrans %}</a></div>
+  </div>
+</div>
+
+{% endblock %}

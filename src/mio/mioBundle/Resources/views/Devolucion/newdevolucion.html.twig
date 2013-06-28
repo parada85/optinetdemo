@@ -1,0 +1,109 @@
+{% extends 'miomioBundle:Default:index.html.twig' %}
+
+{% block title %}
+{% trans %}Nueva devolución{% endtrans %}
+{% endblock %}
+
+{% block body %}
+<div id="titulo">{% trans %}Seleccione una venta para realizar la devolución{% endtrans %}:</div>
+
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="tablanewdevolucion">
+  <thead>
+    <tr>
+	   <th class="th">{% trans %}Número{% endtrans %}</th>
+   	 <th>{% trans %}Cliente{% endtrans %}</th>
+   	 <th>{% trans %}Fecha{% endtrans %}</th>
+   	 <th>{% trans %}Total{% endtrans %}</th>
+     <th>{% trans %}Pago{% endtrans %}</th>
+   	 <th>{% trans %}Realizada{% endtrans %}</th>
+	   <th>{% trans %}Devoluciones{% endtrans %}</th>
+   	 <th>{% trans %}Acciones{% endtrans %}</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+      {% for venta in ventas %}
+
+    <tr>
+            <td>{{ venta.id }}</td>
+            <td><a href="{{ path('usuario_show', { 'id': venta.cliente.getId() }) }}">{{ venta.cliente.getNombre() | capitalize }} {{ venta.cliente.apellido1 | capitalize }}</a></td>
+            <td>{{ venta.fechaoper | date("d/m/Y H:i:s", "Europe/Paris")  }}</td>
+            <td>{{ venta.total }} €</td>
+             <td>{{ venta.pago |capitalize |trans}} </td>
+            <td>{{ venta.empleado.username |capitalize }}</td>
+            	{% if venta.devoluciones.count == 0 %}
+            	<td> {% trans %}No tiene{% endtrans %} </td>
+            	{% else %}
+            	<td><select class="lista fechas"> <option value="">{% trans %}Seleccione{% endtrans %}:</option>
+            		{% for devolucion in venta.devoluciones %}
+            			<option value="{{devolucion.id}}">{{ devolucion.fechaoper| date("d/m/Y H:i:s", "Europe/Paris") }}</option>
+            			{% endfor %}
+            			</select></td>
+            	{% endif %}
+            <td><a class="boton" href="{{ path('nueva_devolucion', { 'id': venta.id }) }}">{% trans %}Seleccionar{% endtrans %}</a></td>
+		</tr>
+  {% endfor %}
+ </tbody>
+ 
+ <tfoot>
+		 <tr>
+	    <th>{% trans %}Número{% endtrans %}</th>
+   	 <th>{% trans %}Cliente{% endtrans %}</th>
+   	 <th>{% trans %}Fecha{% endtrans %}</th>
+   	 <th>{% trans %}Total{% endtrans %}</th>
+     <th>{% trans %}Pago{% endtrans %}</th>
+   	 <th>{% trans %}Realizada{% endtrans %}</th>
+   	 <th>{% trans %}Devoluciones{% endtrans %}</th>
+   	 <th>{% trans %}Acciones{% endtrans %}</th>
+    </tr>
+	</tfoot>
+	
+ </table>
+
+<div id="detalles" title="{% trans %}Detalle{% endtrans %}">
+
+<div class="divajax">
+  <p><span class="id ui-state-highlight ui-corner-all"></span><span class="id1"></span></p>
+ <table cellpadding="0" cellspacing="0" border="0" class="display" id="ajaxventa">
+ <thead>
+    <tr>
+      <th>{% trans %}Código{% endtrans %}</th>
+      <th>{% trans %}Descripción{% endtrans %}</th>
+     <th>{% trans %}Cantidad{% endtrans %}</th>
+     <th>{% trans %}Precio venta{% endtrans %}</th>
+     <th>{% trans %}Iva{% endtrans %}</th>
+     <th>{% trans %}Total{% endtrans %}</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+ </tbody>
+ 
+ </table>
+  
+  </div>
+
+    <div class="divajax1">
+    <p><span class="id ui-state-highlight ui-corner-all"></span><span class="id1"></span></p>
+ <table cellpadding="0" cellspacing="0" border="0" class="display" id="listardevolucion">
+ <thead>
+    <tr>
+      <th>{% trans %}Código{% endtrans %}</th>
+      <th>{% trans %}Descripción{% endtrans %}</th>
+     <th>{% trans %}Cantidad{% endtrans %}</th>
+     <th>{% trans %}Estado{% endtrans %}</th>
+     <th>{% trans %}Precio venta{% endtrans %}</th>
+     <th>{% trans %}Iva{% endtrans %}</th>
+     <th>{% trans %}Total{% endtrans %}</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+ </tbody>
+ 
+ </table>
+  
+  </div>
+</div>
+
+{% endblock %}

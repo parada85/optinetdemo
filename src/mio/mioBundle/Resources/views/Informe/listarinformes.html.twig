@@ -1,0 +1,66 @@
+{% extends 'miomioBundle:Default:index.html.twig' %}
+
+{% block title %}
+{% trans %}Listar informes{% endtrans %}
+{% endblock %}
+
+{% block body %}
+
+<div id="titulo">{% trans %}Listar informes{% endtrans %}:</div>
+    
+{% if app.session.hasFlash('confirmacion') %}
+    <div class="notificacion">
+        <span>{{ app.session.flash('confirmacion') }}</span>
+    </div>
+{% endif %}
+
+
+<table cellpadding="0" cellspacing="0" border="0" class="display tablainformes">
+  <thead>
+    <tr>
+            <th class="th">{% trans %}Número{% endtrans %}</th>
+            <th>{% trans %}Fecha informe{% endtrans %}</th>
+            <th>{% trans %}Médico{% endtrans %}</th>
+            <th>{% trans %}Empleado{% endtrans %}</th>
+            <th>{% trans %}Fecha realizada{% endtrans %}</th>
+            <th>{% trans %}Fecha cita{% endtrans %}</th>
+            <th>{% trans %}Cliente{% endtrans %}</th>
+            <th>{% trans %}Acciones{% endtrans %}</th>
+
+    </tr>
+  </thead>
+  
+  <tbody>
+      {% for entity in entities %}
+
+    <tr>
+            <td>{{ entity.id }}</td>
+            <td>{% if entity.fecha %}{{ entity.fecha|date("d/m/Y H:i:s", "Europe/Paris") }}{% endif %}</td>
+            <td>{{ entity.cita.medico }}</td>
+            <td>{{ entity.cita.empleado }}</td>
+            <td>{% if entity.cita.fechaoper %}{{ entity.cita.fechaoper|date("d/m/Y H:i:s", "Europe/Paris") }}{% endif %}</td>
+            <td>{% if entity.cita.fechacita %}{{ entity.cita.fechacita|date("d/m/Y H:i:s", "Europe/Paris") }}{% endif %}</td>
+            <td><a href="{{ path('usuario_show', { 'id': entity.cita.cliente.getId() }) }}">{{ entity.cita.cliente }} {{entity.cita.cliente.apellido1}} </a></td>
+            <td><a class="fancybox verinforme boton" href="{{ path('informepdf', { 'id': entity.id }) }}">{% trans %}Informe{% endtrans %}</a>
+                <a class="boton" href="{{ path('informe_show', { 'id': entity.id }) }}">{% trans %}Ver{% endtrans %}</a>
+            </td>
+        </tr>
+  {% endfor %}
+ </tbody>
+ 
+ <tfoot>
+         <tr>
+            <th>{% trans %}Número{% endtrans %}</th>
+            <th>{% trans %}Fecha informe{% endtrans %}</th>
+            <th>{% trans %}Médico{% endtrans %}</th>
+            <th>{% trans %}Empleado{% endtrans %}</th>
+            <th>{% trans %}Fecha realizada{% endtrans %}</th>
+            <th>{% trans %}Fecha cita{% endtrans %}</th>
+            <th>{% trans %}Cliente{% endtrans %}</th>
+            <th>{% trans %}Acciones{% endtrans %}</th>
+    </tr>
+    </tfoot>
+    
+ </table>
+
+{% endblock %}

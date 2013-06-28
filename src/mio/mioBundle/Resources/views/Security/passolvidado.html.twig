@@ -1,0 +1,22 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}
+{% trans %}Contraseña olvidada{% endtrans %}
+{% endblock %}
+
+{% block menu %}
+<form class="login" id="formpass">
+    <h1 id="titulologin">{% trans %}Contraseña{% endtrans %}</h1>
+
+    <fieldset>
+        <input title="{% trans %}Introduzca email{% endtrans %}" type="text" id="mail" placeholder="Mail" autofocus required/>
+    </fieldset>
+    <fieldset id="actions">
+        <div class="botoncheck" id="enviarpass">{% trans %}Enviar{% endtrans %}</div>
+        <a class="botonvolver" href="{{ path('login') }}">{% trans %}Volver{% endtrans %}</a>
+        <p id="errorlogin"></p>
+        <img id="ajax-loader" src="{{ asset('bundles/miomio/images/ajax-loader.gif') }}"/>
+    </fieldset>
+</form>
+
+{% endblock %}

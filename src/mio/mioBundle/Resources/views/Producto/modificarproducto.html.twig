@@ -1,0 +1,36 @@
+{% extends 'miomioBundle:Default:index.html.twig' %}
+
+{% block title %}
+{% trans %}Modificar producto{% endtrans %}
+{% endblock %}
+
+{% block body %}
+
+<div class="notificaciones">
+<div id="titulo">{% trans %}Modificar producto{% endtrans %}:</div>
+
+{% if app.session.hasFlash('errorproducto') %}
+    <div class="notificacionerror">
+        <span>{{ app.session.flash('errorproducto') }}</span>
+    </div>
+{% endif %}
+</div>
+
+<form  class="formulario" id="modificarproducto" action="{{ path('producto_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    {{ form_widget(edit_form) }}
+</form>
+
+<form  id="eliminarproducto" action="{{ path('producto_delete', { 'id': entity.id }) }}" method="post">
+     {{ form_widget(delete_form) }}
+</form>
+	<div class="botonescrud">
+    <div class="contenedorcrud">
+	  {% if entity.getPlineas().count() == 0 %}
+      	<div class="botoneliminar" id="beliminarproducto">{% trans %}Eliminar{% endtrans %}</div>
+      {% else %}
+      <div class="botondesactivado botoneliminar" title="{% trans %}No se puede eliminar existen operaciones{% endtrans %}." id="beliminarproducto">{% trans %}Eliminar{% endtrans %}</div>
+      {% endif %}
+      <div class="botoneditar" id="bmodificarproducto">{% trans %}Modificar{% endtrans %}</div>
+      <div><a class="botonvolver" href="{{ path('producto') }}">{% trans %}Volver{% endtrans %}</a></div>
+      </div>
+{% endblock %}

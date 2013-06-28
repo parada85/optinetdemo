@@ -1,0 +1,200 @@
+{% extends 'miomioBundle:Default:index.html.twig' %}
+
+{% block title %}
+{% trans %}Nuevo apartado{% endtrans %}: {{user.nombre}} {{user.apellido1}} {{user.apellido2}}
+{% endblock %}
+
+{% block productos %}
+
+<script type="text/javascript" language="javascript">
+$(document).ready(function () {
+    
+    var stocks = [];
+    $.each(tabla1.fnGetData(), function(i, row) { stocks.push(row[3]);});
+    var max = Math.max.apply(null, stocks);
+    var min = Math.min.apply(null, stocks);
+
+        $("#sliderventa").slider({
+        range: true,
+        min: min,
+        max: max,
+        values: [ min, max ],
+        slide: function( event, ui ) {
+            $( "#amountventa" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] + " Uni.");
+        },
+        change: function( event, ui ) {
+            $('#tabla1_range_from_3').val(ui.values[0]);
+            $('#tabla1_range_to_3').val(ui.values[1]);
+            $('#tabla1_range_from_3').keyup();
+            $('#tabla1_range_to_3').keyup();
+        }
+    })
+        $( "#amountventa" ).val($("#sliderventa").slider( "values", 0 ) + " - " + $("#sliderventa").slider( "values", 1 )+ " Uni." );
+
+    var precios = [];
+    $.each(tabla1.fnGetData(), function(i, row) { precios.push(row[7]);});
+    max1 = Math.max.apply(null, precios);
+    min1 = Math.min.apply(null, precios);
+        $("#sliderventa1").slider({
+        range: true,
+        min: min1,
+        max: max1,
+        values: [ min1, max1],
+        slide: function( event, ui ) {
+            $( "#amountventa1" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] + " €.");
+        },
+        change: function( event, ui ) {
+            $('#tabla1_range_from_7').val(ui.values[0]);
+            $('#tabla1_range_to_7').val(ui.values[1]);
+            $('#tabla1_range_from_7').keyup();
+            $('#tabla1_range_to_7').keyup();
+        }
+    })
+        $( "#amountventa1" ).val($("#sliderventa1").slider( "values", 0 ) + " - " + $("#sliderventa1").slider( "values", 1 )+ " €." );
+
+    $('.restablecer').live('click', function () {            
+       $("#sliderventa" ).slider( "option", "values", [ min, max ] );
+       $("#sliderventa1" ).slider( "option", "values", [ min1, max1 ] );
+       $( "#amountventa" ).val($("#sliderventa").slider( "values", 0 ) + " - " + $("#sliderventa").slider( "values", 1 )+ " Unidades." );
+       $( "#amountventa1" ).val($("#sliderventa1").slider( "values", 0 ) + " - " + $("#sliderventa1").slider( "values", 1 )+ " €." );
+                })
+});
+</script>
+{% endblock %}
+
+{% block body %}
+
+<h3 class="h3busquedalado">{% trans %}Nuevo apartado{% endtrans %}: {{user.nombre|capitalize}} {{user.apellido1|capitalize}} {{user.apellido2|capitalize}}<br/>{% trans %} Listar productos {% endtrans %}:</h3>
+
+<form class="busqueda">
+<fieldset>
+
+<div class="sliders">
+    <div id="sliderventa"></div>
+    <label for="amountventa">Stock:</label>
+    <input type="text" id="amountventa" style="border: 0; color: #f6931f; font-weight: bold;" />
+    <div id="sliderventa1"></div>
+    <label for="amountventa1">{% trans %}Precio{% endtrans %}:</label>
+    <input type="text" id="amountventa1" style="border: 0; color: #f6931f; font-weight: bold;" />
+ </div>
+ <div class="restablecer boton">{% trans %}Restaurar{% endtrans %}</div>
+<div class="botonesbuscar"> 
+    <div class="mostrarproductofamilia"></div>
+    <div class="mostrarproductoproveedor"></div>
+</div>
+ </fieldset>
+</form>
+ <p class="numeros"></p>
+ <p class="numeros1"></p>
+
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="tabla1">
+  <thead>
+    <tr>
+            <th>{% trans %}Código{% endtrans %}</th>
+            <th>{% trans %}Descripción{% endtrans %}</th>
+            <th>{% trans %}Stock{% endtrans %}</th>
+            <th>{% trans %}Stockoculto{% endtrans %}</th>
+            <th>{% trans %}Reservado{% endtrans %}</th>
+            <th>{% trans %}Apartado{% endtrans %}</th>
+            <th>{% trans %}Precio venta{% endtrans %}</th>
+            <th>{% trans %}Precioventaoculto{% endtrans %}</th>
+            <th>{% trans %}Iva{% endtrans %}</th>
+            <th>{% trans %}Familia{% endtrans %}</th>
+            <th>{% trans %}Proveedor{% endtrans %}</th>
+            <th>{% trans %}Acciones{% endtrans %}</th>
+
+    </tr>
+  </thead>
+  
+  <tbody>
+      {% for producto in productos %}
+
+    <tr>
+            <td> {{ producto.id }}</td>
+            <td>{{ producto.descripcion }}</td>
+            <td>{{ producto.stock }} {% trans %}unidad/es{% endtrans %}</td>
+            <td>{{ producto.stock }}</td>
+            <td>{{ producto.reservado }} {% trans %}unidad/es{% endtrans %}</td>
+            <td>{{ producto.apartado }} {% trans %}unidad/es{% endtrans %}</td>
+            <td>{{ producto.pventa }} € </td>
+            <td>{{ producto.pventa }} </td>
+            <td>{{ producto.iva }} %</td>
+             {% if producto.familia %}
+            <td> {{ producto.familia}}</td>
+            {% else %}
+            <td>No tiene</td>
+            {% endif %}
+            {% if producto.proveedor %}
+            <td> {{ producto.proveedor}}</td>
+            {% else %}
+            <td>No tiene</td>
+            {% endif %}
+            <td><input type="text" id="ca"/> <div class="botoncarro" id="añadir">{% trans %}Añadir{% endtrans %}</div></td>
+      
+    </tr>
+  {% endfor %}
+ </tbody>
+
+ <tfoot>
+    <tr>
+            <th>{% trans %}Código{% endtrans %}</th>
+            <th>{% trans %}Descripción{% endtrans %}</th>
+            <th>{% trans %}Stock{% endtrans %}</th>
+            <th>{% trans %}Stockoculto{% endtrans %}</th>
+            <th>{% trans %}Reservado{% endtrans %}</th>
+            <th>{% trans %}Apartado{% endtrans %}</th>
+            <th>{% trans %}Precio venta{% endtrans %}</th>
+            <th>{% trans %}Precioventaoculto{% endtrans %}</th>
+            <th>{% trans %}Iva{% endtrans %}</th>
+            <th>{% trans %}Familia{% endtrans %}</th>
+            <th>{% trans %}Proveedor{% endtrans %}</th>
+            <th>{% trans %}Acciones{% endtrans %}</th>
+
+    </tr>
+  </tfoot>
+  
+ </table>
+<div class="prueba">
+<h3>{% trans %}Productos insertados en el apartado{% endtrans %}:</h3>
+ 
+ 
+ <table cellpadding="0" cellspacing="0" border="0" class="display" id="tabla2">
+  <thead>
+    <tr>
+    <th>{% trans %}Código{% endtrans %}</th>
+    <th>{% trans %}Descripción{% endtrans %}</th>
+        <th>{% trans %}Cantidad{% endtrans %}</th>
+        <th>{% trans %}Precio unidad{% endtrans %}</th>
+        <th>{% trans %}Precio total{% endtrans %}</th>
+        <th>{% trans %}Modificar{% endtrans %}</th>
+
+    </tr>
+  </thead>
+  
+  <tbody>
+
+ </tbody>
+    
+ </table>
+
+<div id="divtotalventa">
+
+<h3> {% trans %}El total del apartado son{% endtrans %} <span id="totalventa">0</span> €.</h3>
+</div>
+
+<div class="ventabotones">
+    <div class="contenedor">
+    <input id="preguntadocumentoreserva" type='checkbox'/><label for="preguntadocumentoreserva">{% trans %}Generar documento{% endtrans %}</label> 
+    <div> <select class="lista" id="formapago">
+    <option value="efectivo">{% trans %}Efectivo{% endtrans %}</option>
+    <option value="tarjeta">{% trans %}Tarjeta{% endtrans %}</option>
+  </select>
+  </div>
+    <div>{% trans %}Adelanto{% endtrans %}: <input type="text" id="adelanto"/></div>
+    <div class="entregado">{% trans %}Entregado{% endtrans %}: <input type="text"/></div>
+    <div class="boton" id="guardarapartado">{% trans %}Guardar{% endtrans %}</div>
+    </div>
+</div>
+</div>
+    <img id="ajax-loader" src="{{ asset('bundles/miomio/images/ajax-loader.gif') }}"/>
+{% endblock %}

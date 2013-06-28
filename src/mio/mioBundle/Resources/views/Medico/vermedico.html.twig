@@ -1,0 +1,26 @@
+{% extends 'miomioBundle:Default:index.html.twig' %}
+
+{% block title %}
+Informacion de médico.
+{% endblock %}
+
+{% block body %}
+<div class="notificaciones">
+    <div id="titulo">{% trans %}Información de médico{% endtrans %}:</div>
+</div>
+
+<form  class="formulario" action="{{ path('medico_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+        <div id="mio_miobundle_medicotype">
+        <div class="empoculto">
+    {{ form_row(edit_form.password) }} 
+    </div>
+    {{ form_rest(edit_form) }}
+    </div>
+</form>
+
+<div class="botonescrud">
+	<div class="contenedorcrud">
+      <div><a class="botonvolver" href="javascript:history.go(-1)">{% trans %}Volver{% endtrans %}</a></div>
+    </div>
+</div>
+{% endblock %}

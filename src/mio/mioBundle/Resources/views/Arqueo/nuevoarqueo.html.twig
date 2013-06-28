@@ -1,0 +1,53 @@
+{% extends 'miomioBundle:Default:index.html.twig' %}
+
+{% block title %}{% trans %}Arqueo{% endtrans %}{% endblock %}
+
+{% block body %}
+
+<div id="titulo">{% trans %}Arqueo{% endtrans %}:</div>
+<p id="infoarqueo"> {% trans %}Se va a realizar un nuevo arqueo de caja con fecha{% endtrans%}: {{ "now" | date("d/m/Y") }}</p>
+<div class="noti">
+<div class="notificacion1">
+        <span>{% trans %}El arqueo ha sido almacenado correctamente{% endtrans %}.</span>
+    </div>
+</div>
+
+<div id="billetes">
+	<div><img src="{{ asset('bundles/miomio/images/Arqueo/boleta.jpg') }}"/><input class="inputarqueo" type="text" id="boleta" value=""/></div>
+	<div><img src="{{ asset('bundles/miomio/images/Arqueo/500.jpg') }}"/><input class="inputarqueo" type="text"  value=""/></div>
+	<div><img src="{{ asset('bundles/miomio/images/Arqueo/200.jpg') }}"/><input class="inputarqueo" type="text" value=""/></div>
+	<div><img src="{{ asset('bundles/miomio/images/Arqueo/100.jpg') }}"/><input class="inputarqueo" type="text" value=""/></div>
+	<div><img src="{{ asset('bundles/miomio/images/Arqueo/50.jpg') }}"/><input class="inputarqueo" type="text" value=""/></div>
+	<div><img src="{{ asset('bundles/miomio/images/Arqueo/20.jpg') }}"/><input class="inputarqueo" type="text" value=""/></div>
+	<div><img src="{{ asset('bundles/miomio/images/Arqueo/10.jpg') }}"/><input class="inputarqueo" type="text" value=""/></div>
+	<div><img src="{{ asset('bundles/miomio/images/Arqueo/5.jpg') }}"/><input class="inputarqueo" type="text" value=""/></div>
+</div>
+
+<div id="monedas">
+	<div><img src="{{ asset('bundles/miomio/images/Arqueo/1cent.jpg') }}"/><input class="inputarqueo" type="text" value=""/></div>
+	<div><img src="{{ asset('bundles/miomio/images/Arqueo/2cent.jpg') }}"/><input class="inputarqueo" type="text" value=""/></div>
+	<div><img src="{{ asset('bundles/miomio/images/Arqueo/5cent.jpg') }}"/><input class="inputarqueo" type="text" value=""/></div>
+	<div><img src="{{ asset('bundles/miomio/images/Arqueo/10cent.jpg') }}"/><input class="inputarqueo" type="text" value=""/></div>
+	<div><img src="{{ asset('bundles/miomio/images/Arqueo/20cent.jpg') }}"/><input class="inputarqueo" type="text" value=""/></div>
+	<div><img src="{{ asset('bundles/miomio/images/Arqueo/50cent.jpg') }}"/><input class="inputarqueo" type="text" value=""/></div>
+	<div><img src="{{ asset('bundles/miomio/images/Arqueo/1euro.jpg') }}"/><input class="inputarqueo" type="text" value=""/></div>
+	<div><img src="{{ asset('bundles/miomio/images/Arqueo/2euros.jpg') }}"/><input class="inputarqueo" type="text" value=""/></div>
+</div>
+
+ {% if chivato != 0 %}
+	<div class="botonescrud">
+		<div class="contenedorcrud">
+      <div class="botoncheck" id="validararqueo"> {% trans %}Validar{% endtrans %}</div>
+  </div>
+  </div>
+  {% else %}
+  <p id="noarqueo">{%trans%}No se puede realizar el arqueo, ya existe un arqueo en el dia de hoy{%endtrans%}.</p>
+  	<div class="botonescrud">
+		<div class="contenedorcrud">
+      <div class="botoncheck botondesactivado" id="validararqueo"> {% trans %}Validar{% endtrans %}</div>
+  </div>
+  </div>
+  <img id="ajax-loader" src="{{ asset('bundles/miomio/images/ajax-loader.gif') }}"/>
+  {% endif %}
+
+{% endblock %}

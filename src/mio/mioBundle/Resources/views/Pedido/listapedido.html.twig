@@ -1,0 +1,92 @@
+{% extends 'miomioBundle:Default:index.html.twig' %}
+
+{% block title %}
+{% trans %}Listar pedidos{% endtrans %}
+{% endblock %}
+
+{% block body %}
+<div id="titulo">{% trans %}Listar pedidos{% endtrans %}:</div>
+
+  {% if app.session.hasFlash('confirmacion') %}
+    <div class="notificacion">
+        <span>{{ app.session.flash('confirmacion') }}</span>
+    </div>
+{% endif %}
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="listapedido">
+  <thead>
+    <tr>
+	   <th class="th">{% trans %}Id{% endtrans %}</th>
+		 <th>{% trans %}Proveedor{% endtrans %}</th>
+   	 <th>{% trans %}Fecha{% endtrans %}</th>
+   	 <th>{% trans %}Fecha recepción{% endtrans %}</th>
+   	 <th>{% trans %}Total{% endtrans %}</th>
+   	 <th>{% trans %}Realizada{% endtrans %}</th>
+   	 <th>{% trans %}Recepcionado{% endtrans %}</th>
+   	 <th>{% trans %}Acciones{% endtrans %}</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+      {% for pedido in pedidos %}
+
+    <tr>
+            <td>{{ pedido.id }}</td>
+            <td><a href="{{ path('proveedor_show', { 'id': pedido.proveedor.getId() }) }}">{{ pedido.proveedor.getNombre() | capitalize }}</a></td>
+            <td>{{ pedido.fecha | date("d/m/Y H:i:s", "Europe/Paris")  }}</td>
+            {% if  pedido.fecharecepcion != null %}
+            <td>{{ pedido.fecharecepcion | date("d/m/Y H:i:s", "Europe/Paris")  }}</td>
+            {% else %}
+            <td><div class="recepcionar boton">{% trans %}Recepcionar{% endtrans %}</div></td>
+            {% endif %}
+            <td>{{ pedido.total }} €</td>
+            <td>{{ pedido.empleado.username |capitalize }}</td>
+             {% if  pedido.recepciona != null %}
+            <td> {{ pedido.recepciona.username |capitalize }}</td>
+            {% else %}
+            <td>{% trans %}No recepcionado{% endtrans %}</td>
+            {% endif %}
+            <td><div class="botoncarro detallepedido">{% trans %}Detalle{% endtrans %}</div>
+          </td>
+		</tr>
+  {% endfor %}
+ </tbody>
+ 
+ <tfoot>
+		 <tr>
+	   <th>{% trans %}Id{% endtrans %}</th>
+		 <th>{% trans %}Proveedor{% endtrans %}</th>
+   	 <th>{% trans %}Fecha{% endtrans %}</th>
+   	 <th>{% trans %}Fecha recepción{% endtrans %}</th>
+   	 <th>{% trans %}Total{% endtrans %}</th>
+   	 <th>{% trans %}Realizada{% endtrans %}</th>
+   	 <th>{% trans %}Recepcionado{% endtrans %}</th>
+   	 <th>{% trans %}Acciones{% endtrans %}</th>
+    </tr>
+	</tfoot>
+	
+ </table>
+ 
+ <div id="detalles" title="{% trans %}Detalle{% endtrans %}">
+ <div class="divajaxpedido">
+  <p><span class="id ui-state-highlight ui-corner-all"></span><span class="id1"></span></p>
+ <table cellpadding="0" cellspacing="0" border="0" class="display" id="ajaxpedido">
+ <thead>
+    <tr>
+	    <th>{% trans %}Id producto{% endtrans %}</th>
+      <th>{% trans %}Cantidad{% endtrans %}</th>
+	    <th>{% trans %}Descripción{% endtrans %}</th>
+		 <th>{% trans %}Precio compra{% endtrans %}</th>
+     <th>{% trans %}Iva{% endtrans %}</th>
+		 <th>{% trans %}Total{% endtrans %}</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+ </tbody>
+ 
+ </table>
+  
+  </div>
+  </div>
+
+{% endblock %}

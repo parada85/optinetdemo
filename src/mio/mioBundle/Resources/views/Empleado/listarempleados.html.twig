@@ -1,0 +1,87 @@
+{% extends 'miomioBundle:Default:index.html.twig' %}
+
+{% block title %}
+{% trans %}Listar empleados{% endtrans %}
+{% endblock %}
+
+{% block body %}
+
+<div id="titulo">{% trans %}Listar empleados{% endtrans %}:</div>
+    
+{% if app.session.hasFlash('confirmacion') %}
+    <div class="notificacion">
+        <span>{{ app.session.flash('confirmacion') }}</span>
+    </div>
+{% endif %}
+
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="tabla5">
+  <thead>
+    <tr>
+     <th>{% trans %}Dni{% endtrans %}</th>
+     <th class="th">{% trans %}Usuario{% endtrans %}</th>  
+   	 <th>{% trans %}Nombre{% endtrans %}</th>   
+   	 <th>{% trans %}Apellido1{% endtrans %}</th>
+   	 <th>{% trans %}Apellido2{% endtrans %}</th>
+   	 <th>{% trans %}Email{% endtrans %}</th>
+   	 <th>{% trans %}Fecha alta{% endtrans %}</th>
+   	 <th>{% trans %}Activo{% endtrans %}</th>
+   	 <th>{% trans %}Rol{% endtrans %}</th>
+   	 <th>{% trans %}Acciones{% endtrans %}</th>
+
+    </tr>
+  </thead>
+  
+  <tbody>
+      {% for entity in entities %}
+
+    <tr>
+            <td>{{ entity.dni }}</td>
+            {% if entity.role == 'ROLE_M' %}
+            <td><a href="{{ path('medico_show', { 'id': entity.id }) }}">{{ entity.username }}</a></td>
+            {% else %}
+             <td><a href="{{ path('empleado_show', { 'id': entity.id }) }}">{{ entity.username }}</a></td>
+            {% endif %}
+            <td>{{ entity.nombre |capitalize }}</td>
+            <td>{{ entity.apellido1 |capitalize }}</td>
+            <td>{{ entity.apellido2 |capitalize }}</td>
+            <td>{{ entity.email }}</td>
+            <td>{% if entity.fechaalta %}{{ entity.fechaalta|date('d-m-Y') }}{% endif %}</td>
+            {% if entity.activo == '0'%}
+            <td>No<img src="{{ asset('bundles/miomio/images/soft-icons-48/Cross1.png') }}"\></td>
+            {% else %}
+            <td>Si<img src="{{ asset('bundles/miomio/images/soft-icons-48/Tick1.png') }}"\></td>
+				{% endif %}
+        {% if entity.role == 'ROLE_A' %}
+            <td> {% trans %}Administrador{% endtrans %}</td>
+            <td><a class="botoneditar" href="{{ path('empleado_edit', { 'id': entity.id }) }}">{% trans %}Editar{% endtrans %}</a></td>
+        {% endif %}
+        {% if entity.role == 'ROLE_U' %}
+            <td>{% trans %}Usuario{% endtrans %}</td>
+            <td><a class="botoneditar" href="{{ path('empleado_edit', { 'id': entity.id }) }}">{% trans %}Editar{% endtrans %}</a></td>
+        {% endif %}
+        {% if entity.role == 'ROLE_M' %}
+            <td> {% trans %}Médico{% endtrans %}</td>
+            <td><a class="botoneditar" href="{{ path('medico_edit', { 'id': entity.id }) }}">{% trans %}Editar{% endtrans %}</a></td>
+        {% endif %}
+		</tr>
+  {% endfor %}
+ </tbody>
+ 
+ <tfoot>
+		 <tr>
+     <th>{% trans %}Dni{% endtrans %}</th>
+   	 <th>{% trans %}Usuario{% endtrans %}</th>
+     <th>{% trans %}Nombre{% endtrans %}</th>  
+   	 <th>{% trans %}Apellido1{% endtrans %}</th>
+   	 <th>{% trans %}Apellido2{% endtrans %}</th>
+   	 <th>{% trans %}Email{% endtrans %}</th>
+   	 <th>{% trans %}Fecha alta{% endtrans %}</th>
+   	 <th>{% trans %}Activo{% endtrans %}</th>
+   	 <th>{% trans %}Rol{% endtrans %}</th>
+   	 <th>{% trans %}Acciones{% endtrans %}</th>
+    </tr>
+	</tfoot>
+	
+ </table>
+
+{% endblock %}

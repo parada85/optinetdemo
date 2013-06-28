@@ -1,0 +1,12 @@
+{# src/Acme/BlogBundle/Resources/views/Blog/index.html.twig #} 
+
+{% extends 'miomioBundle:Default:index.html.twig' %}
+
+{% block title %}{% trans %}Nuevo informe{% endtrans %}{% endblock %}
+
+{% block body %}
+ <h3>{% trans %}Seleccione la cita a la que generar el informe{% endtrans %}:</h3>
+ <p id="medicoinforme"> {{app.user.id}}</p>
+ <div id='calendar2'></div>
+
+{% endblock %}

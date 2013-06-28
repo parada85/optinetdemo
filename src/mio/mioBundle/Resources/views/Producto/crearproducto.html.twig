@@ -1,0 +1,28 @@
+{% extends 'miomioBundle:Default:index.html.twig' %}
+
+{% block title %}
+{% trans %}Nuevo producto{% endtrans %}
+{% endblock %}
+
+{% block body %}
+
+<div class="notificaciones">
+<div id="titulo">{% trans %}Nuevo producto{% endtrans %}:</div>
+
+{% if app.session.hasFlash('errorproducto') %}
+    <div class="notificacionerror">
+        <span>{{ app.session.flash('errorproducto') }}</span>
+    </div>
+{% endif %}
+</div>
+<form class="formulario" id="nuevoproducto" action="{{ path('producto_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+</form>
+
+<div class="botonescrud">
+	<div class="contenedorcrud">
+		<div class="botoncheck" id="gproducto">{% trans %}Crear{% endtrans %}</div>
+	</div>
+</div>
+	
+{% endblock %}

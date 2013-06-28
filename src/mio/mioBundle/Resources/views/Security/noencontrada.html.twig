@@ -1,0 +1,18 @@
+{# src/Acme/BlogBundle/Resources/views/Blog/index.html.twig #} 
+
+{% extends 'miomioBundle:Default:index.html.twig' %}
+
+{% block title %}{% trans %}Página no encontrada{% endtrans %}{% endblock %}
+
+{% block menu %}
+ <div id="div_restringida">
+ <img src="{{ asset('bundles/miomio/images/soft-icons-48/noencontrada.png') }}"/>
+ <p>{% trans %}Usted está accediendo a una página no encontrada. Por favor, presione el botón para volver atrás{% endtrans %}.</p>
+ </div>
+  	<div class="botonescrud">
+		<div class="contenedorcrud">
+		 <div><a class="botonvolver" href="{{ path('homepage') }}">{% trans %}Volver{% endtrans %}</a></div>
+	</div>
+	</div>
+{% endblock %}
+{% block body %} {% endblock %}

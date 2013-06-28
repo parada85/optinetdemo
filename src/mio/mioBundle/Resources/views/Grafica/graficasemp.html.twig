@@ -1,0 +1,40 @@
+{# src/Acme/BlogBundle/Resources/views/Blog/index.html.twig #} 
+{% extends 'miomioBundle:Default:index.html.twig' %}
+
+{% block graficas %}
+<script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/js/highcharts.js') }}"></script>
+<script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/js/highstock.js') }}"></script>
+<script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/js/exporting.js') }}"></script>
+
+{% if app.session.locale == 'en' %}
+
+	  {% javascripts '@miomioBundle/Resources/public/js/mio/graficas/ingles/graficasingles.js' filter='yui_js' %}
+			    <script type="text/javascript" language="javascript" src="{{ asset_url }}"></script>
+		{% endjavascripts %}
+
+	{% else %}
+
+	  {% javascripts '@miomioBundle/Resources/public/js/mio/graficas/espanol/graficas.js' filter='yui_js' %}
+			    <script type="text/javascript" language="javascript" src="{{ asset_url }}"></script>
+	  {% endjavascripts %}
+	{% endif %}
+	
+{% endblock %}
+
+{% block title %}{% trans %}Estadísticas del empleado{% endtrans %}{% endblock %}
+
+{% block body %}
+
+<div id="emptabs">
+	<ul>
+		<li><a href="#emptabs-1">{% trans %}Número de operaciones{% endtrans %}</a></li>
+		<li><a href="#emptabs-2">{% trans %}Facturación{% endtrans %}</a></li>
+	</ul>
+	<div id="emptabs-1">
+		<div id="empcontainer"></div>
+	</div>
+	<div id="emptabs-2">
+		<div id="empcontainer1"></div>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+[doctrine-fixtures]
+    git=http://github.com/doctrine/data-fixtures.git
+
+[DoctrineFixturesBundle]
+    git=http://github.com/doctrine/DoctrineFixturesBundle.git
+    target=/bundles/Symfony/Bundle/DoctrineFixturesBundle
+    version=origin/2.0
+
+[FOSJsRoutingBundle]
+    git=git://github.com/FriendsOfSymfony/FOSJsRoutingBundle.git
+    target=/bundles/FOS/JsRoutingBundle
+
+[PdfBundle]
+      git=git://github.com/psliwa/PdfBundle.git
+      target=/bundles/Ps/PdfBundle
+[PHPPdf]
+      git=git://github.com/psliwa/PHPPdf.git
+      version=origin/1.1.x
+    

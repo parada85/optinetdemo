@@ -1,0 +1,57 @@
+{% extends 'miomioBundle:Default:index.html.twig' %}
+
+{% block title %}
+{% trans %}Nuevo informe{% endtrans %}
+{% endblock %}
+
+{% block body %}
+
+<div class="notificaciones">
+<div id="titulo">{% trans %}Nuevo informe{% endtrans %}:</div>
+
+{% if app.session.hasFlash('errorinforme') %}
+    <div class="notificacionerror">
+        <span>{{ app.session.flash('errorinforme') }}</span>
+    </div>
+{% endif %}
+</div>
+<form class="formulario1" id="nuevoinforme" action="{{ path('informe_create',{'id':id ,'id1':id1}) }}" method="post" {{ form_enctype(form) }}>
+   <div id="mio_miobundle_informetype">
+
+<span class="izquierdo">
+	<p>{% trans %}Ojo Izquierdo{% endtrans %}:</p>
+	    {{ form_row(form.oiavsc) }}
+		{{ form_row(form.oiavcc) }}
+		{{ form_row(form.oiesf) }}
+		{{ form_row(form.oicil) }}
+		{{ form_row(form.oieje) }}
+		{{ form_row(form.oiav) }}
+	</span>
+	<span class="derecho">
+		<p> {% trans %}Ojo Derecho{% endtrans %}:</p>
+		{{ form_row(form.odavsc) }}
+		{{ form_row(form.odavcc) }}
+		{{ form_row(form.odesf) }}
+		{{ form_row(form.odcil) }}
+		{{ form_row(form.odeje) }}
+		{{ form_row(form.odav) }}
+    </span>
+    <span id="otros">
+    	<p>{% trans %}Otros{% endtrans %}:</p>
+		{{ form_row(form.problema) }}
+		{{ form_row(form.pupilar) }}
+		{{ form_row(form.worth) }}
+		{{ form_row(form.Amsler) }}
+		{{ form_rest(form) }}
+	</span>
+</div>
+
+</form>
+
+	<div class="botonescrud">
+		<div class="contenedorcrud">
+		<div class="boton" id="ginforme">{% trans %}Crear{% endtrans %}</div>
+	</div>
+</div>
+
+{% endblock %}

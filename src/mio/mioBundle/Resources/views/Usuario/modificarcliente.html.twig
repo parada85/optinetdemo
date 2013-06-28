@@ -1,0 +1,38 @@
+{% extends 'miomioBundle:Default:index.html.twig' %}
+
+{% block title %}
+{% trans %}Modificar cliente{% endtrans %}
+{% endblock %}
+
+{% block body %}
+
+<div class="notificaciones">
+<div id="titulo">{% trans %}Modificar cliente{% endtrans %}:</div>
+
+{% if app.session.hasFlash('errorusuario') %}
+    <div class="notificacionerror">
+        <span>{{ app.session.flash('errorusuario') }}</span>
+    </div>
+{% endif %}
+</div>
+
+<form  class="formulario" id="modificarusuario" action="{{ path('usuario_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    {{ form_widget(edit_form) }}
+</form>
+
+<form  id="eliminarusuario" action="{{ path('usuario_delete', { 'id': entity.id }) }}" method="post">
+     {{ form_widget(delete_form) }}
+</form>
+		<div class="botonescrud">
+      <div class="contenedorcrud">
+		{% if entity.getOperaciones().count() == 0 %}
+      <div class="botoneliminar" id="beliminarusuario">{% trans %}Eliminar{% endtrans %}</div>
+      {% else %}
+      <div class="botondesactivado botoneliminar" title="{% trans %}No se puede eliminar existen operaciones{% endtrans %}." id="beliminarusuario">{% trans %}Eliminar{% endtrans %}</div>
+      {% endif %}
+      <div class="botoneditar" id="bmodificarusuario">{% trans %}Modificar{% endtrans %}</div>
+      <div><a class="botonvolver" href="{{ path('usuario') }}">{% trans %}Volver{% endtrans %}</a></div>
+      </div>
+    </div>
+
+{% endblock %}

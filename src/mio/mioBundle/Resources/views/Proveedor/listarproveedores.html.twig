@@ -1,0 +1,91 @@
+{% extends 'miomioBundle:Default:index.html.twig' %}
+
+{% block title %}
+{% trans %}Listar proveedores{% endtrans %}
+{% endblock %}
+
+{% block body %}
+
+<div id="titulo">{% trans %}Listar proveedores{% endtrans %}:</div>
+    
+{% if app.session.hasFlash('confirmacion') %}
+    <div class="notificacion">
+        <span>{{ app.session.flash('confirmacion') }}</span>
+    </div>
+{% endif %}
+
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="tablalistaproveedores">
+  <thead>
+    <tr>
+            <th class="th">{% trans %}Nombre{% endtrans %}</th>
+            <th>{% trans %}Dirección{% endtrans %}</th>
+            <th>{% trans %}Teléfono{% endtrans %}</th>
+            <th>{% trans %}Localidad{% endtrans %}</th>
+            <th>{% trans %}Provincia{% endtrans %}</th>
+            <th>{% trans %}Email{% endtrans %}</th>
+            <th>{% trans %}Productos{% endtrans %}</th>
+   	        <th>{% trans %}Acciones{% endtrans %}</th>
+
+    </tr>
+  </thead>
+  
+  <tbody>
+      {% for entity in entities %}
+
+    <tr>
+            <td>{{ entity.nombre |capitalize }}</td>
+            <td>{{ entity.direccion |capitalize }}</td>
+            <td>{{ entity.telefono }}</td>
+            <td>{{ entity.localidad |capitalize  }}</td>
+            <td>{{ entity.provincia |capitalize }}</td>
+            <td>{{ entity.email }}</td>
+            <td>{{ entity.getProductos().count() }}</td>
+             <td><a class="botoneditar" href="{{ path('proveedor_edit', { 'id': entity.id }) }}">{% trans %}Editar{% endtrans %}</a>
+              {% if entity.getProductos().count() != 0 %}
+              <a id="{{entity.id}}" class="boton mostrarproductos1">{% trans %}Productos{% endtrans %}</a>
+              {% else %}
+              <a id="{{entity.id}}" title="{% trans %}El proveedor no suministra ningún producto{% endtrans %}" class="botondesactivado mostrarproductos1">{% trans %}Productos{% endtrans %}</a>
+              {% endif %}
+            </td>
+		</tr>
+  {% endfor %}
+ </tbody>
+ 
+ <tfoot>
+		 <tr>
+            <th>{% trans %}Nombre{% endtrans %}</th>
+            <th>{% trans %}Dirección{% endtrans %}</th>
+            <th>{% trans %}Teléfono{% endtrans %}</th>
+            <th>{% trans %}Localidad{% endtrans %}</th>
+            <th>{% trans %}Provincia{% endtrans %}</th>
+            <th>{% trans %}Email{% endtrans %}</th>
+				    <th>{% trans %}Productos{% endtrans %}</th>
+   	 		    <th>{% trans %}Acciones{% endtrans %}</th>
+    </tr>
+	</tfoot>
+	
+ </table>
+
+<div id="detalles1" title="{% trans %}Detalle{% endtrans %}">
+  <p><span class="id ui-state-highlight ui-corner-all"></span></p>
+ <table cellpadding="0" cellspacing="0" border="0" class="display tablamostrarproductos">
+ <thead>
+    <tr>
+      <th class="th">{% trans %}Código{% endtrans %}</th>
+      <th>{% trans %}Descripción{% endtrans %}</th>
+      <th>{% trans %}Iva{% endtrans %}</th>
+      <th>{% trans %}Precio compra{% endtrans %}</th>
+      <th>{% trans %}Precio venta{% endtrans %}</th>
+      <th>{% trans %}Stock{% endtrans %}</th>
+      <th>{% trans %}Apartado{% endtrans %}</th>
+      <th>{% trans %}Reservado{% endtrans %}</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+ </tbody>
+
+ </table>
+  
+</div>
+{% endblock %}

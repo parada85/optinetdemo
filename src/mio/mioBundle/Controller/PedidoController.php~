@@ -1,0 +1,23 @@
+<?php
+
+namespace mio\mioBundle\Controller;
+
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use mio\mioBundle\Entity\Proveedor;
+use mio\mioBundle\Entity\Pedido;
+use mio\mioBundle\Entity\Empleado;
+use mio\mioBundle\Entity\Lineaspedido;
+
+class PedidoController extends Controller{
+	
+	
+	public function newpedidoAction()
+	{	
+		return ($this->render('miomioBundle:Pedido:newpedido.html.twig'));	
+	
+	}
+	
+}
+?>

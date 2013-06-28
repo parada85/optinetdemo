@@ -1,0 +1,30 @@
+
+{% extends '::base.html.twig' %}
+
+{% block title %}
+{% trans %}Logueo de usuarios{% endtrans %}
+{% endblock %}
+
+{% block menu %}
+<form class="login" action="{{ path('login_check') }}" method="post" >
+    <h1 id="titulologin" >Optinet</h1>
+    <fieldset id="inputs">
+         <input title="{% trans %}Introduzca nombre de usuario{% endtrans %}" type="text" id="username" name="_username" value="{{ last_username }}" placeholder="{%trans%}Usuario{%endtrans%}" autofocus required/>
+        <input title="{% trans %}Introduzca contraseña{% endtrans %}" type="password" id="password" name="_password" placeholder="{% trans %}Clave{%endtrans%}" required/>
+         <label><input id="recuerdame" type="checkbox" id="remember_me" name="_remember_me" checked />{% trans %}Recuérdame{% endtrans %}</label>
+    </fieldset>
+    <fieldset id="actions">
+        <button type="submit" class="botoncheck" id="ingresar">{% trans %}Entrar{% endtrans %}</button>
+        <div class="botonolvidada" id="passolvidado">{% trans %}Contraseña olvidada{% endtrans %} </div>
+         {% set locale = app.request.session.locale %}
+    {% if error %}
+        {% if locale == 'es' %}
+    <p id="errorlogin">{{ error.message |trans }}</p>
+        {% else %}
+    <p id="errorlogin">{{ error.message}}</p>
+    {% endif %} 
+{% endif %}
+    </fieldset>
+</form>
+
+{% endblock %}

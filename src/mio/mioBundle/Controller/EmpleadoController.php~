@@ -1,0 +1,293 @@
+<?php
+
+namespace mio\mioBundle\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use mio\mioBundle\Entity\Empleado;
+use mio\mioBundle\Entity\Pedido;
+use mio\mioBundle\Entity\Lineaspedido;
+use mio\mioBundle\Form\EmpleadoType;
+
+use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
+
+/**
+ * Empleado controller.
+ *
+ * @Route("/empleado")
+ */
+class EmpleadoController extends Controller
+{
+	
+	
+	public function pedidoAction($id)
+	{
+		$em = $this->get('doctrine')->getEntityManager();
+		$proveedor = $this->getDoctrine()->getRepository('miomioBundle:Proveedor')->find($id);
+		$productos = $proveedor->getProductos();
+	 	return $this->render('miomioBundle:Empleado:pedido.html.twig',array('productos' => $productos,'proveedor' => $proveedor));
+	
+	}
+	
+	public function pedidoeAction($id)
+	{
+		$em = $this->get('doctrine')->getEntityManager();
+		
+		$pieces = explode(",", $id);
+		$pedido=new Pedido();
+	   $pedido->setFecha(new \DateTime('now'));
+		$total=0;
+		$proveedor = $this->getDoctrine()->getRepository('miomioBundle:Proveedor')->find($pieces[0]);
+		$empleado = $this->get('security.context')->getToken()->getUser();
+		$pedido->setEmpleado($empleado);
+		$pedido->setProveedor($proveedor);
+		$pedido->setTotal($total);
+		$em->persist($pedido);
+		$em->flush();
+    	
+    	for($i=1;$i<count($pieces);$i=$i+2){
+    		 $producto = $this->getDoctrine()->getRepository('miomioBundle:Producto')->find($pieces[$i]);
+    		 $cantidad = $pieces[$i+1];
+    		 $lpedido = new Lineaspedido();
+    		 $lpedido->setPedido($pedido);
+    		 $lpedido->setProducto($producto);
+    		 $lpedido->setPrecio($producto->getPcompra());
+    		 $lpedido->setCantidad($cantidad);
+    		 $em->persist($lpedido);
+    		 $pedido->addLineasPedido($lpedido);
+
+    		 $total1=$cantidad * $producto->getPcompra();
+    		 $total+=$total1;
+    	}
+    	
+    	$pedido->setTotal($total);
+    	$em->persist($pedido);
+    	$em->flush();
+    	
+    	//$operaciones = $cliente->getOperaciones();
+		//foreach($operaciones as $operacion){
+		//    echo $operacion->getCliente()->getNombre();
+		//}
+		
+		// $operaciones = $cliente->getOperaciones();
+		//foreach($operaciones as $operacion){
+		//	$lineas=$operacion->getLineas();
+		//	}
+			
+		//foreach($lineas as $linea){
+		//	echo $linea->getProducto()->getDescripcion();
+		//	}
+    	
+		//return ($this->render('miomioBundle:Default:index.html.twig'));
+		return new RedirectResponse($this->generateUrl('listapedido'));
+	}
+    /**
+     * Lists all Empleado entities.
+     *
+     * @Route("/", name="empleado")
+     * @Template()
+     */
+    public function indexAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entities = $em->getRepository('miomioBundle:Empleado')->findAll();
+
+        return array('entities' => $entities);
+    }
+
+    /**
+     * Finds and displays a Empleado entity.
+     *
+     * @Route("/{id}/show", name="empleado_show")
+     * @Template()
+     */
+    public function showAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('miomioBundle:Empleado')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Empleado entity.');
+        }
+
+        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createForm(new EmpleadoType(), $entity);
+
+        return array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),        );
+    }
+
+    /**
+     * Displays a form to create a new Empleado entity.
+     *
+     * @Route("/new", name="empleado_new")
+     * @Template()
+     */
+    public function newAction()
+    {
+        $entity = new Empleado();
+        $form   = $this->createForm(new EmpleadoType(), $entity);
+
+        return array(
+            'entity' => $entity,
+            'form'   => $form->createView()
+        );
+    }
+
+    /**
+     * Creates a new Empleado entity.
+     *
+     * @Route("/create", name="empleado_create")
+     * @Method("post")
+     * @Template("miomioBundle:Empleado:new.html.twig")
+     */
+    public function createAction()
+    {
+        $entity  = new Empleado();
+        $request = $this->getRequest();
+        $form    = $this->createForm(new EmpleadoType(), $entity);
+        $form->bindRequest($request);
+
+        if ($form->isValid()) {
+			$em = $this->getDoctrine()->getEntityManager(); 
+         $entity->setFechaAlta(new \DateTime());
+       	$entity->setSalt(md5(time()));
+       	$psswd = substr( md5(microtime()), 1, 8);
+       	$em->persist($entity);
+       	
+			$message = \Swift_Message::newInstance()
+      	  ->setSubject("Nuevo empleado")
+       	  ->setFrom('paradasymfony@gmail.com')
+       	  ->setTo($entity->getEmail())
+       	  ->setBody('Hola '.$entity->getNombre().' '.$entity->getApellido1().' '.$entity->getApellido2().'.<br/><br/>'.
+       	  				'Se ha dado de alta en el sistema Optinet.Le adjunto los datos para que usted pueda entrar al sistema:<br/>'.
+       	  				'Nombre usuario:  '.$entity->getUsername().'<br/>'.
+       	  				'Contraseña:     '.$psswd.'<br/><br/>'.
+       	  				'Un saludo.'
+       	  				,'text/html');
+    		$this->get('mailer')->send($message);
+                       
+            $encoder = new MessageDigestPasswordEncoder('sha1');
+            $password = $encoder->encodePassword($psswd, $entity->getSalt());
+            $entity->setPassword($password);
+            
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('empleado'));
+            
+        }
+
+        return array(
+            'entity' => $entity,
+            'form'   => $form->createView()
+        );
+    }
+
+    /**
+     * Displays a form to edit an existing Empleado entity.
+     *
+     * @Route("/{id}/edit", name="empleado_edit")
+     * @Template()
+     */
+    public function editAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('miomioBundle:Empleado')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Empleado entity.');
+        }
+
+        $editForm = $this->createForm(new EmpleadoType(), $entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+        return array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
+
+    /**
+     * Edits an existing Empleado entity.
+     *
+     * @Route("/{id}/update", name="empleado_update")
+     * @Method("post")
+     * @Template("miomioBundle:Empleado:edit.html.twig")
+     */
+    public function updateAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('miomioBundle:Empleado')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Empleado entity.');
+        }
+
+        $editForm   = $this->createForm(new EmpleadoType(), $entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+        $request = $this->getRequest();
+
+        $editForm->bindRequest($request);
+
+        if ($editForm->isValid()) {
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('empleado_edit', array('id' => $id)));
+        }
+
+        return array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
+
+    /**
+     * Deletes a Empleado entity.
+     *
+     * @Route("/{id}/delete", name="empleado_delete")
+     * @Method("post")
+     */
+    public function deleteAction($id)
+    {
+        $form = $this->createDeleteForm($id);
+        $request = $this->getRequest();
+
+        $form->bindRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getEntityManager();
+            $entity = $em->getRepository('miomioBundle:Empleado')->find($id);
+
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find Empleado entity.');
+            }
+
+            $em->remove($entity);
+            $em->flush();
+        }
+
+        return $this->redirect($this->generateUrl('empleado'));
+    }
+
+    private function createDeleteForm($id)
+    {
+        return $this->createFormBuilder(array('id' => $id))
+            ->add('id', 'hidden')
+            ->getForm()
+        ;
+    }
+}

@@ -1,0 +1,43 @@
+{# src/Acme/BlogBundle/Resources/views/Blog/index.html.twig #} 
+
+{% extends '::base.html.twig' %}
+
+{% block title %}{% trans %}Bienvenido a la gestion Optinet{% endtrans %}{% endblock %}
+
+{% block tema %}
+  {% if app.user.tema %}
+    <link id="hojaestilo" rel="stylesheet" type="text/css" href="{{ asset('bundles/miomio/css/temas/'~app.user.tema~'/jquery-wijmo.min.css') }}" media="screen">
+   {% endif %} 
+{% endblock %}
+
+    {% block jquerys %}
+
+    <script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/js/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/js/ColVis.min.js') }}"></script>
+    <script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/js/media/js/TableTools.min.js') }}"></script>
+    <script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/js/media/js/ZeroClipboard.min.js') }}"></script>
+    <script type="text/javascript" language="javascript" src="{{ asset('bundles/miomio/js/fullcalendar.min.js') }}"></script>
+    <script type="text/javascript" defer language="javascript" src="{{ asset('bundles/miomio/js/jquery.qtip.min.js') }}"></script>
+
+    {% endblock %}
+
+{% block cambioidioma %}
+{% if app.session.locale == 'en' %}
+
+		{% javascripts '@miomioBundle/Resources/public/js/mio/ingles/*.js' filter='yui_js' output='js/jsingles.js'%}
+		{% endjavascripts %}
+		<script type="text/javascript" language="javascript" src="{{ asset('js/jsingles.js') }}"></script>
+
+{% else %}
+
+		{% javascripts '@miomioBundle/Resources/public/js/mio/espanol/*.js' filter='yui_js' output='js/jsespanol.js' %}
+		{% endjavascripts %}
+		<script type="text/javascript" language="javascript" src="{{ asset('js/jsespanol.js') }}"></script>
+
+	{% endif %}
+{% endblock %}
+
+{% block body %}
+ <h3 id="bienvenida2">{% trans %}Bienvenido a la aplicación Optinet{% endtrans %}</h3>
+
+{% endblock %}

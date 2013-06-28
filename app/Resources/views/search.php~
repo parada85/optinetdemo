@@ -1,0 +1,30 @@
+<?php
+
+$host = "localhost";
+$usuario = "root";
+$password = "root";
+$base = "tienda"; 
+
+$conn = mysql_connect($host, $usuario, $password) or die ('Error connecting to mysql');
+mysql_select_db($base);
+	 
+$return_arr = array();
+$row_array = array();
+
+if ($conn)
+	{
+    $fetch = mysql_query("SELECT nombre FROM usuario where nombre like '%" . mysql_real_escape_string($_GET['term']) . "%'");
+	 
+	    /* Retrieve and store in array the results of the query.*/
+	    while ($row = mysql_fetch_array($fetch, MYSQL_ASSOC)) {
+	    	  $row_array['id'] = $row['id'];
+	        $row_array['label'] = $row['nombre'];	       
+	        $row_array['value'] = $row['nombre'];	 
+        array_push($return_arr,$row_array);
+	    }
+}
+	mysql_close($conn);
+
+echo json_encode($return_arr);
+
+?>

@@ -1,0 +1,72 @@
+<?php
+
+namespace mio\mioBundle\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+
+use mio\mioBundle\Entity\Operacion;
+use mio\mioBundle\Entity\Producto;
+use mio\mioBundle\Entity\Usuario;
+use mio\mioBundle\Entity\Lineasoperacion;
+
+use Symfony\Component\HttpFoundation\Request;
+
+
+class OperacionController extends Controller{
+	
+	public function nuevaoperacionAction(Request $request){
+		
+		$oper= new Operacion();
+		
+		$form = $this->createFormBuilder()
+				->add('Usuario', 'entity', array(
+            'class'         => 'mio\\mioBundle\\Entity\\Usuario',
+            'empty_value' => 'Selecciona un usuario',
+            'property' => 'nombre',
+            ))
+            ->add('Fecha', 'date', array(
+    			'input'  => 'datetime',
+    				'widget' => 'choice',
+					))
+				->add('Operacion', 'choice', array(
+    			'choices'   => array('d' => 'Devolucion', 'r' => 'Reserva', 'v' => 'Venta'),
+    			'required'  => true,
+    			'empty_value' => 'Operaciones',
+				))
+				//->add('Producto', 'entity', array(
+            //'class'         => 'mio\\mioBundle\\Entity\\Producto',
+            //'empty_value' => 'Selecciona un producto',
+            //'property' => 'descripcion',
+            //))
+            //->add('Cantidad', 'integer')
+        ->getForm();
+        
+        
+        
+    if($request->getMethod()=='POST'){
+    	
+      $form ->bindRequest($request);
+    if ($form->isValid()){
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$data = $form->getData();
+    	$oper->setCliente($data["Usuario"]);
+    	$oper->setFecha($data["Fecha"]);
+    	$em->persist($oper);
+    	$em->flush();
+    	//$loper = new Lineasoperacion();
+    	//$loper->setOperacion ($oper);
+    	//$loper->setProducto($data["Producto"]);
+    	//$loper->setCantidad($data["Cantidad"]);
+    	$em->persist($loper);
+    	$em->flush();
+    	}
+
+		}
+		$em1 = $this->get('doctrine')->getEntityManager();
+		$productos = $em1->getRepository('miomioBundle:Producto')->listaproducto();	
+		return $this->render('miomioBundle:Operacion:nuevaoperacion.html.twig',array('form' => $form->createView(),'productos' => $productos));
+	}
+	}
+?>
